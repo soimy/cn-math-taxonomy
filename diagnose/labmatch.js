@@ -30,8 +30,18 @@
 })(typeof self !== 'undefined' ? self : this, function (Funclab) {
   'use strict';
 
-  const PROXY = 'http://127.0.0.1:3000/v1/chat/completions';
-  const MODEL = 'DeepSeek-V4.1-Flash-1017-Unlimited';
+  /* 配置唯一真源：diagnose/llm-config.js（浏览器由 index.html 先加载，Node 直接 require） */
+  function _loadLLMConfig() {
+    if (typeof LLMConfig !== 'undefined' && LLMConfig) return LLMConfig;
+    if (typeof require === 'function') {
+      try { return require('./llm-config.js'); } catch (e) { /* 落到 fail-closed */ }
+    }
+    return null;
+  }
+
+  const CFG = _loadLLMConfig();
+  const PROXY = CFG ? CFG.chatUrl() : null;
+  const MODEL = CFG ? CFG.model : null;
   const CACHE_KEY = 'cnmLabMatch.v1';
   /* lenient（学生主动点「画图给我看」）用**独立**缓存表，理由见 resolve() 的注释：
    * lenient 会挂上「题目没直接问、但能帮助学生理解」的图，如果把这种宽松判定写进正常缓存，
@@ -44,13 +54,10 @@
   const LENIENT_CACHE_KEY = 'cnmLabMatchLenient.v2';
   /** 旧版本 key：启动时清掉，避免 localStorage 里留一堆再也不会被读的垃圾（以及旧 key 拿去复用） */
   const LEGACY_LENIENT_CACHE_KEYS = ['cnmLabMatchLenient.v1'];
-  /* 验证时用 500 会把 JSON 截断（reason 字段被切掉一半 → 解析失败）。
-   * 注意网关把 reasoning_content 也算进预算：1200 在长推理题上仍会截断（实测 cnm_202_q1 同题重试就顶到上限），
-   * 因此给 2000 —— 卡面「给足 1200」是最低要求，不是上限。
-   * 现用型号 DeepSeek-V4.1-Flash-1017-Unlimited 实测（cnm_235_q2 题面，4 次）：finish_reason 全为 stop，
-   * completion_tokens 99–161，离 2000 很远，暂无上调必要；换型号/换 prompt 后要重新量。 */
-  const MAX_TOKENS = 2000;
-  const TIMEOUT_MS = 20000;   // 推理模型 + 多选项题面实测可超 12s（cnm_230_q1 就吃过超时）
+  /* 预算/超时唯一真源见 llm-config.js 的 maxTokens.labmatch / timeouts.labmatch；
+   * 实测依据（500 截断、reasoning 计入预算、cnm_235_q2、cnm_230_q1 超时）也随值搬过去了。 */
+  const MAX_TOKENS = CFG ? CFG.maxTokens.labmatch : null;
+  const TIMEOUT_MS = CFG ? CFG.timeouts.labmatch : null;
   /* 代回验算容差：系数是浮点配方的结果（h=-b/2a），1e-9 足够严，又不会被 0.30000000000000004 绊倒 */
   const EPS = 1e-9;
 
@@ -477,6 +484,8 @@
     const o = opts || {};
     const fetchImpl = o.fetchImpl || (typeof fetch !== 'undefined' ? fetch : null);
     if (!fetchImpl) return Promise.reject(new Error('no fetch'));
+    /* 配置没加载就按离线处理：不把 null 传给 fetch（那会变成 TypeError） */
+    if (!CFG) return Promise.reject(new Error('LLMConfig 未加载（llm-config.js 没引入）'));
     const body = {
       model: o.model || MODEL,
       max_tokens: o.maxTokens || MAX_TOKENS,

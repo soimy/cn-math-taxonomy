@@ -9,26 +9,25 @@
  */
 (function (global) {
   'use strict';
-  const PROXY = 'http://127.0.0.1:3000/v1/chat/completions';   // 网关已支持 CORS(2026-10-22),直连不需要 llm-proxy
-  const MODEL = 'DeepSeek-V4.1-Flash-1017-Unlimited';
+
+  /* 配置唯一真源：diagnose/llm-config.js（浏览器由 index.html 先加载，Node 直接 require） */
+  function _loadLLMConfig() {
+    if (typeof LLMConfig !== 'undefined' && LLMConfig) return LLMConfig;
+    if (typeof require === 'function') {
+      try { return require('./llm-config.js'); } catch (e) { /* 落到 fail-closed */ }
+    }
+    return null;
+  }
+
+  const CFG = _loadLLMConfig();
+  const PROXY = CFG ? CFG.chatUrl() : null;
+  const MODEL = CFG ? CFG.model : null;
   const TTL = 5 * 60 * 1000;
 
-  /* O3-6：max_tokens 单一出处。
-   * 讲解输出实测 300-800 token 足够 —— 2048 留足余量且不放大计费（追问的预算见下，另行说明）；
-   * 不写裸数字，避免「改一处漏一处」（O3-4 探测漏改 max_tokens:100 即此类事故）。
-   * 改这两个值之前先看 tests/test_engine.js 的 max_tokens 契约断言。 */
-  const EXPLAIN_MAX_TOKENS = 2048;    // 三步讲解（prompt/hint/reveal 的 JSON）
-  /* 讲解中追问：单轮，但输出是 JSON 对象 {text, graph|null}（不是纯文本）。
-   * JSON 比纯文本多吃 token（键名、引号、转义 + graph 结构化参数），且推理模型的
-   * reasoning 会先吃预算 —— 正文可能一个字都吐不出来（finish_reason=length、content 空串
-   * → 学生看到「AI 老师暂时离线」）。实测同一 prompt 反复打网关：
-   *   max_tokens=1024：稳定 finish=length、content 空（本卡根因）
-   *   max_tokens=2048：仍有 3/10 次被 reasoning 吃光（completion=2048、content 空）
-   *   max_tokens=4096：37/37 次 finish=stop、JSON 完整（completion 448–3342）
-   * 取 4096：reasoning 长度有长尾 —— 2048 多数情况够（另有一次同 prompt 量测 completion=1080、
-   * 约 2 倍余量），但长尾下会被吃光，故取 4096 换稳定；max_tokens 只是上限、按实际用量计费，
-   * 抬高上限不额外花钱，且 <= 4096 是 test_engine.js 既有的防过度放大红线。 */
-  const FOLLOWUP_MAX_TOKENS = 4096;
+  /* 预算唯一真源见 llm-config.js；这里保留同名别名，请求体只引用常量、不写裸数字。
+   * 实测依据（探索/追问的 token 长尾）也已搬到 llm-config.js 对应字段旁。 */
+  const EXPLAIN_MAX_TOKENS = CFG ? CFG.maxTokens.explain : null;   // 三步讲解（prompt/hint/reveal 的 JSON）
+  const FOLLOWUP_MAX_TOKENS = CFG ? CFG.maxTokens.followup : null;
 
   const cache = new Map();   // qid -> {ts, steps, from}
 
@@ -187,6 +186,8 @@
   }
 
   function llmAsk(topic, q, userAnswer, steps, question, labDesc) {
+    /* 配置没加载就按离线处理：不把 null 传给 fetch（那会变成 TypeError） */
+    if (!CFG) return Promise.reject(new Error('LLMConfig 未加载（llm-config.js 没引入）'));
     const body = {
       model: MODEL,
       messages: [
@@ -253,6 +254,8 @@
   }
 
   async function llmSteps(topic, q, userAnswer, labDesc) {
+    /* 配置没加载就按离线处理：由 generate 回退静态讲解 */
+    if (!CFG) throw new Error('LLMConfig 未加载（llm-config.js 没引入）');
     const body = {
       model: MODEL,
       messages: [
