@@ -11,7 +11,7 @@
   - 改了缓存清单，或数据结构有不兼容的变化，把 `sw.js` 里的 `VERSION` 加一，旧缓存会在激活时删掉。
   - 新增页面或脚本时，要把它加进 `sw.js` 的 `SHELL` 列表才会离线可用。
 - 每个页面的 `<head>` 有 manifest、apple-touch-icon、theme-color；页尾加载 `assets/stats-config.js`、`assets/stats.js`、`assets/pwa.js`。service worker 只在 https 或 localhost 下注册。
-- 部署：`scripts/deploy-cf.sh` 已把 `sw.js`、`manifest.webmanifest`、`children/` 打进部署包。
+- 部署：本 fork 走 GitHub Pages，`sw.js`、`manifest.webmanifest`、`children/` 都在仓库里，推送仓库即发布，无需打包。
 
 ### 添加到桌面的提示（`assets/pwa.js`）
 

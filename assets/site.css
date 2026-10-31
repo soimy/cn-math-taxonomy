@@ -430,20 +430,7 @@ body:not(.page-explore) .site-header {
   font-weight: 750;
 }
 .nav-link.subject-link.on:hover { background: var(--brand); color: var(--on-brand); }
-.nav-link.resource-search-btn {
-  gap: 6px;
-  border: 1px solid var(--brand);
-  background: transparent;
-  color: var(--brand-strong);
-  margin-left: 6px;
-  text-decoration: none;
-}
-.nav-link.resource-search-btn:hover { background: var(--brand-soft); color: var(--brand-strong); }
-.resource-search-ico { width: 14px; height: 14px; flex: none; }
-.resource-search-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 @media (max-width: 720px) {
-  .nav-link.resource-search-btn { margin-left: 0; padding: 0 9px; min-height: 36px; }
-  .resource-search-ico { display: none; }
   .site-header { padding: 10px 14px 8px; gap: 4px 12px; }
   .brand { gap: 10px; min-height: 44px; }
   .logo { width: 34px; height: 34px; }
