@@ -1038,7 +1038,7 @@
    */
 
   var PROXY = 'http://127.0.0.1:3000/v1/chat/completions';
-  var MODEL = 'DeepSeek-V4-Flash-0731-Unlimited';
+  var MODEL = 'DeepSeek-V4.1-Flash-1017-Unlimited';
   var MAX_TOKENS = 1600;      /* ≥1200：网关把 reasoning 算进预算 */
   var TIMEOUT_MS = 60000;
   var POOL_IN_PROMPT = 120;   /* 候选池太大时只喂前 N 个（域内已按年级/章节排序） */

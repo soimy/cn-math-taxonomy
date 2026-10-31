@@ -17,6 +17,8 @@
  *                          assets/site.css 不得再出现 .resource-search-* 规则
  *   (f) 分享导流        —— PWA 图文字与分享二维码链接必须指向本站 GitHub Pages
  *   (g) 儿童智商测试卡  —— index.html 不得再出现 a.iq-card
+ *   (h) 全站 LLM 模型    —— diagnose/*.js 里所有 MODEL 赋值必须等于同一个型号
+ *                          （型号失效会静默让整层功能 fail-closed，见 docs/fork-divergences.md）
  *
  * 加白/加例外都要改本文件顶部的数组：改代码、看得见、走 review。
  *
@@ -343,6 +345,47 @@ test('(f) ' + SHARE_JS + ' 的 SHARE_URL 指向 ' + SITE_HOST_TEXT, function () 
     SHARE_JS + ' 的 SHARE_URL 指向了 ' + url.host + '（分享二维码不该导流到上游生产站，见 docs/fork-divergences.md 第 6 条）');
   assert.ok(url.pathname.indexOf('/cn-math-taxonomy') === 0,
     SHARE_JS + ' 的 SHARE_URL 路径是 ' + url.pathname + '，应指向 /cn-math-taxonomy（本站 GitHub Pages 子路径）');
+});
+
+/* ------------------------------------------------------------------ *
+ * (h) 全站 LLM 模型型号一致（防漂移）
+ * ------------------------------------------------------------------ */
+
+/** 全站约定：diagnose/*.js 里所有 `MODEL = '<型号>'` 都必须是这一个。 */
+const SITE_MODEL = 'DeepSeek-V4.1-Flash-1017-Unlimited';
+
+/**
+ * 扫描 diagnose/*.js 里的 `MODEL = '<型号>'` 赋值。
+ * @returns {{file: string, model: string}[]} 每处赋值一条（一个文件里多处也各算一条）
+ */
+function siteModelAssignments() {
+  const out = [];
+  const dir = path.join(ROOT, 'diagnose');
+  for (const name of fs.readdirSync(dir).sort()) {
+    if (!name.endsWith('.js')) continue;
+    const rel = 'diagnose/' + name;
+    const text = read(rel);
+    const re = /\bMODEL\s*=\s*'([^']*)'/g;
+    let m;
+    while ((m = re.exec(text)) !== null) out.push({ file: rel, model: m[1] });
+  }
+  return out;
+}
+
+test('(h) 扫描器确实扫到了 4 个文件里的 MODEL 赋值（防止正则失效导致永远为绿）', function () {
+  const found = siteModelAssignments();
+  const files = new Set(found.map(function (x) { return x.file; }));
+  /* 现状：explain / labmatch / llm-gateway / route 各一处。上游新增调用链要连带更新本断言。 */
+  assert.ok(found.length >= 4,
+    'diagnose/*.js 里只扫到 ' + found.length + ' 处 MODEL 赋值（' + Array.from(files).join('、')
+    + '），应有至少 4 处；是正则失效了，还是调用链被删了？');
+});
+
+test('(h) diagnose/*.js 的 MODEL 全部等于全站约定 ' + SITE_MODEL, function () {
+  const bad = siteModelAssignments().filter(function (x) { return x.model !== SITE_MODEL; });
+  assert.strictEqual(bad.length, 0, bad.map(function (x) {
+    return x.file + ' 的 MODEL 与全站约定不一致（应为 ' + SITE_MODEL + '）—— 见 docs/fork-divergences.md';
+  }).join('\n'));
 });
 
 /* ------------------------------------------------------------------ *

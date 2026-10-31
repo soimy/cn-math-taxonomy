@@ -44,7 +44,7 @@
 
   var PROXY = 'http://127.0.0.1:3000/v1/chat/completions';
 
-  var MODEL = 'DeepSeek-V4-Flash-0731-Unlimited';
+  var MODEL = 'DeepSeek-V4.1-Flash-1017-Unlimited';
 
   var TIMEOUT_MS = 10000;
 

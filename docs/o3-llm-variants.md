@@ -357,7 +357,7 @@ JSON 输出格式是第一道防线：
 
 ```js
 {
-  model: 'DeepSeek-V4-Flash-0731-Unlimited',  // 与 explain.js 同款
+  model: 'DeepSeek-V4.1-Flash-1017-Unlimited',  // 与 explain.js 同款
   messages: [
     { role: 'system', content: systemPrompt() },
     { role: 'user', content: userPrompt(difficulty) }
