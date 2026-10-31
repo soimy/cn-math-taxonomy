@@ -1,4 +1,4 @@
-/* 中小学数学知识图谱：全站配色、字号、导航。浏览页与诊断页共用。 */
+/* 中小学·高中知识图谱：全站配色、字号、导航。浏览页与诊断页共用。 */
 
 :root {
   color-scheme: light;
@@ -62,6 +62,17 @@
   --diagram-edge: #64748b;
 }
 
+body.subject-physics {
+  --brand: #b45309;
+  --brand-strong: #92400e;
+  --brand-soft: #fff7ed;
+  --on-brand: #ffffff;
+  --focus: #b45309;
+  --accent: #b45309;
+  --logo-sheet: #fde9d4;
+  --logo-fold: #ffffff;
+}
+
 body.subject-english {
   --brand: #4338ca;
   --brand-strong: #3730a3;
@@ -70,6 +81,61 @@ body.subject-english {
   --focus: #4338ca;
   --accent: #4338ca;
   --logo-sheet: #e6e8fb;
+  --logo-fold: #ffffff;
+}
+
+body.subject-science {
+  --brand: #047857;
+  --brand-strong: #065f46;
+  --brand-soft: #ecfdf5;
+  --on-brand: #ffffff;
+  --focus: #047857;
+  --accent: #047857;
+  --logo-sheet: #d1fae5;
+  --logo-fold: #ffffff;
+}
+
+body.subject-chinese {
+  --brand: #9f1239;
+  --brand-strong: #881337;
+  --brand-soft: #fff1f2;
+  --on-brand: #ffffff;
+  --focus: #9f1239;
+  --accent: #9f1239;
+  --logo-sheet: #ffe4e6;
+  --logo-fold: #ffffff;
+}
+
+body.subject-morality {
+  --brand: #c2410c;
+  --brand-strong: #9a3412;
+  --brand-soft: #fff7ed;
+  --on-brand: #ffffff;
+  --focus: #c2410c;
+  --accent: #c2410c;
+  --logo-sheet: #ffedd5;
+  --logo-fold: #ffffff;
+}
+
+body.subject-history {
+  --brand: #6b5344;
+  --brand-strong: #4a382c;
+  --brand-soft: #f6f1ea;
+  --on-brand: #ffffff;
+  --focus: #6b5344;
+  --accent: #6b5344;
+  --logo-sheet: #efe4d6;
+  --logo-fold: #ffffff;
+}
+
+body.subject-geography {
+  --brand: #0e7490;
+  --brand-strong: #155e75;
+  --brand-soft: #ecfeff;
+  --on-brand: #ffffff;
+  --focus: #0e7490;
+  --accent: #0e7490;
+  --logo-sheet: #cffafe;
   --logo-fold: #ffffff;
 }
 
@@ -131,6 +197,16 @@ body.subject-english {
     --diagram-text: #f8fafc;
     --diagram-edge: #94a3b8;
   }
+  body.subject-physics {
+    --brand: #fdba74;
+    --brand-strong: #fed7aa;
+    --brand-soft: #7c2d12;
+    --on-brand: #431407;
+    --focus: #fed7aa;
+    --accent: #fdba74;
+    --logo-sheet: #6b2f12;
+    --logo-fold: #8a4218;
+  }
   body.subject-english {
     --brand: #a5b4fc;
     --brand-strong: #c7d2fe;
@@ -140,6 +216,56 @@ body.subject-english {
     --accent: #a5b4fc;
     --logo-sheet: #2a2870;
     --logo-fold: #3c3a96;
+  }
+  body.subject-science {
+    --brand: #6ee7b7;
+    --brand-strong: #a7f3d0;
+    --brand-soft: #064e3b;
+    --on-brand: #022c22;
+    --focus: #a7f3d0;
+    --accent: #6ee7b7;
+    --logo-sheet: #065f46;
+    --logo-fold: #047857;
+  }
+  body.subject-chinese {
+    --brand: #fda4af;
+    --brand-strong: #fecdd3;
+    --brand-soft: #881337;
+    --on-brand: #4c0519;
+    --focus: #fecdd3;
+    --accent: #fda4af;
+    --logo-sheet: #6b1230;
+    --logo-fold: #9f1239;
+  }
+  body.subject-morality {
+    --brand: #fdba74;
+    --brand-strong: #fed7aa;
+    --brand-soft: #7c2d12;
+    --on-brand: #431407;
+    --focus: #fed7aa;
+    --accent: #fdba74;
+    --logo-sheet: #9a3412;
+    --logo-fold: #c2410c;
+  }
+  body.subject-history {
+    --brand: #d6c3ad;
+    --brand-strong: #e7d7c6;
+    --brand-soft: #3f3228;
+    --on-brand: #2a211b;
+    --focus: #e7d7c6;
+    --accent: #d6c3ad;
+    --logo-sheet: #4a382c;
+    --logo-fold: #6b5344;
+  }
+  body.subject-geography {
+    --brand: #67e8f9;
+    --brand-strong: #a5f3fc;
+    --brand-soft: #164e63;
+    --on-brand: #083344;
+    --focus: #a5f3fc;
+    --accent: #67e8f9;
+    --logo-sheet: #155e75;
+    --logo-fold: #0e7490;
   }
 }
 
@@ -304,7 +430,20 @@ body:not(.page-explore) .site-header {
   font-weight: 750;
 }
 .nav-link.subject-link.on:hover { background: var(--brand); color: var(--on-brand); }
+.nav-link.resource-search-btn {
+  gap: 6px;
+  border: 1px solid var(--brand);
+  background: transparent;
+  color: var(--brand-strong);
+  margin-left: 6px;
+  text-decoration: none;
+}
+.nav-link.resource-search-btn:hover { background: var(--brand-soft); color: var(--brand-strong); }
+.resource-search-ico { width: 14px; height: 14px; flex: none; }
+.resource-search-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 @media (max-width: 720px) {
+  .nav-link.resource-search-btn { margin-left: 0; padding: 0 9px; min-height: 36px; }
+  .resource-search-ico { display: none; }
   .site-header { padding: 10px 14px 8px; gap: 4px 12px; }
   .brand { gap: 10px; min-height: 44px; }
   .logo { width: 34px; height: 34px; }
@@ -521,3 +660,16 @@ a.grade-card strong { font-size: 1.08rem; letter-spacing: -0.02em; }
   .stat-grid { grid-template-columns: 1fr 1fr; }
   .hero { padding: 22px 16px 18px; }
 }
+
+
+/* 首页本机盲区汇总 */
+.blind-home { margin: 28px 0 8px; }
+.blind-home-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.blind-home-item {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 12px;
+  padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--card, #fff);
+}
+.blind-home-name { font-weight: 800; color: var(--brand-strong); text-decoration: none; overflow-wrap: anywhere; }
+.blind-home-name:hover { text-decoration: underline; }
+.blind-home-meta { color: var(--muted); font-size: 0.9rem; }
+.blind-home-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }

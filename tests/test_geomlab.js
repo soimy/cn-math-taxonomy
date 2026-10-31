@@ -244,8 +244,11 @@ test('挡下·问个数：cnm_260_q2「公共点有几个」→ asks-count', fun
 test('挡下·取值/最值：cnm_250_q3「长度有几种可能的取值」→ asks-count', function () {
   assert.strictEqual(gateOf('cnm_250_q3').reason, 'asks-count');
 });
-test('挡下·纯算式伪装：cnm_p122_q3「计算：3＋3＝？」→ pure-arithmetic', function () {
-  assert.strictEqual(gateOf('cnm_p122_q3').reason, 'pure-arithmetic');
+test('挡下·纯算式：cnm_p243_q1「计算：3/8＋1/8＝？」→ pure-arithmetic', function () {
+  /* 上游 dc764bd 换了 cnm_p122_q3 的题面，原断言作废：原意是「等腰三角形知识点里
+     那道纯算式伪装题（计算：3＋3＝？）应被 pure-arithmetic 挡下」；上游把该题改成了
+     等边三角形选择题，故换同一条 RE_PURE_CALC 规则的纯算式真题继续锁门禁 */
+  assert.strictEqual(gateOf('cnm_p243_q1').reason, 'pure-arithmetic');
 });
 test('挡下·实景应用：cnm_274_q1 影长求旗杆高 → applied-model', function () {
   assert.strictEqual(gateOf('cnm_274_q1').reason, 'applied-model');

@@ -9,11 +9,12 @@ export CLOUDFLARE_ACCOUNT_ID="$ACCOUNT_ID"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-/tmp/xdg-cache}"
 mkdir -p "$XDG_CACHE_HOME" "$DIST/data"
 
-cp "$ROOT/index.html" "$DIST/"
+cp "$ROOT/index.html" "$ROOT/sw.js" "$ROOT/manifest.webmanifest" "$DIST/"
 [[ -f "$ROOT/.nojekyll" ]] && cp "$ROOT/.nojekyll" "$DIST/"
 cp -a "$ROOT/assets" "$DIST/"
 cp -a "$ROOT/explore" "$DIST/"
 cp -a "$ROOT/diagnose" "$DIST/"
+cp -a "$ROOT/children" "$DIST/"
 rm -f "$DIST/diagnose/README.md"
 cp "$ROOT/data/topics.json" \
    "$ROOT/data/dependencies.json" \

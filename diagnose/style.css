@@ -111,9 +111,9 @@ button.choice.picked { border-color: var(--brand); background: var(--brand-soft)
 .tag.ext { background: var(--junior-soft); color: var(--text); }
 .tag.diff-basic { background: var(--ok-bg); color: var(--ok); }
 .tag.diff-standard { background: var(--junior-soft); color: var(--text); }
-.tag.diff-advanced { background: #fae8ff; color: #86198f; }
+.tag.diff-challenge, .tag.diff-advanced { background: #fae8ff; color: #86198f; }
 @media (prefers-color-scheme: dark) {
-  .tag.diff-advanced { background: #581c87; color: #f5d0fe; }
+  .tag.diff-challenge, .tag.diff-advanced { background: #581c87; color: #f5d0fe; }
 }
 
 .stats { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
@@ -381,3 +381,9 @@ table.log select { min-height: 44px; }
 .route-back { margin-bottom: 10px; }
 .route-back a { color: var(--brand); font-weight: 700; text-decoration: none; }
 .route-back a:hover { text-decoration: underline; }
+
+/* 盲区再测 */
+.blind-list { list-style: none; margin: 8px 0 0; padding: 0; }
+.blind-item { padding: 8px 0; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+.blind-name { font-weight: 700; }
+.blind-retest { font-weight: 700; white-space: nowrap; }

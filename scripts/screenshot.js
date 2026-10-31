@@ -50,6 +50,69 @@ const N_EDGES = String(DEP_ROWS.filter((d) => String(d.topicId).startsWith('cnm_
 const N_QUESTIONS = String(QUESTION_ROWS.filter((q) => String(q.topicId).startsWith('cnm_')).length);
 const N_STANDARDS = String(STD_ITEMS.filter((it) => String(it.id).startsWith('cms-')).length);
 const N_GRADE_CARDS = 14;
+const TOP_BANNER_EXPR = `(() => {
+  const a = document.querySelector('a.top-banner');
+  if (!a) return 'missing';
+  const rel = (a.getAttribute('rel') || '').split(/\\s+/);
+  const text = (a.textContent || '').replace(/\\s+/g, ' ').trim();
+  if (a.getAttribute('href') !== 'https://test.pansgo.com/?from=math-top') return 'href';
+  if (a.target !== '_blank') return 'target';
+  if (rel.indexOf('noopener') < 0) return 'rel';
+  if (text !== '🧠 儿童智商测试') return 'text:' + text;
+  const header = document.querySelector('.site-header');
+  if (!header || (a.compareDocumentPosition(header) & Node.DOCUMENT_POSITION_PRECEDING)) return 'order';
+  const ar = a.getBoundingClientRect();
+  const hr = header.getBoundingClientRect();
+  if (ar.top > 1) return 'not-top:' + Math.round(ar.top);
+  if (ar.bottom > hr.top + 1) return 'overlap-nav';
+  const cs = getComputedStyle(a);
+  const lh = parseFloat(cs.lineHeight);
+  const range = document.createRange();
+  range.selectNodeContents(a);
+  const rh = range.getBoundingClientRect().height;
+  if (!(lh > 0) || rh > lh * 1.45) return 'wrap:' + Math.round(rh) + '/' + lh;
+  const probe = document.createElement('span');
+  probe.textContent = a.textContent;
+  probe.style.cssText = 'position:absolute;left:0;top:0;visibility:hidden;white-space:nowrap;font:' + cs.font;
+  document.body.appendChild(probe);
+  const textW = probe.getBoundingClientRect().width;
+  probe.remove();
+  const innerW = a.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  if (textW > innerW + 1) return 'clip:' + Math.round(textW) + '/' + Math.round(innerW);
+  const navLinks = document.querySelectorAll('.site-nav a');
+  for (let i = 0; i < navLinks.length; i++) {
+    if (navLinks[i].getBoundingClientRect().height + 0.5 < 44) return 'nav-short';
+  }
+  const card = document.querySelector('a.iq-card');
+  if (card && card.getAttribute('href') !== 'https://test.pansgo.com/?from=math-home') return 'card-href';
+  return 'ok';
+})()`;
+const IQ_HOME_EXPR = `(() => {
+  const a = document.querySelector('a.iq-card');
+  if (!a) return 'missing';
+  const rel = (a.getAttribute('rel') || '').split(/\\s+/);
+  const text = a.textContent || '';
+  if (a.getAttribute('href') !== 'https://test.pansgo.com/?from=math-home') return 'href';
+  if (a.target !== '_blank') return 'target';
+  if (rel.indexOf('noopener') < 0) return 'rel';
+  if (text.indexOf('儿童智商测试') < 0 || text.indexOf('找规律 · 补图案 · 空间想象') < 0 || text.indexOf('趣味测评，与数学诊断无关') < 0) return 'text';
+  if (text.indexOf('免费') >= 0 || text.indexOf('分钟') >= 0) return 'promo';
+  return 'ok';
+})()`;
+const IQ_RESULT_EXPR = `(() => {
+  const line = document.getElementById('iq-line');
+  const a = line && line.querySelector('a');
+  if (!line || !a) return 'missing';
+  const page = document.getElementById('root') && document.getElementById('root').lastElementChild;
+  if (!page || page.lastElementChild !== line) return 'not-last';
+  if (a.getAttribute('href') !== 'https://test.pansgo.com/?from=math-result') return 'href';
+  if (a.target !== '_blank') return 'target';
+  if ((a.getAttribute('rel') || '').split(/\\s+/).indexOf('noopener') < 0) return 'rel';
+  const compact = (line.textContent || '').replace(/\\s+/g, '');
+  if (compact !== '做完数学诊断，再测测思维能力？→儿童智商测试') return 'text:' + compact;
+  if (a.textContent !== '儿童智商测试') return 'link-text';
+  return 'ok';
+})()`;
 const DERIVE = TOPIC_ROWS.find((t) => t.name === '导数的概念' && t.grade === 13);
 const GRAPH = E.buildGraph(readJson('topics.json'), readJson('dependencies.json'), readJson('questions.json'));
 function seedFor(topicId, pred) {
@@ -501,8 +564,10 @@ async function main() {
     check((await evalJs('document.querySelector("#explain").textContent')).includes(ch.q.explanation), '自动判题后也显示解析');
     check((await evalJs('document.querySelector(".refans").textContent')).includes(ch.q.answer + '.'), '显示参考答案（含选项文字）');
     await click('#btn-flip');
-    await waitFor(() => exists('#summary'), '改判为对后目标即掌握，直接到结果页');
-    check((await evalJs('JSON.parse(localStorage.getItem("cnmDiagnose.session.v2")).answers[0].result')) === 'correct', '「判错了，我其实做对了」可更正为对（目标掌握，结果页无需补课）');
+    // 默认每知识点需连续答对 3 题才掌握：改判为对后继续本知识点下一题，而不是直接结束
+    await waitFor(() => evalJs('!!document.querySelector(".q-text") && !document.querySelector("#summary")'), '改判为对后继续本知识点下一题');
+    check((await evalJs('JSON.parse(localStorage.getItem("cnmDiagnose.session.v2")).answers[0].result')) === 'correct', '「判错了，我其实做对了」可更正为对');
+    check((await evalJs('Array.from(document.querySelectorAll(".tag")).some(e => /本知识点第 2/.test(e.textContent))')), '改判为对后进入本知识点第 2 题');
 
     // 找一个答案是分数 / 负数的数值题，用全角写法作答
     let nu = null, nuTopic = null;
@@ -890,7 +955,7 @@ async function main() {
     check(mathUi.download && mathUi.downloadName === '知识图谱诊断分享.png', '1280 宽显示下载图片');
     check(!mathUi.hint, '1280 宽不提示长按保存');
     const mathModel = await evalJs('window.__shareModel');
-    check(mathModel && mathModel.siteName === '中小学知识图谱' && mathModel.subject === '数学' && String(mathModel.scope).indexOf('五年级上册') >= 0 && mathModel.spotKind === 'chapter', '数学分享范围是五年级上册（' + JSON.stringify(mathModel && { scope: mathModel.scope, subject: mathModel.subject, spotKind: mathModel.spotKind }) + '）');
+    check(mathModel && mathModel.siteName === '中小学·高中知识图谱' && mathModel.subject === '数学' && String(mathModel.scope).indexOf('五年级上册') >= 0 && mathModel.spotKind === 'chapter', '数学分享范围是五年级上册（' + JSON.stringify(mathModel && { scope: mathModel.scope, subject: mathModel.subject, spotKind: mathModel.spotKind }) + '）');
     check(mathModel && mathModel.spots.length >= 1 && mathModel.spots.length <= 3, '数学分享列出 1–3 个章节');
     check(mathModel && mathModel.roots.length >= 1 && mathModel.roots.length <= 2, '数学分享有 1–2 个根因');
     check(JSON.stringify(mathModel).indexOf('付费') < 0 && JSON.stringify(mathModel).indexOf('姓名') < 0, '分享内容不含付费或姓名');
