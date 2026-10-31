@@ -112,8 +112,8 @@ diagnose/engine.js    核心算法与判题（纯函数，浏览器 / Node 通�
 diagnose/app.js       界面：数据加载、开始页 / 出题页 / 结果页、Cytoscape 路径图、localStorage、导出、打印
 diagnose/style.css    诊断页布局（含 @media print）；配色和导航在 ../assets/site.css
 tests/test_engine.js  Node 测试（无依赖）：node tests/test_engine.js
-scripts/screenshot.js 无头 Chrome 冒烟测试 + 截图：node scripts/screenshot.js
-screenshots/          诊断流程 01–05，首页 / 图谱 / 窄屏 06–16，全部祖先与长名称 17–20，高中 21–27，选择性必修 28–31，小学英语 32–35，分享图 38–40，初中英语 43–46，高中英语 51–54
+scripts/screenshot.js 无头 Chrome 冒烟测试 + 截图：node scripts/screenshot.js（默认写 .cache/screenshots/，已 gitignore）
+screenshots/          文档嵌入的 14 张稳定快照：诊断结果 03，首页 06，图谱 07 / 21 / 28 / 43 / 51，诊断 23 / 30 / 45 / 53，分享图 38 / 39 / 40。刷新需 SHOTS_OUT=screenshots node scripts/screenshot.js 并人工确认 diff
 data/questions.json   题库（6159 题：数学 3355 + 英语 2804，见 docs/questions.md）
 ```
 

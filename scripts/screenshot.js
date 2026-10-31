@@ -8,7 +8,7 @@
  *      刷新验证存档、一路答到结果页、导出 JSON、生成 PDF；
  *      再用固定 seed 分别测选择题（点选项）和数值题（输入答案）的自动判题与解析显示；全程监听 console 错误；
  *   2) 用 ?target=cnm_219&demo=1 的演示模式（掌握 / 不稳 / 薄弱 三种状态都会出现）截
- *      screenshots/01-start.png、02-question.png、03-result.png、04-graph.png，
+ *      01-start.png、02-question.png、03-result.png、04-graph.png，
  *      并截答题后显示解析的 05-explanation.png（1280×900）；
  *   3) 首页、知识图谱（cnm_221 / cnm_p001 / cnm_ext_002，以及根路径 #cnm_219）在 1280 与 375 宽下
  *      检查局部图、无横向溢出、无外网脚本/样式/字体/图片请求，并截 06–16；
@@ -19,7 +19,10 @@
  *      小学英语图谱与四年级上册诊断截 32–35。初中英语「现在完成时」截 43–44，
  *      八年级上册英语整册诊断截 45–46。高中英语「虚拟语气」截 51–52，
  *      选择性必修第一册英语整册诊断截 53–54。
- * 环境变量：CHROME=/path/to/chrome  PORT=8765  DEBUG_PORT=9333
+ *   输出目录默认在仓库根 .cache/ 下（gitignore，跑冒烟不会弄脏工作区）。
+ * 环境变量：CHROME=/path/to/chrome  PORT=8765  DEBUG_PORT=9333  SHOTS_OUT=目录
+ *   SHOTS_OUT=screenshots 才会写进仓库里的 screenshots/：那是 README 引用的 14 张稳定快照，
+ *   只在人工确认 diff 后手工刷新。
  */
 'use strict';
 const { spawn } = require('child_process');
@@ -34,7 +37,7 @@ const jsQR = require('./vendor/jsQR.js');
 const SHARE_URL = 'https://xuxiong.github.io/cn-math-taxonomy/?from=share';
 
 const ROOT = path.join(__dirname, '..');
-const OUT = path.join(ROOT, 'screenshots');
+const OUT = process.env.SHOTS_OUT ? path.resolve(ROOT, process.env.SHOTS_OUT) : path.join(ROOT, '.cache', 'screenshots');
 const PORT = parseInt(process.env.PORT || '8765', 10);
 const DEBUG_PORT = parseInt(process.env.DEBUG_PORT || '9333', 10);
 const BASE = 'http://127.0.0.1:' + PORT;
@@ -260,6 +263,7 @@ class CDP {
 
 async function main() {
   fs.mkdirSync(OUT, { recursive: true });
+  console.log('输出目录: ' + OUT + (process.env.SHOTS_OUT ? '' : '（要刷新仓库里的截图，用 SHOTS_OUT=screenshots）'));
   const chromePath = findChrome();
   const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'cnm-chrome-'));
   const server = spawn('python3', ['-m', 'http.server', String(PORT), '--bind', '127.0.0.1'], { cwd: ROOT, stdio: 'ignore' });
@@ -322,7 +326,7 @@ async function main() {
       const y = selector ? await evalJs('Math.max(0, document.querySelector(' + JSON.stringify(selector) + ').getBoundingClientRect().top + window.scrollY - 12)') : 0;
       const r = await cdp.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: beyond, clip: { x: 0, y: beyond ? y : 0, width: viewW, height: clipH || viewH, scale: 1 } });
       fs.writeFileSync(path.join(OUT, file), Buffer.from(r.data, 'base64'));
-      console.log('  截图 screenshots/' + file);
+      console.log('  截图 ' + path.relative(ROOT, path.join(OUT, file)));
     };
     const overflowOf = () => evalJs('(() => { const doc = document.documentElement; const sw = Math.max(doc.scrollWidth, document.body ? document.body.scrollWidth : 0); return { sw: sw, cw: doc.clientWidth, ok: sw <= doc.clientWidth + 1 }; })()');
     const assetsOf = () => evalJs(LOCAL_ASSET_EXPR);
@@ -906,7 +910,7 @@ async function main() {
         return btoa(binary);
       })()`);
       fs.writeFileSync(path.join(OUT, file), Buffer.from(b64, 'base64'));
-      console.log('  分享图 screenshots/' + file);
+      console.log('  分享图 ' + path.relative(ROOT, path.join(OUT, file)));
     };
     const assertSharePng = (file) => {
       const img = pngRgba(path.join(OUT, file));
