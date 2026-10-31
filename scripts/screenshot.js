@@ -3,7 +3,7 @@
  *
  *   node scripts/screenshot.js
  *
- * 做的事：起一个 python3 http.server，启动系统 Chrome（headless），
+ * 做的事：起仓库自己的 scripts/serve.js（同源反代 /v1，页面不再跨域直连网关），启动系统 Chrome（headless），
  *   1) 打开 /diagnose/，选目标、「不会」→ 苏格拉底三步引导 →「明白了，下一题」出第二题 → 判薄弱 → 回溯先修、
  *      刷新验证存档、一路答到结果页、导出 JSON、生成 PDF；
  *      再用固定 seed 分别测选择题（点选项）和数值题（输入答案）的自动判题与解析显示；全程监听 console 错误；
@@ -266,7 +266,9 @@ async function main() {
   console.log('输出目录: ' + OUT + (process.env.SHOTS_OUT ? '' : '（要刷新仓库里的截图，用 SHOTS_OUT=screenshots）'));
   const chromePath = findChrome();
   const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'cnm-chrome-'));
-  const server = spawn('python3', ['-m', 'http.server', String(PORT), '--bind', '127.0.0.1'], { cwd: ROOT, stdio: 'ignore' });
+  /* 必须用仓库自己的 serve.js：页面已改走同源 /v1，python http.server 没有反代会 404。
+   * serve.js 同样只监听 127.0.0.1、同样服务 ROOT。 */
+  const server = spawn(process.execPath, [path.join(__dirname, 'serve.js'), String(PORT), ROOT], { cwd: ROOT, stdio: 'ignore' });
   const chrome = spawn(chromePath, [
     '--headless=new', '--remote-debugging-port=' + DEBUG_PORT, '--user-data-dir=' + profile,
     '--window-size=1280,900', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
@@ -284,7 +286,7 @@ async function main() {
   let exitCode = 0;
   let dumpPage = null;
   try {
-    await waitFor(() => getJson(BASE + '/diagnose/engine.js').then(() => true, () => fetchOk(BASE + '/diagnose/engine.js')), 'http.server');
+    await waitFor(() => getJson(BASE + '/diagnose/engine.js').then(() => true, () => fetchOk(BASE + '/diagnose/engine.js')), 'serve.js');
     const targets = await waitFor(async () => { const l = await getJson('http://127.0.0.1:' + DEBUG_PORT + '/json/list'); return l.find((t) => t.type === 'page'); }, 'Chrome 调试端口');
     const cdp = await CDP.connect(targets.webSocketDebuggerUrl);
     cdp.on((m) => {

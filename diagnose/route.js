@@ -28,6 +28,17 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
+  /* 配置唯一真源：diagnose/llm-config.js（浏览器由 route.html 先加载，Node 直接 require） */
+  function _loadLLMConfig() {
+    if (typeof LLMConfig !== 'undefined' && LLMConfig) return LLMConfig;
+    if (typeof require === 'function') {
+      try { return require('./llm-config.js'); } catch (e) { /* 落到 fail-closed */ }
+    }
+    return null;
+  }
+
+  var CFG = _loadLLMConfig();
+
   /* ================================================================
    * 0. 数据注入
    * ================================================================ */
@@ -1033,14 +1044,14 @@
   /* ================================================================
    * 5. LLM 选择（唯一需要网关的一步）
    * ================================================================
-   * 网关：http://127.0.0.1:3000/v1/chat/completions（max_tokens ≥ 1200，网关把 reasoning 算进预算）。
+   * 网关：同源反代 /v1/chat/completions（上游地址与型号见 llm-config.js；max_tokens ≥ 1200，网关把 reasoning 算进预算）。
    * fetch 由调用方注入，本模块自己不碰网络，保证 Node 测试不需要网关。
    */
 
-  var PROXY = 'http://127.0.0.1:3000/v1/chat/completions';
-  var MODEL = 'DeepSeek-V4.1-Flash-1017-Unlimited';
-  var MAX_TOKENS = 1600;      /* ≥1200：网关把 reasoning 算进预算 */
-  var TIMEOUT_MS = 60000;
+  var PROXY = CFG ? CFG.chatUrl() : null;
+  var MODEL = CFG ? CFG.model : null;
+  var MAX_TOKENS = CFG ? CFG.maxTokens.route : null;      /* ≥1200：网关把 reasoning 算进预算 */
+  var TIMEOUT_MS = CFG ? CFG.timeouts.route : null;
   var POOL_IN_PROMPT = 120;   /* 候选池太大时只喂前 N 个（域内已按年级/章节排序） */
 
   function buildPrompt(fields, pool) {
@@ -1101,6 +1112,10 @@
     var fetchFn = o.fetch;
     if (typeof fetchFn !== 'function') {
       return Promise.resolve({ ok: false, kind: 'offline', why: '当前环境没有 fetch，无法调用网关' });
+    }
+    /* 配置没加载：走原有离线分支，不把 null 传给 fetch / setTimeout */
+    if (!CFG) {
+      return Promise.resolve({ ok: false, kind: 'offline', why: 'LLMConfig 未加载（llm-config.js 没引入）' });
     }
     var body = {
       model: o.model || MODEL,

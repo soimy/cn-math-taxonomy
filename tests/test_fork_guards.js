@@ -17,8 +17,9 @@
  *                          assets/site.css 不得再出现 .resource-search-* 规则
  *   (f) 分享导流        —— PWA 图文字与分享二维码链接必须指向本站 GitHub Pages
  *   (g) 儿童智商测试卡  —— index.html 不得再出现 a.iq-card
- *   (h) 全站 LLM 模型    —— diagnose/*.js 里所有 MODEL 赋值必须等于同一个型号
- *                          （型号失效会静默让整层功能 fail-closed，见 docs/fork-divergences.md）
+ *   (h) LLM 配置唯一真源 —— diagnose/llm-config.js 能 require、型号正确；
+ *                          diagnose/*.js（除它）与 scripts/*.js 不得再写死网关地址/型号
+ *                          （写死会静默让整层功能 fail-closed，见 docs/fork-divergences.md）
  *
  * 加白/加例外都要改本文件顶部的数组：改代码、看得见、走 review。
  *
@@ -348,44 +349,54 @@ test('(f) ' + SHARE_JS + ' 的 SHARE_URL 指向 ' + SITE_HOST_TEXT, function () 
 });
 
 /* ------------------------------------------------------------------ *
- * (h) 全站 LLM 模型型号一致（防漂移）
+ * (h) LLM 配置唯一真源（防漂移）
  * ------------------------------------------------------------------ */
 
-/** 全站约定：diagnose/*.js 里所有 `MODEL = '<型号>'` 都必须是这一个。 */
+/** 全站约定型号：只允许写在 diagnose/llm-config.js 里。 */
 const SITE_MODEL = 'DeepSeek-V4.1-Flash-1017-Unlimited';
 
+/** 只允许出现在 diagnose/llm-config.js 的字面量（网关地址 + 型号）。 */
+const LLM_SOURCE_LITERALS = ['127.0.0.1:3000', SITE_MODEL];
+
 /**
- * 扫描 diagnose/*.js 里的 `MODEL = '<型号>'` 赋值。
- * @returns {{file: string, model: string}[]} 每处赋值一条（一个文件里多处也各算一条）
+ * 扫描某个目录顶层的 *.js（可排除一个文件名），找出仍写死 LLM 字面量的行。
+ * @param {string} dirRel 相对仓库根目录的目录名（'diagnose' / 'scripts'）
+ * @param {string|null} allowName 该目录下允许保留字面量的文件名
+ * @returns {string[]} 人话描述的违规项
  */
-function siteModelAssignments() {
+function llmLiteralOffenders(dirRel, allowName) {
   const out = [];
-  const dir = path.join(ROOT, 'diagnose');
+  const dir = path.join(ROOT, dirRel);
   for (const name of fs.readdirSync(dir).sort()) {
     if (!name.endsWith('.js')) continue;
-    const rel = 'diagnose/' + name;
+    if (allowName && name === allowName) continue;
+    const rel = dirRel + '/' + name;
     const text = read(rel);
-    const re = /\bMODEL\s*=\s*'([^']*)'/g;
-    let m;
-    while ((m = re.exec(text)) !== null) out.push({ file: rel, model: m[1] });
+    for (const lit of LLM_SOURCE_LITERALS) {
+      let idx = text.indexOf(lit);
+      while (idx !== -1) {
+        const line = text.slice(0, idx).split('\n').length;
+        out.push(rel + ':' + line + ' 仍写死了「' + lit + '」');
+        idx = text.indexOf(lit, idx + lit.length);
+      }
+    }
   }
   return out;
 }
 
-test('(h) 扫描器确实扫到了 4 个文件里的 MODEL 赋值（防止正则失效导致永远为绿）', function () {
-  const found = siteModelAssignments();
-  const files = new Set(found.map(function (x) { return x.file; }));
-  /* 现状：explain / labmatch / llm-gateway / route 各一处。上游新增调用链要连带更新本断言。 */
-  assert.ok(found.length >= 4,
-    'diagnose/*.js 里只扫到 ' + found.length + ' 处 MODEL 赋值（' + Array.from(files).join('、')
-    + '），应有至少 4 处；是正则失效了，还是调用链被删了？');
+test('(h) diagnose/llm-config.js 能 require，且型号为 ' + SITE_MODEL, function () {
+  const cfg = require(path.join(ROOT, 'diagnose', 'llm-config.js'));
+  assert.ok(cfg && typeof cfg === 'object', 'diagnose/llm-config.js 没有导出配置对象');
+  assert.strictEqual(cfg.model, SITE_MODEL,
+    'diagnose/llm-config.js 的 model 应为 ' + SITE_MODEL + '，实际是 ' + cfg.model);
 });
 
-test('(h) diagnose/*.js 的 MODEL 全部等于全站约定 ' + SITE_MODEL, function () {
-  const bad = siteModelAssignments().filter(function (x) { return x.model !== SITE_MODEL; });
-  assert.strictEqual(bad.length, 0, bad.map(function (x) {
-    return x.file + ' 的 MODEL 与全站约定不一致（应为 ' + SITE_MODEL + '）—— 见 docs/fork-divergences.md';
-  }).join('\n'));
+test('(h) 网关地址/型号字面量只允许出现在 diagnose/llm-config.js', function () {
+  const offenders = llmLiteralOffenders('diagnose', 'llm-config.js')
+    .concat(llmLiteralOffenders('scripts', null));
+  assert.deepStrictEqual(offenders, [],
+    '以下文件仍写死了网关地址或型号：\n  ' + offenders.join('\n  ')
+    + '\n请改 diagnose/llm-config.js（配置唯一真源），不要在调用方复制字面量。');
 });
 
 /* ------------------------------------------------------------------ *

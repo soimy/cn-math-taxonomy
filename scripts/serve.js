@@ -16,14 +16,19 @@
  *   node scripts/serve.js 8930         # 指定端口
  *   node scripts/serve.js 8930 docs    # 只服务 docs/（相对路径按 cwd 解析）
  *
- * 零依赖：只 require Node 标准库（http / fs / path / url）。
+ * 同源反代：/v1/* 转发到 diagnose/llm-config.js 里的 upstream（默认本机 3000 端口），
+ * 浏览器只和本服务同源通信，不再依赖网关的 CORS 头。上游连不上/超时 → 502 JSON。
+ *
+ * 零依赖：只 require Node 标准库（http / https / fs / path / url）。
  */
 'use strict';
 
 const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const fsp = fs.promises;
 const path = require('path');
+const LLMConfig = require('../diagnose/llm-config.js');
 
 /** 需要强制禁缓存的扩展名（代码与数据：改了就必须立刻生效） */
 const NO_CACHE_EXT = new Set(['.js', '.mjs', '.css', '.html', '.htm', '.json', '.map']);
@@ -85,6 +90,100 @@ function sendText(res, status, text, extra) {
   res.end(body);
 }
 
+function sendJson(res, status, obj) {
+  if (res.writableEnded || res.headersSent) return;
+  const body = Buffer.from(JSON.stringify(obj), 'utf8');
+  res.writeHead(status, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Content-Length': String(body.length),
+  });
+  res.end(body);
+}
+
+/* /v1 反代的上游超时。必须远大于 route 侧 60s：route 自己会 abort 并给出超时错误，
+ * 反代若先掐断，会把「60s 的长推理正常等待」误判成 502，也拿不到上游的真实失败原因。 */
+const PROXY_TIMEOUT_MS = 120000;
+
+/**
+ * 把 /v1/* 同源转发到 LLMConfig.upstream：method / 请求体 / 必要请求头原样过去，
+ * 响应状态码、content-type、响应体流式回写（不缓冲整个 body）。
+ * 上游连不上 / 超时 → 502 JSON；用 settled + res.headersSent 保证只回一次响应。
+ */
+function proxyV1(req, res, pathname, search) {
+  let target;
+  try {
+    target = new URL(LLMConfig.upstream + pathname + search);
+  } catch (e) {
+    sendJson(res, 502, {
+      error: 'upstream unreachable',
+      upstream: LLMConfig.upstream,
+      reason: (e && e.message) || String(e),
+    });
+    return;
+  }
+
+  let settled = false;
+  function fail(reason) {
+    if (settled) return;
+    settled = true;
+    if (res.headersSent || res.writableEnded) {
+      try { res.destroy(); } catch (e) { /* ignore */ }
+      return;
+    }
+    sendJson(res, 502, {
+      error: 'upstream unreachable',
+      upstream: LLMConfig.upstream,
+      reason: String(reason == null ? 'unknown' : reason),
+    });
+  }
+
+  const headers = {};
+  if (req.headers['content-type']) headers['content-type'] = req.headers['content-type'];
+  if (req.headers['authorization']) headers['authorization'] = req.headers['authorization'];
+  if (req.headers['content-length']) headers['content-length'] = req.headers['content-length'];
+
+  const mod = target.protocol === 'https:' ? https : http;
+  let proxyReq;
+  try {
+    proxyReq = mod.request({
+      protocol: target.protocol,
+      hostname: target.hostname,
+      port: target.port || (target.protocol === 'https:' ? 443 : 80),
+      method: req.method,
+      path: target.pathname + target.search,
+      headers: headers,
+    }, function (upRes) {
+      if (settled || res.headersSent) {
+        upRes.resume();
+        return;
+      }
+      settled = true;
+      res.writeHead(upRes.statusCode || 502, {
+        'Content-Type': upRes.headers['content-type'] || 'application/octet-stream',
+      });
+      upRes.on('error', function () {
+        try { res.destroy(); } catch (e) { /* ignore */ }
+      });
+      upRes.pipe(res);
+    });
+  } catch (e) {
+    fail((e && e.code) || (e && e.message) || e);
+    return;
+  }
+
+  proxyReq.setTimeout(PROXY_TIMEOUT_MS, function () {
+    fail('ETIMEDOUT');
+    try { proxyReq.destroy(); } catch (e) { /* ignore */ }
+  });
+  proxyReq.on('error', function (err) {
+    fail((err && err.code) || (err && err.message) || err);
+  });
+  req.on('error', function (err) {
+    fail((err && err.code) || (err && err.message) || err);
+  });
+  req.pipe(proxyReq);
+}
+
 /**
  * 把 URL 里的 pathname 映射成磁盘绝对路径，并做越界检查。
  * 返回 { ok: true, filePath, isDir } 或 { ok: false, status, message }。
@@ -120,11 +219,20 @@ function createServer(options) {
 
   const server = http.createServer(function (req, res) {
     let pathname = '/';
+    let search = '';
     try {
       // 用完整 URL 拼一个假 origin，避免 req.url 是绝对形式时解析失败
-      pathname = new URL(req.url, 'http://localhost').pathname;
+      const u = new URL(req.url, 'http://localhost');
+      pathname = u.pathname;
+      search = u.search;
     } catch (e) {
       sendText(res, 400, '400 Bad Request');
+      return;
+    }
+
+    /* /v1/* 同源反代必须在方法白名单之前：POST /v1/chat/completions 不能被 405 挡住 */
+    if (pathname.indexOf('/v1/') === 0) {
+      proxyV1(req, res, pathname, search);
       return;
     }
 

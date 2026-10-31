@@ -2664,10 +2664,16 @@ test('单一出处：explain.js 内 max_tokens 字面量只出现在常量定义
   assert.deepStrictEqual(offenders, [], '存在裸数字 max_tokens 字面量:\n' + offenders.join('\n'));
 });
 
-test('单一出处：explain.js 定义 EXPLAIN_MAX_TOKENS=2048 与 FOLLOWUP_MAX_TOKENS=4096', () => {
+test('单一出处：llm-config.js 定义 explain=2048 / followup=4096，explain.js 从配置取值', () => {
+  /* 配置唯一真源搬到 llm-config.js，所以断言从扫字面量改成读配置值，防漂移目的不变。 */
+  const cfg = require('../diagnose/llm-config.js');
+  assert.strictEqual(cfg.maxTokens.explain, 2048, 'llm-config.js 的 maxTokens.explain 应为 2048');
+  assert.strictEqual(cfg.maxTokens.followup, 4096, 'llm-config.js 的 maxTokens.followup 应为 4096（防止回落到 1024 —— 实测 content 为空）');
   const src = fsExplain.readFileSync(path.join(__dirname, '..', 'diagnose', 'explain.js'), 'utf8');
-  assert.ok(/const\s+EXPLAIN_MAX_TOKENS\s*=\s*2048\s*;/.test(src), '应定义 EXPLAIN_MAX_TOKENS = 2048');
-  assert.ok(/const\s+FOLLOWUP_MAX_TOKENS\s*=\s*4096\s*;/.test(src), '应定义 FOLLOWUP_MAX_TOKENS = 4096（防止回落到 1024 —— 实测 content 为空）');
+  assert.ok(/EXPLAIN_MAX_TOKENS\s*=\s*CFG\s*\?\s*CFG\.maxTokens\.explain/.test(src),
+    'explain.js 的 EXPLAIN_MAX_TOKENS 应从 LLMConfig 取值（配置唯一真源）');
+  assert.ok(/FOLLOWUP_MAX_TOKENS\s*=\s*CFG\s*\?\s*CFG\.maxTokens\.followup/.test(src),
+    'explain.js 的 FOLLOWUP_MAX_TOKENS 应从 LLMConfig 取值（配置唯一真源）');
 });
 
 /* ============================================ 函数实验室 fromPrompt 解析 */

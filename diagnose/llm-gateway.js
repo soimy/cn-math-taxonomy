@@ -5,6 +5,7 @@
  *   - 请求：postOnce（带超时，返回响应 JSON 或 null）
  *   - 工具自验（§2.4 效率层）：TOOLS schema / executeToolCalls / runToolLoop
  *   - 常量：PROXY / MODEL / TIMEOUT_MS / PROBE_* / GEN_MAX_TOKENS / TOOL_MAX_TOKENS
+ *           （值统一取自 diagnose/llm-config.js，本模块只保留同名别名）
  *
  * 依赖注入：表达式求值由调用方拿进来（本模块不碰纯函数层的内部实现），
  * 浏览器取 window.DiagLLMEval，Node 下 require('./llm-eval.js')。
@@ -30,11 +31,21 @@
 
   function _evTools() { return _evp; }
 
-  /* max_tokens 单一出处在 llm-variants.js（O3-6 契约，tests/test_llm_variants.js 静态断言）。
-   * 本模块不重复定义，只接受注入；未注入时用与管线层一致的兜底值。
-   * 改值请改 llm-variants.js 的 GEN_MAX_TOKENS / TOOL_MAX_TOKENS。 */
-  var GEN_MAX_TOKENS = 1024;
-  var TOOL_MAX_TOKENS = 512;
+  /* 配置唯一真源：diagnose/llm-config.js（浏览器由 index.html 先加载，Node 直接 require） */
+  function _loadLLMConfig() {
+    if (typeof LLMConfig !== 'undefined' && LLMConfig) return LLMConfig;
+    if (typeof require === 'function') {
+      try { return require('./llm-config.js'); } catch (e) { /* 落到 fail-closed */ }
+    }
+    return null;
+  }
+
+  var CFG = _loadLLMConfig();
+
+  /* max_tokens 单一真源已收敛到 llm-config.js 的 maxTokens.variants / maxTokens.tools（O3-6 契约，
+   * tests/test_llm_variants.js 静态断言）。本模块保留同名别名，仍接受 setLimits 注入覆盖。 */
+  var GEN_MAX_TOKENS = CFG ? CFG.maxTokens.variants : null;
+  var TOOL_MAX_TOKENS = CFG ? CFG.maxTokens.tools : null;
 
   function setLimits(lim) {
     if (!lim) return;
@@ -42,14 +53,15 @@
     if (typeof lim.TOOL_MAX_TOKENS === 'number') TOOL_MAX_TOKENS = lim.TOOL_MAX_TOKENS;
   }
 
-  var PROXY = 'http://127.0.0.1:3000/v1/chat/completions';
+  var PROXY = CFG ? CFG.chatUrl() : null;
 
-  var MODEL = 'DeepSeek-V4.1-Flash-1017-Unlimited';
+  var MODEL = CFG ? CFG.model : null;
 
-  var TIMEOUT_MS = 10000;
+  var TIMEOUT_MS = CFG ? CFG.timeouts.chat : null;
 
-  /* O3-4：探测超时放宽到 15s（联调时网关负载大响应可能 >5s，5s 太紧导致误判 false） */
-  var PROBE_TIMEOUT_MS = 15000;
+  /* O3-4：探测超时放宽到 15s（联调时网关负载大响应可能 >5s，5s 太紧导致误判 false）
+   * 值与实测依据都搬到了 llm-config.js 的 timeouts.probe。 */
+  var PROBE_TIMEOUT_MS = CFG ? CFG.timeouts.probe : null;
 
   /* O3-4：探测结果 5 分钟 TTL，过期自动重探（避免 false 永久污染钉死功能） */
   var PROBE_TTL_MS = 5 * 60 * 1000;
@@ -85,11 +97,16 @@
       _gatewayReachable = false; _gatewayProbeAt = _nowFn();
       return Promise.resolve(false);
     }
+    /* 配置没加载：按不可达降级，不把 null 传给 fetch */
+    if (!CFG) {
+      _gatewayReachable = false; _gatewayProbeAt = _nowFn();
+      return Promise.resolve(false);
+    }
     if (!_probeExpired(_gatewayProbeAt) && _gatewayReachable !== null) {
       return Promise.resolve(_gatewayReachable);
     }
 
-    var modelsUrl = PROXY.replace('/chat/completions', '/models');
+    var modelsUrl = CFG.modelsUrl();
     var controller = null;
     var timeoutId = null;
     if (typeof AbortController !== 'undefined') {
@@ -186,6 +203,11 @@
       _supportsTools = false; _supportsToolsAt = _nowFn();
       return Promise.resolve(false);
     }
+    /* 配置没加载：按不支持降级，不把 null 传给 fetch */
+    if (!CFG) {
+      _supportsTools = false; _supportsToolsAt = _nowFn();
+      return Promise.resolve(false);
+    }
     if (!_probeExpired(_supportsToolsAt) && _supportsTools !== null) {
       return Promise.resolve(_supportsTools);
     }
@@ -257,6 +279,8 @@
    * @returns {Promise<object|null>}
    */
   function _postOnce(body) {
+    /* 配置没加载：沿用「请求失败返回 null」的降级路径，不把 null 传给 fetch */
+    if (!CFG) return Promise.resolve(null);
     var controller = null;
     var timeoutId = null;
     if (typeof AbortController !== 'undefined') {

@@ -1149,10 +1149,16 @@ test('单一出处：llm-variants.js 内 max_tokens 字面量只出现在常量�
   assert.deepStrictEqual(findBareMaxTokens(src), [], '存在裸数字 max_tokens 字面量:\n' + findBareMaxTokens(src).join('\n'));
 });
 
-test('单一出处：llm-variants.js 定义 GEN_MAX_TOKENS=1024 与 TOOL_MAX_TOKENS=512', () => {
+test('单一出处：llm-config.js 定义 variants=1024 / tools=512，llm-variants.js 从配置取值', () => {
+  /* 配置唯一真源搬到 llm-config.js，所以断言从扫字面量改成读配置值，防漂移目的不变。 */
+  const cfg = require('../diagnose/llm-config.js');
+  assert.strictEqual(cfg.maxTokens.variants, 1024, 'llm-config.js 的 maxTokens.variants 应为 1024');
+  assert.strictEqual(cfg.maxTokens.tools, 512, 'llm-config.js 的 maxTokens.tools 应为 512');
   const src = fs.readFileSync(path.join(__dirname, '..', 'diagnose', 'llm-variants.js'), 'utf8');
-  assert.ok(/var\s+GEN_MAX_TOKENS\s*=\s*1024\s*;/.test(src), '应定义 GEN_MAX_TOKENS = 1024');
-  assert.ok(/var\s+TOOL_MAX_TOKENS\s*=\s*512\s*;/.test(src), '应定义 TOOL_MAX_TOKENS = 512');
+  assert.ok(/GEN_MAX_TOKENS\s*=\s*CFG\s*\?\s*CFG\.maxTokens\.variants/.test(src),
+    'llm-variants.js 的 GEN_MAX_TOKENS 应从 LLMConfig 取值（配置唯一真源）');
+  assert.ok(/TOOL_MAX_TOKENS\s*=\s*CFG\s*\?\s*CFG\.maxTokens\.tools/.test(src),
+    'llm-variants.js 的 TOOL_MAX_TOKENS 应从 LLMConfig 取值（配置唯一真源）');
 });
 
 /* ================================================================

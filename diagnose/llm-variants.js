@@ -26,6 +26,17 @@
   var _evaldn = __evaldn;
   var _gw = __gw;
 
+  /* 配置唯一真源：diagnose/llm-config.js（浏览器由 index.html 先加载，Node 直接 require） */
+  function _loadLLMConfig() {
+    if (typeof LLMConfig !== 'undefined' && LLMConfig) return LLMConfig;
+    if (typeof require === 'function') {
+      try { return require('./llm-config.js'); } catch (e) { /* 落到 fail-closed */ }
+    }
+    return null;
+  }
+
+  var CFG = _loadLLMConfig();
+
   /* ================================================================
    * 出题配方（族 = 知识点 id → 难度档）
    * ================================================================ */
@@ -34,13 +45,13 @@
 
   var MAX_RETRIES = 3;
 
-  /* O3-6：max_tokens 单一出处（各文件自持，关键是一处定义、多处引用）。
+  /* O3-6：max_tokens 单一真源已收敛到 llm-config.js 的 maxTokens.variants / maxTokens.tools。
    * GEN  —— 出题：一道题 JSON（题面+答案+解析），扩族后题面变长，500 会撞截断，取 1024
    * TOOL —— 工具轮：只需返回 tool_calls 参数，不需要长文本，取 512（也是 >=512 下限）
-   * 改这两个值之前先看 tests/test_llm_variants.js 的 max_tokens 契约断言。 */
-  var GEN_MAX_TOKENS = 1024;
+   * 实测注释随值一起搬到了 llm-config.js；改值/防漂移断言见 tests/test_llm_variants.js。 */
+  var GEN_MAX_TOKENS = CFG ? CFG.maxTokens.variants : null;
 
-  var TOOL_MAX_TOKENS = 512;
+  var TOOL_MAX_TOKENS = CFG ? CFG.maxTokens.tools : null;
 
   var CACHE_KEY = 'cnmDiagnose.llmVariants.v1';
 
