@@ -135,9 +135,13 @@ assets/home.js           首页统计与年级入口（从 data/*.json 计算）
 assets/vendor/           Cytoscape 3.30.4、dagre 0.8.5、cytoscape-dagre 2.5.0（MIT，随仓库分发，见 VENDOR.md）
 diagnose/                诊断小工具（纯静态：index.html、engine.js、app.js、style.css、README.md）
 tests/test_engine.js     诊断引擎测试（Node，无依赖）
-scripts/screenshot.js    无头 Chrome 冒烟测试与截图脚本
-screenshots/             首页、知识图谱与诊断页截图（01–05 诊断流程，06 起为新界面与窄屏）
+scripts/screenshot.js    无头 Chrome 冒烟测试与截图脚本（默认输出到 .cache/screenshots/）
+screenshots/             文档里直接嵌入的 14 张稳定快照（首页、知识图谱、诊断、分享图）
 ```
+
+截图：`node scripts/screenshot.js` 跑一次冒烟会生成 50 多张图，默认写到 `.cache/screenshots/`（已 gitignore），跑完工作区不脏。
+README 和 `diagnose/README.md` 用 `![](screenshots/…)` 嵌入的这 14 张是人工挑选后拷进 `screenshots/` 的稳定快照——
+刷新它们必须显式指定输出目录：`SHOTS_OUT=screenshots node scripts/screenshot.js`，跑完人工确认 diff，只提交确实该变的几张。
 
 ### topics.json 字段
 
