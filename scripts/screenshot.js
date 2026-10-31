@@ -501,8 +501,10 @@ async function main() {
     check((await evalJs('document.querySelector("#explain").textContent')).includes(ch.q.explanation), '自动判题后也显示解析');
     check((await evalJs('document.querySelector(".refans").textContent')).includes(ch.q.answer + '.'), '显示参考答案（含选项文字）');
     await click('#btn-flip');
-    await waitFor(() => exists('#summary'), '改判为对后目标即掌握，直接到结果页');
-    check((await evalJs('JSON.parse(localStorage.getItem("cnmDiagnose.session.v2")).answers[0].result')) === 'correct', '「判错了，我其实做对了」可更正为对（目标掌握，结果页无需补课）');
+    // 默认每知识点需连续答对 3 题才掌握：改判为对后继续本知识点下一题，而不是直接结束
+    await waitFor(() => evalJs('!!document.querySelector(".q-text") && !document.querySelector("#summary")'), '改判为对后继续本知识点下一题');
+    check((await evalJs('JSON.parse(localStorage.getItem("cnmDiagnose.session.v2")).answers[0].result')) === 'correct', '「判错了，我其实做对了」可更正为对');
+    check((await evalJs('Array.from(document.querySelectorAll(".tag")).some(e => /本知识点第 2/.test(e.textContent))')), '改判为对后进入本知识点第 2 题');
 
     // 找一个答案是分数 / 负数的数值题，用全角写法作答
     let nu = null, nuTopic = null;
@@ -890,7 +892,7 @@ async function main() {
     check(mathUi.download && mathUi.downloadName === '知识图谱诊断分享.png', '1280 宽显示下载图片');
     check(!mathUi.hint, '1280 宽不提示长按保存');
     const mathModel = await evalJs('window.__shareModel');
-    check(mathModel && mathModel.siteName === '中小学知识图谱' && mathModel.subject === '数学' && String(mathModel.scope).indexOf('五年级上册') >= 0 && mathModel.spotKind === 'chapter', '数学分享范围是五年级上册（' + JSON.stringify(mathModel && { scope: mathModel.scope, subject: mathModel.subject, spotKind: mathModel.spotKind }) + '）');
+    check(mathModel && mathModel.siteName === '中小学·高中知识图谱' && mathModel.subject === '数学' && String(mathModel.scope).indexOf('五年级上册') >= 0 && mathModel.spotKind === 'chapter', '数学分享范围是五年级上册（' + JSON.stringify(mathModel && { scope: mathModel.scope, subject: mathModel.subject, spotKind: mathModel.spotKind }) + '）');
     check(mathModel && mathModel.spots.length >= 1 && mathModel.spots.length <= 3, '数学分享列出 1–3 个章节');
     check(mathModel && mathModel.roots.length >= 1 && mathModel.roots.length <= 2, '数学分享有 1–2 个根因');
     check(JSON.stringify(mathModel).indexOf('付费') < 0 && JSON.stringify(mathModel).indexOf('姓名') < 0, '分享内容不含付费或姓名');

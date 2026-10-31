@@ -3,19 +3,21 @@
  * 数据流：buildGraph(topics, deps, questions?) -> graph      （questions 缺失时用 topics 的 diagnostic_question）
  *         createSession(graph, targets, {limit, seed, avoid}) -> session   （会话是可 JSON 序列化的纯数据）
  *         nextQuestion(graph, session) -> topicId | null     （下一个要考的知识点）
- *         nextItem(graph, session) -> {topicId, question, attempt} | null   （要出的具体题目；attempt 为 1 或 2）
+ *         nextItem(graph, session) -> {topicId, question, attempt} | null   （要出的具体题目；attempt 从 1 起）
  *         applyAnswer(graph, session, id, 'correct'|'wrong'|'skip', {text}) -> 新 session（不修改入参）
  *         summarize(graph, session) -> 结果（根因、学习路径、掌握/不稳/薄弱/未测）
  *         gradeTargets(graph, '一年级'|'七上'|'高一'|'选必二', subject?) -> {ids, volumes, label} | null
- *           默认 subject 为 math，不把英语卷进数学的整册；'english' 只取英语（含九全），'all' 不限学科
- *         createSession(graph, ids, {mode:'screen'}) -> 筛查会话：范围 = 目标本身，回溯不出范围，默认题量上限 SCREEN_LIMIT
+ *           默认 subject 为 math，不把英语卷进数学的整册；'english' 只取英语（含九全），'physics' 只取物理（八上、八下、九全），'all' 不限学科
+ *         createSession(graph, ids, {mode:'screen', confirm}) -> 筛查会话：范围 = 目标本身，回溯不出范围，默认题量上限 SCREEN_LIMIT
  *         chapterSummary(graph, session) -> 按章汇总（薄弱章节在前）
  *         layout(graph, session, summary) -> 路径图的分层布局
  *         judgeQuestion(question, userText) -> {verdict:'correct'|'wrong'|'manual', reason}
  *         judgeAnswer(user, reference) -> 同上（只按参考答案文本判，旧接口）
  *
- * 每个知识点最多 2 题：第一题对 -> 掌握（并推断祖先掌握）；第一题错 / 不会 -> 再出一道同级或更容易的题：
- *   第二题对 -> 不稳（shaky，不向先修回溯）；第二题也错 -> 薄弱（weak，向先修回溯，hard 先于 soft）。
+ * 每个知识点需连续答对 confirm 题才判掌握（默认 3，可选 2/3/5；题库更少时以题库为准）：
+ *   连续答对满额 -> 掌握（并推断祖先掌握）；中途错 / 不会 -> 再出一道更基础的题确认：
+ *   确认题对 -> 不稳（shaky，不向先修回溯）；确认题也错 -> 薄弱（weak，向先修回溯，hard 先于 soft）。
+ *   选题：第一题优先 standard（提高）；连续答对再出 challenge（拓展）确认掌握；答错先补 basic。
  */
 (function (root, factory) {
   if (typeof module !== 'undefined' && module.exports) module.exports = factory();
@@ -25,7 +27,7 @@
 
   /* ------------------------------------------------------------------ 图 */
 
-  const DIFF_RANK = { basic: 0, standard: 1, advanced: 2 };
+  const DIFF_RANK = { basic: 0, standard: 1, challenge: 2, advanced: 2 };
 
   function qNum(q) { const m = /_q(\d+)$/.exec(q.id); return m ? parseInt(m[1], 10) : 0; }
 
@@ -240,6 +242,27 @@
   const RESULTS = { correct: 1, wrong: 1, skip: 1 };
   const DEFAULT_LIMIT = 16;
   const SCREEN_LIMIT = 40;
+  const DEFAULT_CONFIRM = 3;
+  const CONFIRM_CHOICES = [2, 3, 5];
+
+  /** 界面可选值：只接受 2 / 3 / 5，其它回退默认。 */
+  function clampConfirm(n) {
+    const v = Math.floor(Number(n));
+    return CONFIRM_CHOICES.indexOf(v) >= 0 ? v : DEFAULT_CONFIRM;
+  }
+
+  /** 引擎内部：任意 ≥1 的确认题数（测试可用 1；界面仍走 clampConfirm）。 */
+  function normalizeConfirm(n) {
+    const v = Math.floor(Number(n));
+    return v >= 1 && v <= 10 ? v : DEFAULT_CONFIRM;
+  }
+
+  /** 该知识点判「掌握」所需的连续答对题数：取 confirm 与题库题数的较小值（至少 1）。 */
+  function needConfirm(graph, session, id) {
+    const bankLen = (graph.bank[id] || []).length;
+    const conf = session && session.confirm != null ? session.confirm : DEFAULT_CONFIRM;
+    return Math.max(1, Math.min(conf, bankLen || 1));
+  }
 
   function createSession(graph, targets, opts) {
     opts = opts || {};
@@ -248,6 +271,7 @@
     ts.forEach(function (id) { if (!graph.byId[id]) throw new Error('未知知识点：' + id); });
     const screen = opts.mode === 'screen';
     const limit = Math.max(1, Math.floor(opts.limit == null ? (screen ? SCREEN_LIMIT : DEFAULT_LIMIT) : opts.limit));
+    const confirm = normalizeConfirm(opts.confirm == null ? DEFAULT_CONFIRM : opts.confirm);
     // 筛查模式：诊断范围就是目标集合本身（不把先修祖先并进来），回溯只在范围内进行
     // 普通模式：先取目标 + 全部祖先的子图，再按年级截断（规则①）——
     // 截断只发生在会话的候选集里，图本身与数据不动。
@@ -261,7 +285,7 @@
     const stack = ts.filter(function (id) { return isTestable(graph, id); })
       .sort(function (a, b) { return pos[b] - pos[a]; });
     return {
-      targets: ts, limit: limit, order: nodes, status: {}, stack: stack, answers: [], attempts: {},
+      targets: ts, limit: limit, confirm: confirm, order: nodes, status: {}, stack: stack, answers: [], attempts: {},
       mode: screen ? 'screen' : 'target', scope: screen ? ts.slice() : null,
       // 因年级跨度被略过的先修（不测、不在 order 里，但界面要显示「已略过」，不能静默丢弃）
       suppressed: cuts.suppressed,
@@ -274,7 +298,7 @@
     const attempts = {};
     Object.keys(s.attempts).forEach(function (k) { attempts[k] = s.attempts[k].slice(); });
     return {
-      targets: s.targets.slice(), limit: s.limit, order: s.order, stack: s.stack.slice(),
+      targets: s.targets.slice(), limit: s.limit, confirm: s.confirm, order: s.order, stack: s.stack.slice(),
       status: Object.assign({}, s.status), answers: s.answers.slice(), attempts: attempts,
       suppressed: (s.suppressed || []).slice(),
       seed: s.seed, avoid: s.avoid, mode: s.mode, scope: s.scope ? s.scope.slice() : null
@@ -306,11 +330,12 @@
   const rankOf = function (q) { return DIFF_RANK[q.difficulty] == null ? 1 : DIFF_RANK[q.difficulty]; };
 
   /**
-   * 给知识点 id 选第 attempt 题（1 或 2）。
+   * 给知识点 id 选第 attempt 题。
    *  - 已在本次会话里出过的题不再出；
-   *  - 第一题：优先没出过（session.avoid 之外）的题，并尽量避开 advanced；
-   *  - 第二题：同级或更容易——优先 basic，其次与第一题同难度，再其次其它更容易的，最后才是更难的（取最容易的）；
-   *    难度优先于“没出过”，同档里仍优先没出过的；
+   *  - 第一题：优先 standard（提高），没有再退到 basic，尽量不出拓展；
+   *  - 连续答对、尚未错过：优先 challenge（拓展）确认掌握，再 standard，再 basic；
+   *  - 错过之后的确认题：同级或更容易——优先 basic，其次与第一题同难度，再其次其它更容易的，最后才是更难的（取最容易的）；
+   *    难度优先于“没出过”，同档里仍优先没出过（session.avoid 之外）的；
    *  - 档内用 seed 决定的伪随机数选一道。
    */
   function pickQuestion(graph, session, id, attempt) {
@@ -323,11 +348,20 @@
       const f = list.filter(function (q) { return !avoid.has(q.id); });
       return f.length ? f : list;
     };
+    const pickRank = function (list, ranks) {
+      for (let i = 0; i < ranks.length; i++) {
+        const hit = list.filter(function (q) { return rankOf(q) === ranks[i]; });
+        if (hit.length) return freshFirst(hit);
+      }
+      return freshFirst(list);
+    };
+    const prev = session.attempts[id] || [];
+    const hadFail = prev.some(function (a) { return a.result !== 'correct'; });
     let cand;
-    if (attempt <= 1) {
-      cand = freshFirst(pool);
-      const nonAdv = cand.filter(function (q) { return rankOf(q) < 2; });
-      if (nonAdv.length) cand = nonAdv;
+    if (attempt <= 1 || !hadFail) {
+      const base = freshFirst(pool);
+      if (attempt <= 1) cand = pickRank(base, [1, 0]);
+      else cand = pickRank(base, [2, 1, 0]);
     } else {
       const first = all.find(function (q) { return q.id === tried[0]; });
       const r0 = first ? rankOf(first) : 1;
@@ -349,10 +383,11 @@
 
   /**
    * 记录一次作答（针对 nextItem 给出的那道题）。
-   *  - 第一题 correct：该点及其所有尚未判定的祖先记为掌握（祖先为 inferred）；
-   *  - 第一题 wrong/skip：还没有结论，该点仍排在最前面，下一题给它出第二题（没有第二题可出就直接判薄弱）；
-   *  - 第二题 correct：不稳（shaky），不向先修回溯；
-   *  - 第二题 wrong/skip：薄弱，并把其先修（hard 先、soft 后）压到出题栈顶。
+   *  - 连续答对满 needConfirm 题：该点及其所有尚未判定的祖先记为掌握（祖先为 inferred）；
+   *  - 连续答对尚未满额：还没有结论，继续出同知识点下一题；
+   *  - 中途 wrong/skip：还没有结论，再出一道确认题（没有可出的就直接判薄弱）；
+   *  - 确认题 correct：不稳（shaky），不向先修回溯；
+   *  - 确认题 wrong/skip：薄弱，并把其先修（hard 先、soft 后）压到出题栈顶。
    * 直接作答（direct）的判定不会被推断（inferred）覆盖。extra.text 是用户输入的答案（只用于记录）。
    */
   function applyAnswer(graph, session, id, result, extra) {
@@ -366,18 +401,22 @@
     if (extra && extra.text != null && extra.text !== '') rec.text = String(extra.text);
     s.answers.push(rec);
     s.attempts[id] = prev.concat([{ qid: rec.qid, result: result }]);
-    const nth = s.attempts[id].length;
+    const attempts = s.attempts[id];
+    const fails = attempts.filter(function (a) { return a.result !== 'correct'; }).length;
+    const corrects = attempts.filter(function (a) { return a.result === 'correct'; }).length;
+    const need = needConfirm(graph, s, id);
     if (result === 'correct') {
-      if (nth === 1) {
+      if (fails === 0 && corrects >= need) {
         s.status[id] = { s: 'mastered', src: 'direct' };
         ancestorSet(graph, id).forEach(function (a) {
           if (!s.status[a]) s.status[a] = { s: 'mastered', src: 'inferred' };
         });
-      } else {
+      } else if (fails > 0) {
         s.status[id] = { s: 'shaky', src: 'direct' };
       }
-    } else if (nth === 1 && pickQuestion(graph, s, id, 2)) {
-      // 第一题没过：等第二题再下结论
+      // 否则：连续答对尚未满额，继续出题
+    } else if (fails === 1 && pickQuestion(graph, s, id, attempts.length + 1)) {
+      // 第一次没过：等确认题再下结论
     } else {
       s.status[id] = { s: 'weak', src: 'direct' };
       const scope = s.scope ? new Set(s.scope) : null;
@@ -426,10 +465,11 @@
     return isUnconfirmed(session, id) ? 'weak' : 'unknown';
   }
 
-  /** 第一题答错、但没来得及出第二题（题量用完）的点。 */
+  /** 答过错、但没来得及出确认题（题量用完）的点。 */
   function isUnconfirmed(session, id) {
     const a = session.attempts[id];
-    return !session.status[id] && !!a && a.length === 1 && a[0].result !== 'correct';
+    if (session.status[id] || !a || !a.length) return false;
+    return a.some(function (x) { return x.result !== 'correct'; });
   }
 
   /* ------------------------------------------------------------------ 结果 */
@@ -630,10 +670,13 @@
    */
   function parseChapter(chapter) {
     const s = chapter || '';
-    const pm = /^([一二三四五六七八九])年级([上下全])册 (第\d+单元) (.+)$/.exec(s);
+    const pm = /^([一二三四五六七八九])年级([上下全])册 (第\d+单元|预备单元\d) (.+)$/.exec(s);
     if (pm) return { volume: pm[1] + pm[2], chapterNo: pm[3], chapterName: pm[4], section: '' };
     const pi = /^([一二三四五六])年级([上下])册 (综合与实践) (.+)$/.exec(s);
     if (pi) return { volume: pi[1] + pi[2], chapterNo: pi[3], chapterName: pi[4], section: '' };
+    // 小学英语复习 / Recycle（如「四年级上册 复习 Let's help!」）
+    const prev = /^([一二三四五六])年级([上下])册 (复习) (.+)$/.exec(s);
+    if (prev) return { volume: prev[1] + prev[2], chapterNo: prev[3], chapterName: prev[4], section: '' };
     // 高中英语按册名解析，避免「第1单元 Teenage Life」被空格拆成章名和节。
     const enHs = /^(必修第([一二三])册|选择性必修第([一二三四])册) (欢迎单元|第\d+单元) (.+)$/.exec(s);
     if (enHs) {
@@ -652,11 +695,17 @@
     return { volume: m[1], chapterNo: m[2], chapterName: m[3], section: m[4] || '' };
   }
 
-  /** 学科：显式 subject 优先，否则 cne_ 前缀是英语，其余算数学。 */
+  /** 学科：显式 subject 优先，否则 cne_ 是英语、cnp_ 是物理、cnc_ 是语文、cns_ 是科学、cnd_ 是道德与法治、cnh_ 是历史、cng_ 是地理，其余算数学。 */
   function subjectOf(topic) {
     if (!topic) return 'math';
-    if (topic.subject === 'english' || topic.subject === 'math') return topic.subject;
+    if (topic.subject === 'english' || topic.subject === 'math' || topic.subject === 'physics' || topic.subject === 'chinese' || topic.subject === 'science' || topic.subject === 'morality' || topic.subject === 'history' || topic.subject === 'geography') return topic.subject;
     if (String(topic.id || '').indexOf('cne_') === 0) return 'english';
+    if (String(topic.id || '').indexOf('cnp_') === 0) return 'physics';
+    if (String(topic.id || '').indexOf('cnc_') === 0) return 'chinese';
+    if (String(topic.id || '').indexOf('cns_') === 0) return 'science';
+    if (String(topic.id || '').indexOf('cnd_') === 0) return 'morality';
+    if (String(topic.id || '').indexOf('cnh_') === 0) return 'history';
+    if (String(topic.id || '').indexOf('cng_') === 0) return 'geography';
     return 'math';
   }
 
@@ -844,7 +893,11 @@
     '米': 'm', 'm': 'm', '厘米': 'cm', 'cm': 'cm', '毫米': 'mm', 'mm': 'mm', '千米': 'km', '公里': 'km', 'km': 'km',
     '千克': 'kg', '公斤': 'kg', 'kg': 'kg', '克': 'g', 'g': 'g', '秒': 's', 's': 's', '分钟': 'min', 'min': 'min',
     '小时': 'h', 'h': 'h', '平方米': 'm^2', 'm^2': 'm^2', '平方厘米': 'cm^2', 'cm^2': 'cm^2',
-    '立方米': 'm^3', 'm^3': 'm^3', '立方厘米': 'cm^3', 'cm^3': 'cm^3', '元': '元', '度': '°', '°': '°'
+    '立方米': 'm^3', 'm^3': 'm^3', '立方厘米': 'cm^3', 'cm^3': 'cm^3', '元': '元', '度': '°', '°': '°',
+    // 物理：只收多字母单位，单字母（a、v、w、n、j）会和数学里的字母答案混淆，不收
+    'm/s': 'm/s', '米/秒': 'm/s', 'km/h': 'km/h', '千米/时': 'km/h', 'kg/m^3': 'kg/m^3', 'g/cm^3': 'g/cm^3',
+    'pa': 'Pa', '帕': 'Pa', '帕斯卡': 'Pa', 'kpa': 'kPa', 'hz': 'Hz', '赫兹': 'Hz', 'db': 'dB', '分贝': 'dB',
+    'kw*h': 'kW·h', '千瓦时': 'kW·h', 'ml': 'mL', '毫升': 'mL', 'n/kg': 'N/kg', 'j/kg': 'J/kg'
   };
 
   function canonUnit(u) {
@@ -1089,10 +1142,20 @@
   }
 
   /** 按题型判题：choice 比字母（或选项文字）；numeric 数值等价；short 规范化精确匹配 + accept；self 永远自评。 */
+  /**
+   * 带 percent: true 的题（目前只有物理的效率题），answer 是百分数的数值部分，如 50 表示 50%。
+   * 学生写 50 或 50%（全角 ％ 也算）都判对；0.5 不算，题干问的是「百分之多少」，0.5 也可能是把 0.5% 写错。
+   * 没有 percent 的题（全部数学题）不经过这里，50% 仍按 0.5 判。
+   */
+  function stripPercent(user) {
+    const s = String(user == null ? '' : user).trim();
+    return s.replace(/\s*[%％]$/, '');
+  }
+
   function judgeQuestion(q, user) {
     switch (q.type) {
       case 'choice': return judgeChoice(user, q);
-      case 'numeric': return judgeNumeric(user, q);
+      case 'numeric': return judgeNumeric(q.percent === true ? stripPercent(user) : user, q);
       case 'short': return judgeShort(user, q);
       case 'self': return { verdict: 'manual', reason: 'self' };
       default: return judgeAnswer(user, q.answer); // legacy：来自 diagnostic_question
@@ -1385,6 +1448,11 @@
     cutByGrade: cutByGrade,
     prereqPriority: prereqPriority,
     orderByPriority: orderByPriority,
+    DEFAULT_CONFIRM: DEFAULT_CONFIRM,
+    CONFIRM_CHOICES: CONFIRM_CHOICES.slice(),
+    clampConfirm: clampConfirm,
+    normalizeConfirm: normalizeConfirm,
+    needConfirm: needConfirm,
     gradeTargets: gradeTargets,
     subjectOf: subjectOf,
     chapterSummary: chapterSummary,

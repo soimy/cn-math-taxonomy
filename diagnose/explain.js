@@ -10,7 +10,7 @@
 (function (global) {
   'use strict';
   const PROXY = 'http://127.0.0.1:3000/v1/chat/completions';   // 网关已支持 CORS(2026-10-22),直连不需要 llm-proxy
-  const MODEL = 'DeepSeek-V4-Flash-0731-Unlimited';
+  const MODEL = 'DeepSeek-V4.1-Flash-1017-Unlimited';
   const TTL = 5 * 60 * 1000;
 
   /* O3-6：max_tokens 单一出处。

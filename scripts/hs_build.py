@@ -389,7 +389,7 @@ def main():
 
     std = load("cn-curriculum-standards.json")
     note = std["source"].get("note") or ""
-    extra = (" 高中必修条目据《普通高中数学课程标准（2017年版2020年修订）》五个主题的公开转述整理，"
+    extra = (" 高中必修条目据《普通高中数学课程标准（2017年版2025年修订）》五个主题的公开转述整理，"
              "不是逐页核对的原文，verbatim 为 false，page_or_ref 为「待核」。"
              "编号 cms-2017:H.<模块>.NN 是本图谱按主题编的，不是教育部原编号。")
     if "cms-2017" not in note:
@@ -399,7 +399,7 @@ def main():
     if "2026-10-20" not in retrieved:
         std["source"]["retrieved"] = retrieved + "；2026-10-20（高中必修）"
     std["source"]["high_school"] = {
-        "title": "普通高中数学课程标准（2017年版2020年修订）",
+        "title": "普通高中数学课程标准（2017年版2025年修订）",
         "issuer": "中华人民共和国教育部",
         "year": 2020,
         "url": "http://www.moe.gov.cn/srcsite/A26/s8001/202006/t20200603_462199.html",

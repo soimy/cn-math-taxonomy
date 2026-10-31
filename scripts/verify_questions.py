@@ -208,7 +208,47 @@ def choice_text_value(text):
     return V.parse_numeric_answer(t) if V.NUM_RE.match(t) else None
 
 
+# 物理选项常写成「数值 + 单位」（如 20 m/s、2.7 g/cm³）。只对 cnp_ 题拆出数值比较，单位必须是下面这些之一；
+# 判断双解时数值相同且单位也相同才算重复（2.7 g/cm³ 与 2.7 kg/m³ 是不同选项）。
+PHY_UNITS = ("J/(kg·℃)", "kg/m³", "g/cm³", "kW·h", "m/s", "km/h", "N/kg", "J/kg", "kPa", "kW", "kJ", "kV", "kΩ",
+             "mV", "mA", "mL", "mg", "mm", "cm³", "dm³", "m³", "cm²", "m²", "cm", "km", "μm", "nm", "min", "Hz", "dB",
+             "Pa", "kg", "℃", "Ω", "%", "m", "g", "t", "L", "s", "h", "N", "J", "W", "V", "A", "个", "倍",
+             # 高中物理
+             "m/s²", "cm/s", "rad/s", "r/min", "r/s", "rad", "°", "N·s", "kg·m/s", "N·m", "N/m", "V/m", "N/C", "C", "μC", "nC",
+             "pF", "μF", "mF", "F", "mT", "μT", "T", "Wb", "Ω·m", "mH", "μH", "H", "MHz", "kHz", "GHz", "eV", "keV", "MeV",
+             "K", "mol", "J/K", "ms", "μs", "ns", "MW", "MJ", "mW", "kN", "cm/s²", "atm", "mmHg", "MPa", "J/mol", "m/s³",
+             "kg·m²", "W/m²", "天", "年", "圈", "次", "匝", "u", "个/s")
+_PHY_RE = re.compile(r"^(-?\d+(?:\.\d+)?)\s*(" + "|".join(re.escape(u) for u in PHY_UNITS) + r")$")
+
+
+def phy_choice_value(text):
+    """返回 (Fraction, 单位) 或 None。"""
+    m = _PHY_RE.match(text.strip())
+    if not m:
+        return None
+    return Fraction(m.group(1)), m.group(2)
+
+
+def compare_phy_choice(q, res):
+    texts = {c["key"]: c["text"].strip() for c in q["choices"]}
+    right = texts[q["answer"]]
+    rv = phy_choice_value(right)
+    if rv is None or isinstance(res, (str, bool)) or not isinstance(res, (int, float, Fraction)):
+        return None
+    if not num_equal(rv[0], res):
+        return False, "verify 得 %s，但正确选项 %s 的值是 %s" % (res, q["answer"], right)
+    dup = [k for k, t in texts.items() if k != q["answer"] and phy_choice_value(t) is not None
+           and phy_choice_value(t)[1] == rv[1] and num_equal(phy_choice_value(t)[0], res)]
+    if dup:
+        return False, "选项 %s 与正确选项数值和单位都相同（双解）" % "、".join(dup)
+    return True, ""
+
+
 def compare_choice(q, res):
+    if str(q.get("id", "")).startswith("cnp_"):
+        out = compare_phy_choice(q, res)
+        if out is not None:
+            return out
     texts = {c["key"]: c["text"].strip() for c in q["choices"]}
     right = texts[q["answer"]]
     rv = choice_text_value(right)

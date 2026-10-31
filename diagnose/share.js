@@ -143,7 +143,7 @@
     ctx.fill();
 
     drawLogo(ctx, 64, 56, 84);
-    text(ctx, m.siteName || '中小学知识图谱', 168, 64, 800, 40, '#ffffff', 820);
+    text(ctx, m.siteName || '中小学·高中知识图谱', 168, 64, 800, 40, '#ffffff', 820);
     text(ctx, '诊断结果', 168, 114, 500, 26, 'rgba(255,255,255,0.86)', 820);
 
     ctx.fillStyle = '#ffffff';
@@ -253,11 +253,6 @@
     ctx.fillStyle = '#0f766e';
     ctx.font = font(800, 48);
     ctx.fillText('扫码打开本站', qrX + qrSize + 48, qrY + qrSize / 2 - 8);
-    ctx.textBaseline = 'top';
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#5c6d82';
-    ctx.font = font(500, 24);
-    ctx.fillText('AI 生成初稿，仅供参考', W / 2, 1872);
     return canvas;
   }
 
