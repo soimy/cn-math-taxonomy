@@ -541,10 +541,16 @@ node scripts/serve.js 8920        # 推荐：带禁缓存头，改完代码刷�
 
 ## 许可证 / License
 
+本仓库 fork 自 [xiaoyang111222/cn-math-taxonomy](https://github.com/xiaoyang111222/cn-math-taxonomy)，
+原作者为该仓库作者。**本仓库对其内容有修改**，修改清单见
+[docs/fork-divergences.md](docs/fork-divergences.md)（逐条说明删改了什么、为什么）。
+
 本项目（知识图谱数据、题库、诊断工具代码及文档）采用 [知识共享 署名-非商业性使用 4.0 国际许可协议（CC BY-NC 4.0）](https://creativecommons.org/licenses/by-nc/4.0/deed.zh-hans) 授权，完整条款见 [LICENSE](LICENSE)。`assets/vendor/` 里的 Cytoscape、dagre、cytoscape-dagre 仍是各自的 MIT 许可证（见 `assets/vendor/VENDOR.md` 和同目录的 LICENSE 文件），不改成 CC BY-NC。
 
 - ✅ 可以免费用于个人学习、教学、研究，可以修改和再分发，但需署名并注明来源（本仓库链接）。
 - ❌ 不得用于商业用途（包括但不限于付费课程、付费 App、机构收费服务、售卖题库等）。
+
+> 注：本项目为修改版。上游原有内容适用上述许可；本仓库新增部分的商用授权请联系本仓库维护者。
 
 **商用授权：** 如需商业使用，请联系作者获取单独授权：X（Twitter）私信 [@hassanyehiaa](https://x.com/hassanyehiaa)，或在本仓库 [提交 Issue](https://github.com/xuxiong/cn-math-taxonomy/issues) 说明用途。
 
