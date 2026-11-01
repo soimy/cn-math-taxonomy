@@ -1032,7 +1032,7 @@ testAsync('扩族生成：cnm_224 mock 题面含"因式分解"通过验证门', 
 /* ================================================================
  * O3-6 回归：max_tokens 校准（防「多处散落改一处漏一处」+ 防过度放大/截断）
  * 行为契约：所有发往网关的请求体 max_tokens >= 512（防 100 这类截断值）；
- *           出题 = 1024、工具轮 = 512。
+ *           出题 = 8192、工具轮 = 512。
  * ================================================================ */
 
 const fs = require('fs');
@@ -1073,7 +1073,7 @@ function findBareMaxTokens(src) {
   return offenders;
 }
 
-testAsync('出题请求 max_tokens = 1024（避免扩族后题面变长撞 500）', async () => {
+testAsync('出题请求 max_tokens = 8192（避免扩族后长题面 JSON 被截断）', async () => {
   LLMV._resetProbe();
   LLMV._resetStats();
   LLMV._clearCache();
@@ -1088,7 +1088,7 @@ testAsync('出题请求 max_tokens = 1024（避免扩族后题面变长撞 500�
     // 最后一次请求是出题请求（前面可能有探测请求）
     const gen = bodies[bodies.length - 1];
     assert.ok(gen.messages, '捕获到出题请求体');
-    assert.strictEqual(gen.max_tokens, 1024, '出题 max_tokens 应为 1024: ' + gen.max_tokens);
+    assert.strictEqual(gen.max_tokens, 8192, '出题 max_tokens 应为 8192: ' + gen.max_tokens);
   } finally { restore(); LLMV._resetProbe(); }
 });
 
@@ -1149,10 +1149,10 @@ test('单一出处：llm-variants.js 内 max_tokens 字面量只出现在常量�
   assert.deepStrictEqual(findBareMaxTokens(src), [], '存在裸数字 max_tokens 字面量:\n' + findBareMaxTokens(src).join('\n'));
 });
 
-test('单一出处：llm-config.js 定义 variants=1024 / tools=512，llm-variants.js 从配置取值', () => {
+test('单一出处：llm-config.js 定义 variants=8192 / tools=512，llm-variants.js 从配置取值', () => {
   /* 配置唯一真源搬到 llm-config.js，所以断言从扫字面量改成读配置值，防漂移目的不变。 */
   const cfg = require('../diagnose/llm-config.js');
-  assert.strictEqual(cfg.maxTokens.variants, 1024, 'llm-config.js 的 maxTokens.variants 应为 1024');
+  assert.strictEqual(cfg.maxTokens.variants, 8192, 'llm-config.js 的 maxTokens.variants 应为 8192');
   assert.strictEqual(cfg.maxTokens.tools, 512, 'llm-config.js 的 maxTokens.tools 应为 512');
   const src = fs.readFileSync(path.join(__dirname, '..', 'diagnose', 'llm-variants.js'), 'utf8');
   assert.ok(/GEN_MAX_TOKENS\s*=\s*CFG\s*\?\s*CFG\.maxTokens\.variants/.test(src),

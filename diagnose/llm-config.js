@@ -55,16 +55,26 @@
      * completion_tokens 99–161，离 2000 很远，暂无上调必要；换型号/换 prompt 后要重新量。 */
     labmatch: 2000,
     /* O3-6：max_tokens 单一出处（各文件自持，关键是一处定义、多处引用）。
-     * GEN  —— 出题：一道题 JSON（题面+答案+解析），扩族后题面变长，500 会撞截断，取 1024
+     * GEN  —— 出题：一道题 JSON（题面+答案+解析），扩族后题面变长，500 会撞截断。
+     *   为什么现在能到 8192（实测，不是拍脑袋）：
+     *   网关吞吐实测约 250 token/s → 10s 只够约 2500 token，所以旧的 1024 上限其实在当「保险丝」用；
+     *   一道需要长推理的题目用 max_tokens=8192 实测 10.5s / completion 2972 才 finish=stop；
+     *   同一题 max_tokens=2048 时 8.1s、finish=length、内容被截断。
+     *   即：8192 才够长题面不截断，但它必然跑过旧的 10s，所以 timeouts.chat 必须同步放到 30000。
+     *   8192 只对出题生效；工具轮见下，仍是 512，不受影响。
      * TOOL —— 工具轮：只需返回 tool_calls 参数，不需要长文本，取 512（也是 >=512 下限）
      * 改这两个值之前先看 tests/test_llm_variants.js 的 max_tokens 契约断言。 */
-    variants: 1024,
+    variants: 8192,
     tools: 512,
     route: 1600     /* ≥1200：网关把 reasoning 算进预算 */
   };
 
   var timeouts = {
-    chat: 10000,
+    /* 与 maxTokens.variants=8192 配套（实测依据见上）：网关吞吐约 250 token/s，
+     * 长推理题 max_tokens=8192 实测 10.5s / completion 2972 才 finish=stop，旧的 10s 会先触发超时。
+     * 取 30000：宁可等，也不要超时后 fail-closed 丢掉已经生成的内容
+     * （超时 abort 会连同已产出的题目 JSON 一起丢）。 */
+    chat: 30000,
     /* O3-4：探测超时放宽到 15s（联调时网关负载大响应可能 >5s，5s 太紧导致误判 false） */
     probe: 15000,
     labmatch: 20000,  /* 推理模型 + 多选项题面实测可超 12s（cnm_230_q1 就吃过超时） */

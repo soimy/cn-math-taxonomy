@@ -46,7 +46,7 @@
   var MAX_RETRIES = 3;
 
   /* O3-6：max_tokens 单一真源已收敛到 llm-config.js 的 maxTokens.variants / maxTokens.tools。
-   * GEN  —— 出题：一道题 JSON（题面+答案+解析），扩族后题面变长，500 会撞截断，取 1024
+   * GEN  —— 出题：一道题 JSON（题面+答案+解析），扩族后题面变长，500 会撞截断，取 8192
    * TOOL —— 工具轮：只需返回 tool_calls 参数，不需要长文本，取 512（也是 >=512 下限）
    * 实测注释随值一起搬到了 llm-config.js；改值/防漂移断言见 tests/test_llm_variants.js。 */
   var GEN_MAX_TOKENS = CFG ? CFG.maxTokens.variants : null;
