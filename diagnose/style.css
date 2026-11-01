@@ -365,7 +365,9 @@ table.log select { min-height: 44px; }
 .ask-a { margin-top: 2px; color: var(--text, #222); }
 .ask-a.pending { color: var(--muted, #888); font-style: italic; }
 .ask-a.offline { color: var(--warn, #b58900); }
-.ask-input { flex: 1; min-width: 0; padding: 7px 10px; border: 1px solid var(--line, #ccc); border-radius: 8px; font-size: 0.95rem; }
+/* 追问输入框：.grow 只是 flex 项、不是 flex 容器，里面的 input 撑不开 —— 让这层也变成 flex */
+.ask-box .grow { display: flex; }
+.ask-input { flex: 1; min-width: 0; width: 100%; padding: 7px 10px; border: 1px solid var(--line, #ccc); border-radius: 8px; font-size: 0.95rem; }
 .ask-graph { margin-top: 8px; max-width: 100%; }
 .ask-graph .funclab { max-width: 100%; }
 .ask-graph .funclab-canvas { height: 240px; }
