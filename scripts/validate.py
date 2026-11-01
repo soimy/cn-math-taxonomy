@@ -92,6 +92,13 @@ EDITION_RESERVED = {"renjiao_math", "pep_math"}  # 人教版就是 topic 自己�
 MAPPING_TERMS = ("上", "下", "全")
 MAPPING_ENTRY_FIELDS = {"grade", "term", "unit", "chapter", "note"}
 MAPPING_FILE_STATUS = ("example", "draft", "reviewed")
+SUBJECTS = ("math", "english", "physics", "chinese", "science", "morality", "history", "geography")
+
+
+def edition_subject(edition):
+    """对照表 edition 的学科后缀：'hujiao_english' -> 'english'；没有学科后缀时按数学。"""
+    tail = str(edition or "").rsplit("_", 1)[-1]
+    return tail if tail in SUBJECTS else "math"
 
 errors = []
 warnings = []
@@ -272,8 +279,8 @@ def check_mapping_files(ids):
             t = ids.get(tid)
             if t is None:
                 err("%s topicId 不存在：%r" % (ew, tid))
-            elif t.get("external") or topic_subject(tid) != "math":
-                err("%s 只能对照数学正式知识点：%s" % (ew, tid))
+            elif t.get("external") or topic_subject(tid) != edition_subject(edition):
+                err("%s 只能对照%s正式知识点：%s" % (ew, edition_subject(edition), tid))
             if tid in seen:
                 err("%s topicId 重复：%s" % (ew, tid))
             seen.add(tid)

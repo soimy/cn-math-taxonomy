@@ -54,6 +54,7 @@
   let chapterOpen = false;
   let gradeSel = '七';     // 开始页「按年级整体诊断」：年级
   let volSel = '';         // '' 整年级 / '上' / '下'
+  let editionKey = '';     // 档案教材版本对应的对照表键（如 hujiao_math），空 = 按人教版册次
   let seedParam = null;    // URL 参数 seed：固定选题的随机种子
   let pathCy = null;
   let pathToken = 0;
@@ -209,6 +210,44 @@
       if ('一二三四五六'.indexOf(gradeSel) < 0) gradeSel = '一';
       if (volSel === '全') volSel = '';
     }
+    applyChildDefaults();
+  }
+
+  // 教材版本 → data/mappings 的 edition 前缀（对照表键 = 前缀_学科）
+  const EDITION_PREFIX = { '沪教版': 'hujiao' };
+  const EDITION_LABELS = { hujiao_math: '沪教版', hujiao_english: '沪教版' };
+
+  /** 档案里的教材版本 + 当前学科 → 对照表键；该学科没有对照表时返回 ''（按人教版册次出题）。 */
+  function editionFor(child) {
+    const prefix = child && EDITION_PREFIX[child.textbook];
+    return prefix ? prefix + '_' + subject : '';
+  }
+
+  /** 开始页的年级、教材版本跟随档案；没有档案时保持现状。 */
+  function applyChildDefaults() {
+    const c = CC.current && CC.current();
+    editionKey = editionFor(c);
+    const g = String((c && c.grade) || '');
+    if (/^[一二三四五六七八九]年级$/.test(g)) gradeSel = g.charAt(0);
+    else if (/^高[一二三]$/.test(g)) gradeSel = g;
+  }
+
+  /** 按教材版本取范围；该版本/年级没有对照时回退人教版的册次范围。 */
+  function targetsFor(scope) {
+    if (editionKey) {
+      const g = E.gradeTargets(D.graph, scope, subject, editionKey);
+      if (g) return { g: g, ed: editionKey };
+    }
+    return { g: E.gradeTargets(D.graph, scope, subject), ed: '' };
+  }
+
+  /** 整年级筛查的按单元汇总：这次诊断用了教材版本对照，就按该版本的单元分组。 */
+  function chapterSummaryOf() {
+    const ed = sessionMeta && sessionMeta.edition;
+    return E.chapterSummary(D.graph, session, ed ? function (t) {
+      const m = t.mappings && t.mappings[ed];
+      return m && m.unit ? { key: m.unit, label: m.unit } : null;
+    } : null);
   }
   function lsGet(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* 隐私模式等 */ } }
@@ -299,21 +338,60 @@
     D = { topics: topics, deps: deps, stdById: stdById, graph: graph, tree: buildTree(topics), aliases: (js[3] && js[3].aliases) || {} };
   }
 
-  function buildTree(topics) {
+  // edition 为空时按人教版册次分组；传了版本键就按 topic.mappings 的年级/学期/单元分组
+  function buildTree(topics, edition) {
     const vols = {};
     topics.forEach(function (t) {
       if (t.external) return;
-      const c = E.parseChapter(t.chapter);
-      const v = vols[c.volume] || (vols[c.volume] = { chapters: [], byKey: {} });
-      const key = c.chapterNo + ' ' + c.chapterName;
-      let ch = v.byKey[key];
+      const m = edition ? (t.mappings && t.mappings[edition]) : null;
+      if (edition && !m) return;
+      const c = m ? null : E.parseChapter(t.chapter);
+      const volKey = m ? '一二三四五六七八九'.charAt(m.grade - 1) + m.term : c.volume;
+      const chLabel = m ? (m.unit || '未分单元') : c.chapterNo + ' ' + c.chapterName;
+      const section = m ? (m.chapter || '') : c.section;
+      const v = vols[volKey] || (vols[volKey] = {
+        chapters: [], byKey: {},
+        volumeLabel: m ? '一二三四五六七八九'.charAt(m.grade - 1) + '年级' + (m.term === '全' ? '全一册' : m.term + '册') : c.volume
+      });
+      let ch = v.byKey[chLabel];
       if (!ch) {
-        ch = v.byKey[key] = { volume: c.volume, key: c.volume + ' ' + c.chapterNo, label: c.chapterNo + ' ' + c.chapterName, topics: [] };
+        ch = v.byKey[chLabel] = { volume: volKey, key: volKey + ' ' + chLabel, label: chLabel, topics: [] };
         v.chapters.push(ch);
       }
-      ch.topics.push({ t: t, section: c.section });
+      ch.topics.push({ t: t, section: section });
     });
+    if (edition) {
+      Object.keys(vols).forEach(function (k) {
+        vols[k].chapters.sort(function (a, b) { return unitNo(a.label) - unitNo(b.label); });
+      });
+    }
     return vols;
+  }
+
+  function volLabelOf(tree, vol) {
+    return (tree && tree[vol] && tree[vol].volumeLabel) || vol;
+  }
+
+  const CN_DIGIT = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 };
+  // 单元序号：优先阿拉伯数字（Unit 3 / 第3单元），其次中文（三、统计）；取不到排最后
+  function unitNo(label) {
+    const s = label || '';
+    const m = /(\d+)/.exec(s);
+    if (m) return Number(m[1]);
+    const cn = /([一二三四五六七八九十]+)/.exec(s);
+    if (!cn) return 999;
+    const t = cn[1];
+    if (t.length === 1) return CN_DIGIT[t] || 999;
+    if (t.charAt(0) === '十') return 10 + (CN_DIGIT[t.charAt(1)] || 0);
+    if (t.charAt(1) === '十') return (CN_DIGIT[t.charAt(0)] || 0) * 10 + (CN_DIGIT[t.charAt(2)] || 0);
+    return CN_DIGIT[t.charAt(0)] || 999;
+  }
+
+  // 版本模式下的册列表：[册键, 显示名]，按年级/学期排序
+  function editionVolumes(tree) {
+    function rank(k) { return '一二三四五六七八九'.indexOf(k.charAt(0)) * 3 + '上下全'.indexOf(k.charAt(1)); }
+    return Object.keys(tree).sort(function (a, b) { return rank(a) - rank(b); })
+      .map(function (k) { return [k, tree[k].volumeLabel]; });
   }
 
   /* ------------------------------------------------------------ 孩子档案 */
@@ -363,7 +441,7 @@
     return h('div', { class: 'card child-bar no-print', id: 'child-bar' },
       h('div', { class: 'row' },
         h('label', { for: 'child-select' }, '当前孩子'),
-        childSelect(function (id) { CC.setCurrent(id); renderStart(); }),
+        childSelect(function (id) { CC.setCurrent(id); applyChildDefaults(); renderStart(); }),
         h('span', { class: 'grow' }),
         cur ? h('a', { class: 'btn', href: childrenHref('history.html?child=' + encodeURIComponent(cur.id)), text: '盲区与历史' }) : null,
         h('a', { class: 'btn', href: childrenHref(fromQuery()), text: '孩子档案' })),
@@ -443,7 +521,7 @@
     if (demo || !session) return;
     lsSet(sessionKey(), {
       v: 2, mode: session.mode, targets: session.targets, limit: session.limit, confirm: session.confirm,
-      label: sessionMeta.label, answers: session.answers,
+      label: sessionMeta.label, edition: sessionMeta.edition || '', answers: session.answers,
       seed: session.seed, avoid: session.avoid, savedAt: new Date().toISOString()
     });
   }
@@ -455,7 +533,7 @@
     session = E.createSession(D.graph, targets, {
       mode: mode, limit: limit || (screen ? st.screenLimit : st.limit), confirm: st.confirm, seed: newSeed(), avoid: seenList()
     });
-    sessionMeta = { label: label };
+    sessionMeta = { label: label, edition: editionKey };
     resetUi();
     save();
     render();
@@ -466,7 +544,7 @@
       session = E.replay(D.graph, saved.targets, saved.answers, {
         mode: saved.mode, limit: saved.limit, confirm: saved.confirm, seed: saved.seed, avoid: saved.avoid
       });
-      sessionMeta = { label: saved.label || saved.targets.map(nameOf).join('、') };
+      sessionMeta = { label: saved.label || saved.targets.map(nameOf).join('、'), edition: saved.edition || '' };
       return true;
     } catch (e) { return false; }
   }
@@ -835,7 +913,7 @@
     const listBox = h('div', { id: 'target-list' });
     const browser = h('details', { class: 'chapter-browser', id: 'chapter-browser', open: chapterOpen || !!startQuery },
       h('summary', null, '按册、章浏览'),
-      h('p', { class: 'muted small', text: '列表按年级、册、章折叠。想直接开始，用上面的搜索更快。' }),
+      h('p', { class: 'muted small', text: (editionKey && EDITION_LABELS[editionKey] ? '当前按' + EDITION_LABELS[editionKey] + '的册次和单元编排；' : '') + '列表按年级、册、章折叠。想直接开始，用上面的搜索更快。' }),
       listBox);
     browser.addEventListener('toggle', function () { chapterOpen = browser.open; });
     const confirmHelp = '同一知识点连续答对 ' + st.confirm + ' 题（可在下方改成 2 / 3 / 5；题库更少时以题库为准）才算掌握；答错会再出一道同级或更容易的题——确认题也错才算薄弱并回溯先修，确认题答对则标为「不稳」。';
@@ -900,7 +978,10 @@
     const box = h('div', { class: 'card', id: 'grade-card' });
     const fill = function () {
       while (box.firstChild) box.removeChild(box.firstChild);
-      const g = E.gradeTargets(D.graph, gradeScope(), subject);
+      const picked = targetsFor(gradeScope());
+      const g = picked.g;
+      const edName = picked.ed ? EDITION_LABELS[picked.ed] : '';
+      const edNote = !edName && editionKey ? (EDITION_LABELS[editionKey] || '该教材版本') + '这个年级还没有对照表，按人教版出题。' : '';
       const tabs = function (label, items, current, set) {
         return h('div', { class: 'stage-tabs', role: 'tablist', 'aria-label': label }, items.map(function (it) {
           return h('button', {
@@ -954,12 +1035,14 @@
           : (subject === 'english' && gradeSel === '九')
             ? tabs('范围', [['', '整年级'], ['上', '上册（新版）'], ['全', '全一册（旧版，九下暂用）']], volSel, function (v) { volSel = v; })
             : tabs('范围', [['', '整年级'], ['上', '上册'], ['下', '下册']], volSel, function (v) { volSel = v; }),
-        h('p', { class: 'muted', id: 'grade-info' }, g ? g.label + '：' + g.ids.length + ' 个知识点。' : '这个范围没有知识点。'),
+        h('p', { class: 'muted', id: 'grade-info' }, g
+          ? g.label + (edName ? '（' + edName + '）' : '') + '：' + g.ids.length + ' 个知识点。' + (edNote ? ' ' + edNote : '')
+          : '这个范围没有知识点。' + (edNote ? ' ' + edNote : '')),
         h('div', { class: 'row' },
           h('label', null, '题量上限（' + SCREEN_MIN + '–' + SCREEN_MAX + '）', limitInput),
           h('button', {
             class: 'primary', id: 'btn-grade-start', disabled: !g,
-            onclick: function () { if (g) startSession(g.ids, g.label + '（整体筛查）', null, 'screen'); }
+            onclick: function () { if (g) startSession(g.ids, g.label + (edName ? ' · ' + edName : '') + '（整体筛查）', null, 'screen'); }
           }, '开始整体诊断')),
         h('p', { class: 'muted small' }, '知识点多、题量有限，到上限后没测到的标为「未测」；结果页可以再加题。默认 ' + E.SCREEN_LIMIT + ' 题。'));
     };
@@ -976,9 +1059,11 @@
       if ('一二三四五六'.indexOf(key.charAt(0)) >= 0) return 'p';
       return 'j';
     }
-    VOLUMES.forEach(function (vv) {
+    const tree = editionKey ? buildTree(D.topics, editionKey) : D.tree;
+    const vols = editionKey ? editionVolumes(tree) : VOLUMES;
+    vols.forEach(function (vv) {
       if (startStage && volumeStage(vv[0]) !== startStage) return;
-      const v = D.tree[vv[0]];
+      const v = tree[vv[0]];
       if (!v) return;
       const chapters = [];
       v.chapters.forEach(function (ch) {
@@ -992,7 +1077,7 @@
       if (!chapters.length) return;
       const count = chapters.reduce(function (n, c) { return n + c.rows.length; }, 0);
       shown += count;
-      const openVol = subject === 'physics' ? '八上' : subject === 'english' ? '三上' : subject === 'history' || subject === 'geography' ? '七上' : '一上';
+      const openVol = editionKey ? (tree[gradeSel + (volSel || '上')] ? gradeSel + (volSel || '上') : vols[0][0]) : subject === 'physics' ? '八上' : subject === 'english' ? '三上' : subject === 'history' || subject === 'geography' ? '七上' : '一上';
       const seniorOpen = subject === 'english' || subject === 'physics' ? '必修一' : '高一';
       const det = h('details', { class: 'vol', open: !!q || (startStage === 'j' ? vv[0] === '七上' : startStage === 'h' ? vv[0] === seniorOpen : vv[0] === openVol) },
         h('summary', null, vv[1] + '（' + count + ' 个知识点）'));
@@ -1003,7 +1088,7 @@
             h('span', { class: 't', text: ch.label }),
             h('button', {
               class: 'primary', title: '把本章全部 ' + ch.topics.length + ' 个知识点一起作为目标',
-              onclick: function () { startSession(ch.topics.map(function (x) { return x.t.id; }), ch.volume + ' ' + ch.label + '（整章）'); }
+              onclick: function () { startSession(ch.topics.map(function (x) { return x.t.id; }), volLabelOf(tree, ch.volume) + ' ' + ch.label + '（整章）'); }
             }, '以整章为目标')),
           c.rows.map(function (x) {
             return h('div', { class: 'topic-row', title: x.t.description },
@@ -1631,7 +1716,7 @@
     }
     var token = ++shareToken;
     var sum = E.summarize(D.graph, session);
-    var chapters = session.mode === 'screen' ? E.chapterSummary(D.graph, session) : null;
+    var chapters = session.mode === 'screen' ? chapterSummaryOf() : null;
     var model = buildShareModel(sum, chapters);
     window.__shareModel = model;
     var canvas = document.createElement('canvas');
@@ -1747,7 +1832,7 @@
     else page.append(adviceCard(sum));
 
     const targetsMastered = session.targets.every(function (id) { return E.statusOf(session, id) === 'mastered'; });
-    const chapters = screen ? E.chapterSummary(D.graph, session) : null;
+    const chapters = screen ? chapterSummaryOf() : null;
     const outOfScope = screen ? sum.roots.filter(function (r) { return r.outOfScopePrereqs.length; }) : [];
     let headline;
     if (screen) {
@@ -2197,7 +2282,7 @@
     sum.path.concat(session.mode === 'screen' ? [] : session.targets.map(function (id) { return { id: id }; })).forEach(function (p) {
       (D.graph.byId[p.id].standards || []).forEach(function (sd) { stdIds.add(sd.id); });
     });
-    const chapters = session.mode === 'screen' ? E.chapterSummary(D.graph, session) : null;
+    const chapters = session.mode === 'screen' ? chapterSummaryOf() : null;
     const out = {
       tool: 'cn-math-taxonomy/diagnose', version: 2, mode: session.mode || 'target', generatedAt: new Date().toISOString(),
       note: '自动判题是近似的，以参考答案为准。',
@@ -2303,7 +2388,7 @@
         if (scope.charAt(0) !== gch) throw new Error('URL 参数 grade 与 volume 不一致：' + grade + ' / ' + volume);
       }
       if (/^[一二三四五六七八九]$/.test(scope)) scope += '年级';
-      const g = E.gradeTargets(D.graph, scope, subject);
+      const g = (editionKey && E.gradeTargets(D.graph, scope, subject, editionKey)) || E.gradeTargets(D.graph, scope, subject);
       if (!g) throw new Error('URL 参数 grade / volume 无法识别：' + (volume || grade) + '（写法如 grade=七年级、volume=七上）');
       return { ids: g.ids, label: g.label + '（整体筛查）', mode: 'screen' };
     }
@@ -2332,7 +2417,7 @@
         mode: resolved.mode, limit: limit || (resolved.mode === 'screen' ? getSettings().screenLimit : getSettings().limit),
         confirm: getSettings().confirm, seed: seedParam == null ? 'demo' : seedParam
       });
-      sessionMeta = { label: resolved.label };
+      sessionMeta = { label: resolved.label, edition: editionKey };
       const step = parseInt(params.get('step'), 10);
       runDemo(step >= 0 ? step : Infinity);
       render();

@@ -724,6 +724,24 @@ test('英语：小学 197、初中 180–260、高中 220–320，不与数学�
   assert.ok(enGrade9.volumes.indexOf('九全') >= 0 && enGrade9.ids.every((id) => id.startsWith('cne_')));
   const mathGrade9 = E.gradeTargets(RG, '九年级');
   assert.ok(mathGrade9.ids.length > 0 && mathGrade9.ids.every((id) => id.startsWith('cnm_') && RG.byId[id].semester !== '全'));
+  // 教材版本对照（topic.mappings）：沪教版五上 = 人教 2 上–5 上的跨年级集合，不按人教版册次
+  const edMath = E.gradeTargets(RG, '五上', 'math', 'hujiao_math');
+  assert.strictEqual(edMath.ids.length, 21);
+  assert.ok(edMath.ids.every((id) => RG.byId[id].mappings.hujiao_math.grade === 5 && RG.byId[id].mappings.hujiao_math.term === '上'));
+  assert.ok(edMath.ids.some((id) => RG.byId[id].grade !== 5), '沪教版五上应含人教其他年级的知识点');
+  assert.strictEqual(E.gradeTargets(RG, '五年级', 'math', 'hujiao_math').ids.length, 30);
+  assert.strictEqual(E.gradeTargets(RG, '六上', 'math', 'hujiao_math'), null, '没有对照时返回 null，让调用方回退人教版');
+  assert.deepStrictEqual(E.gradeTargets(RG, '五上', 'math'), E.gradeTargets(RG, '五上', 'math', null));
+  assert.strictEqual(E.gradeTargets(RG, '五上', 'english', 'hujiao_english').ids.length, 38);
+  const edRun = E.createSession(RG, E.gradeTargets(RG, '五上', 'math', 'hujiao_math').ids, { mode: 'screen', limit: 8, seed: 'edition' });
+  const edCh = E.chapterSummary(RG, edRun, function (t) {
+    const m = t.mappings && t.mappings.hujiao_math;
+    return m && m.unit ? { key: m.unit, label: m.unit } : null;
+  });
+  assert.strictEqual(edCh.length, 5, '沪教版五上按 5 个单元汇总');
+  assert.ok(edCh.every((c) => c.label && c.total > 0));
+  assert.ok(edCh.some((c) => c.label.indexOf('小数乘除法') >= 0), '单元名用沪教版目录，不是人教版章名');
+  assert.strictEqual(edCh.reduce((n, c) => n + c.total, 0), 21);
   assert.deepStrictEqual(
     E.parseChapter('八年级下册 第8单元 Have you read Treasure Island yet'),
     { volume: '八下', chapterNo: '第8单元', chapterName: 'Have you read Treasure Island yet', section: '' }

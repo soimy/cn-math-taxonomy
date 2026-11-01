@@ -112,7 +112,7 @@ data/topics.json         知识点节点（JSON 数组）
 data/dependencies.json   先修边（JSON 数组）
 data/cn-curriculum-standards.json  课标（数学 314 + 英语 116 + 物理 197（初中 89 + 高中 108），另有语文、科学、道德与法治，以及历史 19 条 chs-2022、地理 22 条 cgs-2022；高中、英语、历史和地理页码待核）
 data/id-aliases.json               旧 id cnm_ext_001…018 → 小学正式知识点（方案 b，节点已删除）
-data/mappings/             教材版本对照表（可选，沪教、苏教等；现只有一个占位示例 hujiao_math.example.json），说明见 docs/edition-mappings.md
+data/mappings/             教材版本对照表（可选；现有 hujiao_math.json、hujiao_english.json、sd54_math.json 与占位示例 hujiao_math.example.json），合并进 topics.json 用 scripts/merge_mappings.py，说明见 docs/edition-mappings.md
 docs/standards-mapping.md          课标对齐说明：来源、映射规则、覆盖率、未映射清单、局限
 data/questions.json      题库：数学 3627 题 + 英语 3164 题（小学 1100 + 初中 1028 + 高中 1036）+ 物理 1076 题（初中 368 + 高中 708）+ 历史 536 题 + 地理 236 题等；另有语文、科学、道德与法治，以文件为准
 data/_qbatches/primary_g1.json … primary_g6.json、high.json、high_sel.json   生成批次（保留，便于对照；不部署）
@@ -162,7 +162,7 @@ README 和 `diagnose/README.md` 用 `![](screenshots/…)` 嵌入的这 14 张�
 | `external` | `false` |
 | `standards` | 课标映射数组，元素 `{"id", "confidence", "note"?}`，见下节；可为空数组 |
 | `root_reason` | 仅当没有任何先修边时必填。现在只有 `cnm_p001`（1到5各数的认识） |
-| `mappings` | 可选。其他教材版本的对照，`{版本 id: {grade, term, unit?, chapter?, note?}}`，如 `hujiao_math`（沪教版）；缺省就是只有人教版。目前没有知识点带这个字段，贡献方式见 [docs/edition-mappings.md](docs/edition-mappings.md) |
+| `mappings` | 可选。其他教材版本的对照，`{版本 id: {grade, term, unit?, chapter?, note?}}`，如 `hujiao_math`（沪教版数学）、`hujiao_english`（沪教版英语）；缺省就是只有人教版。由 `scripts/merge_mappings.py` 从 `data/mappings/*.json` 生成，不要手改，贡献方式见 [docs/edition-mappings.md](docs/edition-mappings.md) |
 | `external` | 全部为 `false`。旧的小学外部节点已按方案 b 删除，见 `data/id-aliases.json` |
 
 说明：

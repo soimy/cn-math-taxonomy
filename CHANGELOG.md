@@ -1,5 +1,10 @@
 # 变更日志
 
+## 2026-11-01（诊断按教材版本出题：沪教版数学 + 英语五上）
+
+- 2026-11-01：教材版本对照从「只存不看」接到诊断上。新增 `scripts/merge_mappings.py` 把 `data/mappings/*.json` 全量合并进 `data/topics.json` 的 `topic.mappings`（现 200 个知识点带对照，`mappings` 插在 `standards` 后，diff 只有新增行）；`engine.gradeTargets(graph, scope, subject, editionId)` 加可选第 4 参，传了就按 `mappings` 的年级/学期筛（跨人教年级映射），不传行为不变；`engine.chapterSummary(graph, session, labelOf)` 加可选第 3 参，整年级筛查的按单元汇总可用该版本单元名分组。诊断开始页的年级、范围跟随孩子档案的 `grade` / `textbook`，`沪教版` 映射到 `hujiao_<学科>`，该版本/年级无对照时回退人教版并在卡片提示。新增 `data/mappings/hujiao_english.json`（沪教版（五四制）（新教材）英语五上 Starter + Unit 1–10，38 条，`draft`，部分单元语言点标「待核」）。`validate.py` 的对照表学科限制从硬编码数学改为按 edition 学科后缀判定（`hujiao_english` → 英语）。开始页「按册、章浏览」也改成按档案版本分组（册=映射年级+学期，章=映射单元，副标题=映射课时），无对照时仍按人教版；`sw.js` VERSION v5→v7。检查：`python3 scripts/merge_mappings.py && python3 scripts/validate.py`、`node tests/test_engine.js`（补沪教版五上 21 条 / 英语五上 38 条 / 按单元汇总 5 组）。本地提交，未推送、未部署。
+
+
 ## 2026-10-31（新增初中地理）
 
 - 2026-10-31：新增初中地理（人教版 2024 审定七上至八下，`cng_j001`–`cng_j059`，59 个知识点、236 题、先修边 76 条（hard 26，soft 50）、课标条目 22 条 `cgs-2022:`）。六三制初中地理只开七、八年级，九年级没有地理课。七上至八下按 2024 审定人教目录（七下「中东」改为「西亚」，八下收束章为「奋进中的中国」）。领域：地球与地图 9、世界地理 21、中国地理 29。首页、知识图谱、诊断加上「地理」切换（海洋青主题）；`validate.py` 增加地理的 id、领域、年级和课标校验；测试补上按年级目标和档案恢复。盲区学科列表加上地理。可复跑：`scripts/geo_build.py`。本地提交，未推送、未部署。

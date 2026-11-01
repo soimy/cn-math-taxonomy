@@ -1,0 +1,263 @@
+{
+ "edition": "hujiao_english",
+ "label": "沪教版（上海教育出版社）英语",
+ "status": "draft",
+ "source": "对照依据：沪教版（五四制）（新教材）五年级上册目录（Starter + Unit 1–10），取自教习网教材目录页 https://www.51jiaoxi.com/catalog/list?book_id=3003962 （页面标题「小学英语沪教版（五四制）（新教材）五年级上册（新教材）」，2026-11-01 查证）；单元语言点按同站该单元教案/学案正文与单元主题整理。人教小学英语知识库按 PEP 单元编排，与沪教版单元顺序不同，故 unit 记沪教版单元、chapter 记能查到的沪教版课时。本文件只做「语言点重合」的保守映射，跨年级借用人教 3 上–6 下知识点属设计意图；未直接查到课时语言点的条目在 note 标 **待核**，勿当已审核。牛津上海版已停用，不在本文件范围。",
+ "entries": [
+  {
+   "topicId": "cne_p126",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 1 Clubs in our school",
+   "note": "there be 描述社团教室和设施"
+  },
+  {
+   "topicId": "cne_p113",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 1 Clubs in our school",
+   "note": "When do the clubs meet?"
+  },
+  {
+   "topicId": "cne_p114",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 1 Clubs in our school",
+   "note": "We have the Art Club on Mondays."
+  },
+  {
+   "topicId": "cne_p117",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 1 Clubs in our school"
+  },
+  {
+   "topicId": "cne_p122",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 1 Clubs in our school",
+   "note": "I can paint well."
+  },
+  {
+   "topicId": "cne_p123",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 1 Clubs in our school",
+   "chapter": "Lesson 3 At the Art Club"
+  },
+  {
+   "topicId": "cne_p121",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 1 Clubs in our school"
+  },
+  {
+   "topicId": "cne_p108",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 1 Clubs in our school",
+   "note": "**待核**：按词例 club/class 的 cl 连缀对应，语音板块未逐条核对"
+  },
+  {
+   "topicId": "cne_p167",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 2 Traditional games"
+  },
+  {
+   "topicId": "cne_p115",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 2 Traditional games"
+  },
+  {
+   "topicId": "cne_p116",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 2 Traditional games"
+  },
+  {
+   "topicId": "cne_p129",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 3 Amazing plants"
+  },
+  {
+   "topicId": "cne_p130",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 3 Amazing plants"
+  },
+  {
+   "topicId": "cne_p131",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 3 Amazing plants",
+   "chapter": "Lesson 4 My plant poster"
+  },
+  {
+   "topicId": "cne_p132",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 4 Together with animals",
+   "chapter": "Lesson 1 A welcome letter to the Safari Park"
+  },
+  {
+   "topicId": "cne_p018",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 4 Together with animals",
+   "note": "介绍动物，从人教三年级上册借用"
+  },
+  {
+   "topicId": "cne_p175",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 5 Seeing a doctor"
+  },
+  {
+   "topicId": "cne_p177",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 5 Seeing a doctor",
+   "chapter": "Lesson 2 Seeing a doctor",
+   "note": "I can't see clearly these days. / You should ..."
+  },
+  {
+   "topicId": "cne_p178",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 5 Seeing a doctor"
+  },
+  {
+   "topicId": "cne_p236",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 5 Seeing a doctor",
+   "note": "看病延伸到健康习惯建议"
+  },
+  {
+   "topicId": "cne_p124",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 6 Try my best"
+  },
+  {
+   "topicId": "cne_p168",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 6 Try my best",
+   "note": "He tries his best."
+  },
+  {
+   "topicId": "cne_p171",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 7 Great scientists"
+  },
+  {
+   "topicId": "cne_p172",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 7 Great scientists"
+  },
+  {
+   "topicId": "cne_p173",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 7 Great scientists"
+  },
+  {
+   "topicId": "cne_p174",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 7 Great scientists"
+  },
+  {
+   "topicId": "cne_p109",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 7 Great scientists",
+   "note": "描述科学家性格和外貌"
+  },
+  {
+   "topicId": "cne_p110",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 7 Great scientists",
+   "note": "What is he like?"
+  },
+  {
+   "topicId": "cne_p185",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 8 Useful inventions",
+   "chapter": "Lesson 4 An ad for a useful invention",
+   "note": "**待核**：按发明介绍的过去时叙述对应，课时语言点未核对"
+  },
+  {
+   "topicId": "cne_p189",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 8 Useful inventions",
+   "note": "**待核**：同上"
+  },
+  {
+   "topicId": "cne_p176",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 9 Using computers",
+   "note": "**待核**：电脑使用规则，沪教版以 should/shouldn't 表达"
+  },
+  {
+   "topicId": "cne_p199",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 9 Using computers",
+   "note": "**待核**：人教以 have to / can't 表达同一条「规则」功能"
+  },
+  {
+   "topicId": "cne_p192",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 10 A greener life",
+   "chapter": "Lesson 3 Baggie's new life",
+   "note": "**待核**：环境今昔对比，按主题对应"
+  },
+  {
+   "topicId": "cne_p193",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 10 A greener life",
+   "note": "**待核**：同上"
+  },
+  {
+   "topicId": "cne_p194",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 10 A greener life",
+   "note": "**待核**：同上"
+  },
+  {
+   "topicId": "cne_p181",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 10 A greener life",
+   "note": "**待核**：比较级，按主题对应"
+  },
+  {
+   "topicId": "cne_p182",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 10 A greener life",
+   "note": "**待核**：同上"
+  },
+  {
+   "topicId": "cne_p184",
+   "grade": 5,
+   "term": "上",
+   "unit": "Unit 10 A greener life",
+   "note": "**待核**：同上"
+  }
+ ]
+}

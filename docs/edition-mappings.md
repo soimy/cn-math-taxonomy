@@ -40,7 +40,7 @@
 | `note` | 否 | 与人教版取舍不同、拆合并等需要说明的地方 |
 
 - 没有对照的知识点**不要**写 `mappings`（空对象会被拒绝）；缺省不会触发任何校验错误。
-- 目前 `topics.json` 里没有任何 topic 带 `mappings`。
+- `topics.json` 里的 `mappings` 由对照表文件合并而来（见下），不要手改；目前 200 个知识点带对照。
 
 ### 2. 贡献用的对照表文件 `data/mappings/<版本 id>.json`
 
@@ -60,9 +60,21 @@
 
 - `status`：`example`（示例，仅演示格式）、`draft`（有依据，待核）、`reviewed`（已另一人对照教材核过）。`draft` 和 `reviewed` 必须写 `source`。
 - 文件名必须以 `edition` 开头；示例文件叫 `<edition>.example.json`，`status` 必须是 `example`，至多 10 条。
-- `entries[].topicId` 必须是已存在的数学正式知识点，同一文件里不能重复；`grade`、`term`、`unit`、`chapter`、`note` 规则同上。
+- `entries[].topicId` 必须是该版本学科对应的正式知识点（版本 id 的学科后缀决定学科：`hujiao_math` → 数学、`hujiao_english` → 英语），同一文件里不能重复；`grade`、`term`、`unit`、`chapter`、`note` 规则同上。
 
-仓库里现有的 `data/mappings/hujiao_math.example.json` 只有 6 条**占位**数据，没有对照沪教版教材核对，不能当沪教版目录用。
+仓库里现有 `hujiao_math.json`（沪教版数学 1–5 年级，160 条，`draft`）、`hujiao_english.json`（沪教版英语五上，38 条，`draft`）、`sd54_math.json`（山东五四制青岛版，12 条，`draft`），以及只有 6 条**占位**数据、不能当目录用的 `hujiao_math.example.json`。
+
+### 3. 合并进 topics.json
+
+浏览器不 fetch `data/mappings/`，运行时只读 `topics.json`（PWA 预缓存、离线可用）。改完对照表后跑：
+
+```sh
+python3 scripts/merge_mappings.py          # 全量重建 topic.mappings，可反复运行
+python3 scripts/merge_mappings.py --check  # 只报告差异，不写文件
+python3 scripts/validate.py
+```
+
+脚本会先清掉所有 `mappings` 再按当前对照文件写回（跳过 `status: example`），所以删掉某条对照重跑就生效。`mappings` 固定插在 `standards` 后面，diff 只有新增行。
 
 ## 怎么提 PR
 
@@ -75,6 +87,9 @@
 
 ## 现状和限制
 
-- 前端目前**不读取**对照数据：图谱、诊断仍按人教版的年级册次显示。孩子档案里「教材版本」只是备注（见 `docs/pwa.md`）。
-- 之后做前端时的约定：选了非人教版、而某知识点没有对应 `mappings` 时，仍按人教版的年级显示，并提示「该版本映射尚未补齐」；不会因为缺映射隐藏知识点。
+- 诊断页**已读取**对照数据：开始页「按年级整体诊断」的年级和范围跟随孩子档案的年级、教材版本（`assets/children.js` 的 `grade` / `textbook`），按 `mappings` 里的年级/学期筛范围，整年级筛查的按单元汇总也用该版本的单元名（`diagnose/app.js` 的 `targetsFor()` / `chapterSummaryOf()`，`engine.gradeTargets()` 第 4 个参数）。
+- 该版本/年级没有对照、或该学科没有对照表时，回退人教版的册次范围，并在卡片上提示「××这个年级还没有对照表，按人教版出题」；不会因为缺映射隐藏知识点。
+- 目前生效的只有 `沪教版`：`hujiao` 前缀映射到 `hujiao_<学科>`，`assets/children.js` 的 `TEXTBOOKS` 里其他版本（北师大版、苏教版、外研版、译林版）还没有对照表，选了仍按人教版出题。
+- 开始页的「按册、章浏览」也按该版本分组：册 = `mappings` 的年级+学期，章 = `mappings.unit`，行内副标题 = `mappings.chapter`（没有对照的知识点不会出现在这个列表里，可仍用搜索或整年级范围测到）。
+- 图谱页（`explore/`）仍按人教版册次显示。
 - 对照表覆盖不全是正常状态，不要为了凑满而填占位值。

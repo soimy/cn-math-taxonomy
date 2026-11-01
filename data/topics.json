@@ -23,6 +23,14 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第3单元 10以内的数",
+        "chapter": "1~5的认识"
+      }
+    },
     "root_reason": "一年级认数从 1 到 5 开始，前面没有更早的小学知识点。"
   },
   {
@@ -48,7 +56,15 @@
         "id": "cms-2022:1.NA.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第3单元 10以内的数",
+        "chapter": "比一比；小于、等于、大于"
+      }
+    }
   },
   {
     "id": "cnm_p003",
@@ -73,7 +89,15 @@
         "id": "cms-2022:1.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第3单元 10以内的数",
+        "chapter": "第几"
+      }
+    }
   },
   {
     "id": "cnm_p004",
@@ -98,7 +122,15 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第3单元 10以内的数",
+        "chapter": "分与合（1）；分与合（2）延至10"
+      }
+    }
   },
   {
     "id": "cnm_p005",
@@ -123,7 +155,15 @@
         "id": "cms-2022:1.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第3单元 10以内的数",
+        "chapter": "0的认识"
+      }
+    }
   },
   {
     "id": "cnm_p006",
@@ -152,7 +192,15 @@
         "id": "cms-2022:1.NA.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第4单元 10以内数的加减法",
+        "chapter": "加法"
+      }
+    }
   },
   {
     "id": "cnm_p007",
@@ -177,7 +225,15 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第4单元 10以内数的加减法",
+        "chapter": "减法"
+      }
+    }
   },
   {
     "id": "cnm_p008",
@@ -202,7 +258,15 @@
         "id": "cms-2022:1.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第3单元 10以内的数",
+        "chapter": "6~9的认识；10的认识"
+      }
+    }
   },
   {
     "id": "cnm_p009",
@@ -227,7 +291,15 @@
         "id": "cms-2022:1.NA.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第3单元 10以内的数",
+        "chapter": "比一比；小于、等于、大于"
+      }
+    }
   },
   {
     "id": "cnm_p010",
@@ -256,7 +328,15 @@
         "id": "cms-2022:1.NA.07",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第4单元 10以内数的加减法",
+        "chapter": "加法；10的游戏"
+      }
+    }
   },
   {
     "id": "cnm_p011",
@@ -281,7 +361,15 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第4单元 10以内数的加减法",
+        "chapter": "减法"
+      }
+    }
   },
   {
     "id": "cnm_p012",
@@ -306,7 +394,15 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第4单元 10以内数的加减法",
+        "chapter": "连加连减"
+      }
+    }
   },
   {
     "id": "cnm_p013",
@@ -335,7 +431,15 @@
         "id": "cms-2022:1.NA.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第4单元 10以内数的加减法",
+        "chapter": "加减混合"
+      }
+    }
   },
   {
     "id": "cnm_p014",
@@ -360,7 +464,15 @@
         "id": "cms-2022:1.GG.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第2单元 认识图形",
+        "chapter": "认识立体图形"
+      }
+    }
   },
   {
     "id": "cnm_p015",
@@ -385,7 +497,16 @@
         "id": "cms-2022:1.IP.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第4单元 我的学校我的家",
+        "chapter": "我的房间",
+        "note": "**回填**：目录级唯一候选落点——方位描述依托「我的房间」，目录无位置专节名，待课时内容确认"
+      }
+    }
   },
   {
     "id": "cnm_p016",
@@ -410,7 +531,15 @@
         "id": "cms-2022:1.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第5单元 20以内的数",
+        "chapter": "11~20的认识"
+      }
+    }
   },
   {
     "id": "cnm_p017",
@@ -435,7 +564,16 @@
         "id": "cms-2022:1.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第5单元 20以内的数",
+        "chapter": "十几就是十和几",
+        "note": "位值概念渗透，无「十位、个位」专节"
+      }
+    }
   },
   {
     "id": "cnm_p018",
@@ -460,7 +598,15 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第6单元 20以内数的加减法（一）",
+        "chapter": "不进位加法和不退位减法"
+      }
+    }
   },
   {
     "id": "cnm_p019",
@@ -485,7 +631,16 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第6单元 20以内数的加减法（一）",
+        "chapter": "进位加法",
+        "note": "进位加法不用「凑十法」命名"
+      }
+    }
   },
   {
     "id": "cnm_p020",
@@ -510,7 +665,16 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第6单元 20以内数的加减法（一）",
+        "chapter": "进位加法",
+        "note": "无「9加几」专节"
+      }
+    }
   },
   {
     "id": "cnm_p021",
@@ -539,7 +703,16 @@
         "id": "cms-2022:1.NA.07",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第6单元 20以内数的加减法（一）",
+        "chapter": "进位加法",
+        "note": "无按被加数分节"
+      }
+    }
   },
   {
     "id": "cnm_p022",
@@ -568,7 +741,16 @@
         "id": "cms-2022:1.SP.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第1单元 我是小学生",
+        "chapter": "说一说",
+        "note": "「用数介绍」对应说一说；分类无专节，仅能借第1、2单元活动渗透，部分覆盖"
+      }
+    }
   },
   {
     "id": "cnm_p023",
@@ -593,7 +775,15 @@
         "id": "cms-2022:1.GG.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第2单元 认识图形",
+        "chapter": "认识平面图形"
+      }
+    }
   },
   {
     "id": "cnm_p024",
@@ -618,7 +808,16 @@
         "id": "cms-2022:1.GG.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第2单元 认识图形",
+        "chapter": "认识平面图形",
+        "note": "无拼组专节，附于认识平面图形的活动"
+      }
+    }
   },
   {
     "id": "cnm_p025",
@@ -643,7 +842,16 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "下",
+        "unit": "第1单元 20以内数的加减法（二）",
+        "chapter": "退位减法",
+        "note": "退位减法不按被减数分节"
+      }
+    }
   },
   {
     "id": "cnm_p026",
@@ -668,7 +876,16 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "下",
+        "unit": "第1单元 20以内数的加减法（二）",
+        "chapter": "退位减法",
+        "note": "同上"
+      }
+    }
   },
   {
     "id": "cnm_p027",
@@ -697,7 +914,16 @@
         "id": "cms-2022:1.NA.07",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "下",
+        "unit": "第1单元 20以内数的加减法（二）",
+        "chapter": "退位减法",
+        "note": "同上"
+      }
+    }
   },
   {
     "id": "cnm_p028",
@@ -722,7 +948,15 @@
         "id": "cms-2022:1.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "下",
+        "unit": "第2单元 100以内的数",
+        "chapter": "数数；数的读写；数的组成；数的位置；认识100"
+      }
+    }
   },
   {
     "id": "cnm_p029",
@@ -747,7 +981,15 @@
         "id": "cms-2022:1.NA.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "下",
+        "unit": "第2单元 100以内的数",
+        "chapter": "比较100以内数的大小"
+      }
+    }
   },
   {
     "id": "cnm_p030",
@@ -772,7 +1014,16 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "下",
+        "unit": "第4单元 100以内数的加减法（一）",
+        "chapter": "不进位加法",
+        "note": "仅加法部分对应；整十数减法新版一年级未出现，部分覆盖"
+      }
+    }
   },
   {
     "id": "cnm_p031",
@@ -797,7 +1048,15 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "下",
+        "unit": "第4单元 100以内数的加减法（一）",
+        "chapter": "不进位加法；进位加法"
+      }
+    }
   },
   {
     "id": "cnm_p032",
@@ -822,7 +1081,15 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第1单元 100以内数的加减法（二）",
+        "chapter": "不退位减法；退位减法"
+      }
+    }
   },
   {
     "id": "cnm_p033",
@@ -847,7 +1114,16 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "下",
+        "unit": "第4单元 100以内数的加减法（一）",
+        "chapter": "不进位加法；进位加法",
+        "note": "不单列「笔算」"
+      }
+    }
   },
   {
     "id": "cnm_p034",
@@ -872,7 +1148,16 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第1单元 100以内数的加减法（二）",
+        "chapter": "不退位减法；退位减法",
+        "note": "沪教版重横式、不单列「笔算」，内容由两节覆盖"
+      }
+    }
   },
   {
     "id": "cnm_p035",
@@ -901,7 +1186,16 @@
         "id": "cms-2022:1.NA.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "上",
+        "unit": "第4单元 10以内数的加减法",
+        "chapter": "讲讲算算（1）；讲讲算算（2）",
+        "note": "部分—总量关系以讲讲算算形式渗透，无同名单元"
+      }
+    }
   },
   {
     "id": "cnm_p217",
@@ -930,6 +1224,15 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第1单元 100以内数的加减法（二）",
+        "chapter": "讲讲算算（1）；加与减",
+        "note": "**回填**：旧版二下有「相差多少」专节，新版无此节名，相差问题应在讲讲算算中，无专节"
+      }
+    },
     "external": false
   },
   {
@@ -959,6 +1262,15 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "下",
+        "unit": "第4单元 100以内数的加减法",
+        "chapter": "一",
+        "note": "比多比少问题在应用中渗透，无单课"
+      }
+    },
     "external": false
   },
   {
@@ -984,7 +1296,15 @@
         "id": "cms-2022:1.IP.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第2单元 欢乐购物街",
+        "chapter": "认识人民币"
+      }
+    }
   },
   {
     "id": "cnm_p037",
@@ -1013,7 +1333,16 @@
         "id": "cms-2022:2.SP.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第5单元 分类",
+        "chapter": "分类的标准；逐层分类",
+        "note": "**回填确认**：分类本体新设专单元（该部分为明确对应）；「整理」（数据整理/统计表）部分新版二三上无对应，故整体判大致；一年级新版第1、2单元活动亦有分类渗透（见一年级对照表），但正式落点为二上专单元。"
+      }
+    }
   },
   {
     "id": "cnm_p038",
@@ -1042,7 +1371,15 @@
         "id": "cms-2022:1.NA.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第3单元 表内乘法",
+        "chapter": "乘法引入"
+      }
+    }
   },
   {
     "id": "cnm_p039",
@@ -1067,7 +1404,15 @@
         "id": "cms-2022:1.NA.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第3单元 表内乘法",
+        "chapter": "5的乘法；2、4、8的乘法；3、6、9的乘法；\"九九\"乘法口诀表"
+      }
+    }
   },
   {
     "id": "cnm_p048",
@@ -1096,7 +1441,15 @@
         "id": "cms-2022:1.NA.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第3单元 表内乘法",
+        "chapter": "讲讲算算（2）；讲讲算算（3）"
+      }
+    }
   },
   {
     "id": "cnm_p057",
@@ -1126,7 +1479,16 @@
         "confidence": "inferred",
         "note": "两步混合运算在第二学段要求更完整，二年级先掌握先乘后加减。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第1单元 两步四则运算与应用题",
+        "chapter": "两步四则运算",
+        "note": "旧版二上有「分拆为乘与加」，新版二上无此内容，乘加乘减并入三上两步运算"
+      }
+    }
   },
   {
     "id": "cnm_p043",
@@ -1155,7 +1517,15 @@
         "id": "cms-2022:1.NA.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第1单元 表内除法",
+        "chapter": "除法引入"
+      }
+    }
   },
   {
     "id": "cnm_p046",
@@ -1180,7 +1550,15 @@
         "id": "cms-2022:1.NA.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第1单元 表内除法",
+        "chapter": "用乘法口诀求商"
+      }
+    }
   },
   {
     "id": "cnm_p047",
@@ -1234,7 +1612,15 @@
         "id": "cms-2022:1.IP.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第4单元 我的学校我的家",
+        "chapter": "东南西北"
+      }
+    }
   },
   {
     "id": "cnm_p040",
@@ -1259,7 +1645,16 @@
         "id": "cms-2022:1.GG.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "下",
+        "unit": "第5单元 长度的比较与测量",
+        "chapter": "长度的测量；线段",
+        "note": "厘米在「长度的测量」中引入，无专节；新版三上第6单元周长（长度的测量）为再现落点。"
+      }
+    }
   },
   {
     "id": "cnm_p041",
@@ -1284,7 +1679,16 @@
         "id": "cms-2022:1.GG.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第6单元 周长",
+        "chapter": "长度的测量",
+        "note": "旧版三上有「米与厘米」专节判明确；新版无米的专节，内容并入长度的测量，降为大致"
+      }
+    }
   },
   {
     "id": "cnm_p045",
@@ -1309,7 +1713,15 @@
         "id": "cms-2022:1.IP.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "下",
+        "unit": "第6单元 身体上的尺子",
+        "chapter": "用身体上的尺子量一量；量一量身体上的尺子"
+      }
+    }
   },
   {
     "id": "cnm_p042",
@@ -1334,7 +1746,16 @@
         "id": "cms-2022:1.NA.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第3单元 表内乘法",
+        "chapter": "7的乘法；3、6、9的乘法；2、4、8的乘法",
+        "note": "旧版跨「乘法、除法（一）/（二）」两单元，新版合并为一单元"
+      }
+    }
   },
   {
     "id": "cnm_p044",
@@ -1359,7 +1780,15 @@
         "id": "cms-2022:1.NA.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第1单元 表内除法",
+        "chapter": "用乘法口诀求商"
+      }
+    }
   },
   {
     "id": "cnm_p061",
@@ -1385,7 +1814,15 @@
         "confidence": "exact",
         "note": "依据 dzkbw xs2x_2026（2026 春）小节补点。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第3单元 时间在哪里",
+        "chapter": "感受分和秒"
+      }
+    }
   },
   {
     "id": "cnm_p062",
@@ -1411,7 +1848,16 @@
         "confidence": "inferred",
         "note": "同「秒的认识」：课标在第一学段，现行教材在三年级上册，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第3单元 时间在哪里",
+        "chapter": "感受分和秒；读出钟面上的时刻",
+        "note": "无「进率」专节，换算在感受分和秒中渗透；旧版判明确，本次降为大致"
+      }
+    }
   },
   {
     "id": "cnm_p063",
@@ -1437,7 +1883,16 @@
         "confidence": "inferred",
         "note": "经过时间是时、分、秒的应用，册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "六、整理与提高",
+        "chapter": "数学广场——时间的计算",
+        "note": "旧版无「经过时间」单课，五上「时间的计算」最接近；新版二上/二下/三上目录已核查无此内容；旧版落点在四/五年级，不在新版已收集范围内，保留旧版判定。"
+      }
+    }
   },
   {
     "id": "cnm_p050",
@@ -1462,7 +1917,16 @@
         "id": "cms-2022:1.NA.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第1单元 表内除法",
+        "chapter": "余数",
+        "note": "旧版在二上，新版移至二下，与人教口径学期对齐"
+      }
+    }
   },
   {
     "id": "cnm_p051",
@@ -1487,7 +1951,15 @@
         "id": "cms-2022:1.NA.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第1单元 表内除法",
+        "chapter": "有余数除法的计算；用乘法口诀求商"
+      }
+    }
   },
   {
     "id": "cnm_p052",
@@ -1512,7 +1984,16 @@
         "id": "cms-2022:1.NA.07",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第1单元 表内除法",
+        "chapter": "讲讲算算（1）；讲讲算算（2）",
+        "note": "无「应用」专节，应用在讲讲算算与练习中（同旧版判断）"
+      }
+    }
   },
   {
     "id": "cnm_p219",
@@ -1541,6 +2022,15 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第4单元 用一位数除",
+        "chapter": "倍",
+        "note": "乘除数量关系以「倍」为核心组织；另二下表内除法承载乘除互逆（同旧版口径，旧版落点二上「倍」）"
+      }
+    },
     "external": false
   },
   {
@@ -1566,7 +2056,15 @@
         "id": "cms-2022:1.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第2单元 万以内的数",
+        "chapter": "千以内数的认识；万以内数的认识"
+      }
+    }
   },
   {
     "id": "cnm_p054",
@@ -1591,7 +2089,16 @@
         "id": "cms-2022:1.NA.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第2单元 万以内的数",
+        "chapter": "万以内数的认识；相邻的数、整十数、整百数",
+        "note": "新版无「大小比较」专节名，比较应在数的认识课时内；旧版有专节判明确，本次降为大致"
+      }
+    }
   },
   {
     "id": "cnm_p055",
@@ -1616,7 +2123,15 @@
         "id": "cms-2022:1.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第2单元 万以内的数",
+        "chapter": "千以内数的认识；数位表上的游戏；万以内数的认识"
+      }
+    }
   },
   {
     "id": "cnm_p064",
@@ -1645,7 +2160,15 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第4单元 两位数与三位数的加减法",
+        "chapter": "两、三位数加减法口算"
+      }
+    }
   },
   {
     "id": "cnm_p065",
@@ -1670,7 +2193,15 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第4单元 两位数与三位数的加减法",
+        "chapter": "两、三位数加减法口算"
+      }
+    }
   },
   {
     "id": "cnm_p066",
@@ -1695,7 +2226,16 @@
         "id": "cms-2022:2.NA.06",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第2单元 用一位数乘",
+        "chapter": "估算",
+        "note": "新版估算专节在乘法单元内（乘法估算口径）；旧版二下有「三位数加减法的估算」专节，新版二下无——位置与口径均变"
+      }
+    }
   },
   {
     "id": "cnm_p071",
@@ -1724,7 +2264,16 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第4单元 两位数与三位数的加减法",
+        "chapter": "两、三位数加法",
+        "note": "新版两、三位数合并编排"
+      }
+    }
   },
   {
     "id": "cnm_p072",
@@ -1749,7 +2298,15 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第4单元 两位数与三位数的加减法",
+        "chapter": "两、三位数减法"
+      }
+    }
   },
   {
     "id": "cnm_p220",
@@ -1778,6 +2335,15 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第1单元 100以内数的加减法（二）",
+        "chapter": "加与减",
+        "note": "「加与减」为加减互逆的直观认识；正式的各部分间关系表述新版二三上无专节（旧版底稿落点四上）"
+      }
+    },
     "external": false
   },
   {
@@ -1803,7 +2369,16 @@
         "id": "cms-2022:1.NA.08",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 1,
+        "term": "下",
+        "unit": "第7单元 数学广场",
+        "chapter": "找规律",
+        "note": "新版一下数学广场即有找规律；新版二上第6单元数学广场（找规律）为再现落点。"
+      }
+    }
   },
   {
     "id": "cnm_p221",
@@ -1824,6 +2399,15 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "sd54_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "谁的眼睛亮",
+        "chapter": "从不同位置观察同一物体看到的形状不同",
+        "note": "人教版放在三上，青岛五四制放在二年级上册（M-2A-04-01，课本 P63）"
+      }
+    },
     "external": false,
     "diagnostic_question": {
       "question": "用 4 个同样的小正方体从左到右摆成一排，从正面看到的是什么样子？",
@@ -1850,6 +2434,15 @@
         "note": "新版三上「观察物体」单元的小节；课标第二学段没有同名条款，展开图在 3.GG.05 系统学习，待核。"
       }
     ],
+    "mappings": {
+      "sd54_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "谁的眼睛亮",
+        "chapter": "根据看到的图形判断观察位置",
+        "note": "同上；「展开图」在我方教材中未单独列点，归入同一观察单元（M-2A-04-02，P64）"
+      }
+    },
     "external": false,
     "diagnostic_question": {
       "question": "把一个长方体纸盒沿棱剪开、展平，展开图一共有几个面？",
@@ -1875,6 +2468,21 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第1单元 两步四则运算与应用题",
+        "chapter": "两步四则运算"
+      },
+      "sd54_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "劳动最美丽",
+        "chapter": "混合运算",
+        "note": "我方 M-3A-05，课本 P75 起；含乘加乘减、除加除减的运算顺序"
+      }
+    },
     "external": false,
     "diagnostic_question": {
       "question": "只有加减法的算式 36－8＋12，要从左往右算。结果是多少？",
@@ -1904,7 +2512,23 @@
         "id": "cms-2022:1.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第1单元 两步四则运算与应用题",
+        "chapter": "两步四则运算",
+        "note": "无「括号」专节名，括号是否在本单元内待课时确认；旧版在三下「括号先算」单列判明确，本次降为大致"
+      },
+      "sd54_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "劳动最美丽",
+        "chapter": "带小括号的混合运算顺序",
+        "note": "我方 M-3A-05，P82"
+      }
+    }
   },
   {
     "id": "cnm_p059",
@@ -1929,7 +2553,23 @@
         "id": "cms-2022:1.NA.07",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第1单元 两步四则运算与应用题",
+        "chapter": "应用题",
+        "note": "应用题一节统摄两步应用，不按加减分列（同旧版判断）"
+      },
+      "sd54_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "劳动最美丽",
+        "chapter": "列综合算式解决实际问题",
+        "note": "我方 M-3A-05，P86；我方以「列综合算式」表述，本质同两步应用"
+      }
+    }
   },
   {
     "id": "cnm_p067",
@@ -1979,7 +2619,16 @@
         "id": "cms-2022:2.GG.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第6单元 周长",
+        "chapter": "长度的测量",
+        "note": "旧版有「分米的认识」专节；新版同上，降为大致"
+      }
+    }
   },
   {
     "id": "cnm_p069",
@@ -2004,7 +2653,15 @@
         "id": "cms-2022:2.GG.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第7单元 马拉松的路线设计",
+        "chapter": "千米"
+      }
+    }
   },
   {
     "id": "cnm_p056",
@@ -2056,7 +2713,15 @@
         "confidence": "inferred",
         "note": "吨写在「曹冲称象」主题里。现行三年级上册「测量」单元有吨，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "二、数与量",
+        "chapter": "从克到吨"
+      }
+    }
   },
   {
     "id": "cnm_p224",
@@ -2110,7 +2775,15 @@
         "id": "cms-2022:2.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第2单元 用一位数乘",
+        "chapter": "一位数乘两位数；一位数乘三位数"
+      }
+    }
   },
   {
     "id": "cnm_p075",
@@ -2135,7 +2808,23 @@
         "id": "cms-2022:2.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第2单元 用一位数乘",
+        "chapter": "一位数乘整十数、整百数；一位数乘三位数",
+        "note": "含 0 乘法在一位数乘法中一并处理，无专节（同旧版判断）"
+      },
+      "sd54_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "乡村新面貌",
+        "chapter": "乘数末尾有 0 的乘法简便写法",
+        "note": "口径不完全一致：我方三上该单元是「多位数乘两位数」（M-3A-04，P51 起），只覆盖乘数末尾有 0 的情形；乘数中间有 0 的情形我方未单列"
+      }
+    }
   },
   {
     "id": "cnm_p076",
@@ -2161,7 +2850,15 @@
         "confidence": "inferred",
         "note": "用数描述事物的特征。数字编码是现行三年级上册的实践内容，课标没有同名条款，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "六、整理与提高",
+        "chapter": "数学广场——编码"
+      }
+    }
   },
   {
     "id": "cnm_p099",
@@ -2186,7 +2883,15 @@
         "id": "cms-2022:2.GG.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "五、几何小实践",
+        "chapter": "线段、射线、直线"
+      }
+    }
   },
   {
     "id": "cnm_p225",
@@ -2207,6 +2912,15 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第3单元 三角形与四边形",
+        "chapter": "角的初步认识",
+        "note": "旧版在二上（角与直角），新版移至三上，与人教口径对齐"
+      }
+    },
     "external": false,
     "diagnostic_question": {
       "question": "一个角有几条边？",
@@ -2240,7 +2954,16 @@
         "id": "cms-2022:2.GG.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第3单元 三角形与四边形",
+        "chapter": "角的初步认识",
+        "note": "初步认识应含直角及锐、钝角的直观辨认，无专节（旧版落点二下三角形的分类（1））"
+      }
+    }
   },
   {
     "id": "cnm_p079",
@@ -2265,7 +2988,23 @@
         "id": "cms-2022:2.NA.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "下",
+        "unit": "三、分数的初步认识（一）",
+        "chapter": "几分之一",
+        "note": "新版三下目录未上架（2026-10-23 核查），本条按旧版（二期课改试用本）目录落点，新版待补判"
+      },
+      "sd54_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "今天我分餐",
+        "chapter": "几分之一的认识与比较",
+        "note": "我方 M-3A-06，P91 起"
+      }
+    }
   },
   {
     "id": "cnm_p226",
@@ -2286,6 +3025,22 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "下",
+        "unit": "三、分数的初步认识（一）",
+        "chapter": "几分之几",
+        "note": "新版三下目录未上架（2026-10-23 核查），本条按旧版（二期课改试用本）目录落点，新版待补判"
+      },
+      "sd54_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "今天我分餐",
+        "chapter": "几分之几的认识与分数单位",
+        "note": "我方 M-3A-06，P93"
+      }
+    },
     "external": false,
     "diagnostic_question": {
       "question": "把一个圆平均分成 4 份，涂了其中 3 份。涂色部分是这个圆的几分之几？",
@@ -2311,6 +3066,21 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "三、分数的初步认识（二）",
+        "chapter": "比一比"
+      },
+      "sd54_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "今天我分餐",
+        "chapter": "分母相同的分数比大小",
+        "note": "我方 M-3A-06，P96"
+      }
+    },
     "external": false,
     "diagnostic_question": {
       "question": "3/7 和 2/7 哪个大？",
@@ -2340,7 +3110,22 @@
         "id": "cms-2022:2.NA.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "三、分数的初步认识（二）",
+        "chapter": "分数的加减计算"
+      },
+      "sd54_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "今天我分餐",
+        "chapter": "同分母分数的加减与混合运算",
+        "note": "我方 M-3A-06，P100 起"
+      }
+    }
   },
   {
     "id": "cnm_p073",
@@ -2370,7 +3155,23 @@
         "id": "cms-2022:1.NA.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第4单元 用一位数除",
+        "chapter": "倍",
+        "note": "旧版在二上，新版移至三上，与人教口径对齐"
+      },
+      "sd54_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "非遗文化进校园",
+        "chapter": "解决问题（倍数关系）",
+        "note": "我方 M-3A-02，P15–P22；我方把「倍」放在「解决问题」单元里，含求一个数是另一个数的几倍、求几倍是多少等"
+      }
+    }
   },
   {
     "id": "cnm_p081",
@@ -2422,7 +3223,22 @@
         "confidence": "inferred",
         "note": "依据 dzkbw xs3s_2025（2025 秋）小节补点。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "下",
+        "unit": "第5单元 数学广场",
+        "chapter": "搭配"
+      },
+      "sd54_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "智慧广场",
+        "chapter": "搭配问题（乘法原理雏形）",
+        "note": "我方 M-3A-P02-01；我方列为「智慧广场」拓展内容，非正式单元"
+      }
+    }
   },
   {
     "id": "cnm_p228",
@@ -2472,7 +3288,16 @@
         "id": "cms-2022:2.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第4单元 用一位数除",
+        "chapter": "一位数除两位数；一位数除三位数等",
+        "note": "旧版即在三上；较人教口径（三下）提前一学期"
+      }
+    }
   },
   {
     "id": "cnm_p084",
@@ -2501,7 +3326,15 @@
         "id": "cms-2022:1.NA.07",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第4单元 用一位数除",
+        "chapter": "除法的应用"
+      }
+    }
   },
   {
     "id": "cnm_p229",
@@ -2522,6 +3355,15 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第3单元 三角形与四边形",
+        "chapter": "三角形与四边形的初步认识",
+        "note": "多边形以三角形、四边形形式出现（同旧版口径，旧版在二下）"
+      }
+    },
     "external": false,
     "diagnostic_question": {
       "question": "五边形有几条边？",
@@ -2555,7 +3397,16 @@
         "id": "cms-2022:1.GG.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第3单元 三角形与四边形",
+        "chapter": "三角形与四边形的初步认识",
+        "note": "旧版二上有「长方形、正方形的初步认识」专节判明确；新版并入四边形初步认识，无专节，降为大致且后移一学期以上"
+      }
+    }
   },
   {
     "id": "cnm_p078",
@@ -2580,7 +3431,15 @@
         "id": "cms-2022:2.GG.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第6单元 周长",
+        "chapter": "长方形、正方形的周长"
+      }
+    }
   },
   {
     "id": "cnm_p088",
@@ -2655,7 +3514,16 @@
         "id": "cms-2022:2.GG.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "下",
+        "unit": "一、复习与提高",
+        "chapter": "面积单位；面积计算",
+        "note": "新版三下目录未上架（2026-10-23 核查），本条按旧版（二期课改试用本）目录落点，新版待补判"
+      }
+    }
   },
   {
     "id": "cnm_p085",
@@ -2706,7 +3574,15 @@
         "id": "cms-2022:2.IP.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第5单元 年、月、日的秘密",
+        "chapter": "制作月历牌；制订作息时间表"
+      }
+    }
   },
   {
     "id": "cnm_p092",
@@ -2756,7 +3632,15 @@
         "id": "cms-2022:2.NA.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "二、小数的认识与加减法",
+        "chapter": "小数的意义"
+      }
+    }
   },
   {
     "id": "cnm_p094",
@@ -2781,7 +3665,15 @@
         "id": "cms-2022:2.NA.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "二、小数的认识与加减法",
+        "chapter": "小数加减法"
+      }
+    }
   },
   {
     "id": "cnm_p082",
@@ -2807,7 +3699,16 @@
         "confidence": "inferred",
         "note": "暂挂复习与关联，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第4单元 我的学校我的家",
+        "chapter": "东南西北",
+        "note": "「东南西北」一节含八个方位（与旧版同名节口径一致）"
+      }
+    }
   },
   {
     "id": "cnm_p096",
@@ -2832,7 +3733,15 @@
         "id": "cms-2022:2.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "二、数与量",
+        "chapter": "大数的认识"
+      }
+    }
   },
   {
     "id": "cnm_p097",
@@ -2861,7 +3770,15 @@
         "id": "cms-2022:2.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "二、数与量",
+        "chapter": "四舍五入法"
+      }
+    }
   },
   {
     "id": "cnm_p236",
@@ -2911,7 +3828,15 @@
         "id": "cms-2022:2.GG.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "五、几何小实践",
+        "chapter": "角的度量"
+      }
+    }
   },
   {
     "id": "cnm_p232",
@@ -2932,6 +3857,15 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "五、几何小实践",
+        "chapter": "角",
+        "note": "平角、周角在「角」「角的计算」中涉及，无单课"
+      }
+    },
     "external": false,
     "diagnostic_question": {
       "question": "1 个平角是多少度？",
@@ -2961,7 +3895,16 @@
         "id": "cms-2022:2.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "下",
+        "unit": "二、乘与除",
+        "chapter": "用两位数乘",
+        "note": "新版三下目录未上架（2026-10-23 核查），本条按旧版（二期课改试用本）目录落点，新版待补判"
+      }
+    }
   },
   {
     "id": "cnm_p087",
@@ -2986,7 +3929,16 @@
         "id": "cms-2022:2.NA.08",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "下",
+        "unit": "二、乘与除",
+        "chapter": "用两位数乘",
+        "note": "新版三下目录未上架（2026-10-23 核查），本条按旧版（二期课改试用本）目录落点，新版待补判"
+      }
+    }
   },
   {
     "id": "cnm_p102",
@@ -3011,7 +3963,16 @@
         "id": "cms-2022:2.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "下",
+        "unit": "二、乘与除",
+        "chapter": "用两位数乘",
+        "note": "沪教版为两位数乘两、三位数，口径相近不完全一致。新版三下目录未上架（2026-10-23 核查），本条按旧版（二期课改试用本）目录落点，新版待补判"
+      }
+    }
   },
   {
     "id": "cnm_p233",
@@ -3032,6 +3993,15 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第2单元 用一位数乘",
+        "chapter": "估算",
+        "note": "与 cnm_p066 同落点；项目两条估算类知识点在新版合并对应一节"
+      }
+    },
     "external": false,
     "diagnostic_question": {
       "question": "估算 49×21：把两个数看作 50 和 20，积大约是多少？",
@@ -3061,7 +4031,16 @@
         "id": "cms-2022:2.NA.08",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第4单元 用一位数除",
+        "chapter": "单价、数量、总价",
+        "note": "仅单价部分对应；工作效率等其余数量关系不在新版二三上（旧版底稿落点四上）"
+      }
+    }
   },
   {
     "id": "cnm_p230",
@@ -3136,7 +4115,15 @@
         "id": "cms-2022:2.GG.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "四、几何小实践",
+        "chapter": "垂直"
+      }
+    }
   },
   {
     "id": "cnm_p104",
@@ -3161,7 +4148,15 @@
         "id": "cms-2022:2.GG.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "四、几何小实践",
+        "chapter": "平行"
+      }
+    }
   },
   {
     "id": "cnm_p105",
@@ -3186,7 +4181,15 @@
         "id": "cms-2022:2.GG.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "五、几何小实践",
+        "chapter": "平行四边形；梯形"
+      }
+    }
   },
   {
     "id": "cnm_p234",
@@ -3208,6 +4211,15 @@
         "note": "新版四上「平行四边形和梯形」单元据新闻稿增加尺规画平行线；课标 2.GG.01 讲直尺和圆规作线段，待核。"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "五、整理与提高",
+        "chapter": "数学广场——用多功能三角尺画垂线与平行线",
+        "note": "沪教版用三角尺画平行线，非尺规作图"
+      }
+    },
     "external": false,
     "diagnostic_question": {
       "question": "用直尺和三角板画平行线时，三角板应该怎样移动？",
@@ -3284,6 +4296,15 @@
         "note": "新版四上综合与实践「寻找宝藏」；具体内容只见新闻稿，按方向、距离和路线推理编写，待核。"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "五、整理与提高",
+        "chapter": "数学广场——位置的表示方法",
+        "note": "大致对应：沪教版无同名小节，内容由相邻内容覆盖，口径略有差异"
+      }
+    },
     "external": false,
     "diagnostic_question": {
       "question": "从起点向东走 30 米，再继续向东走 45 米。这时离起点多少米？",
@@ -3339,7 +4360,15 @@
         "id": "cms-2022:2.NA.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "四、整数的四则运算",
+        "note": "同 cnm_p220"
+      }
+    }
   },
   {
     "id": "cnm_p112",
@@ -3364,7 +4393,15 @@
         "id": "cms-2022:2.NA.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "四、整数的四则运算",
+        "chapter": "三步计算式题"
+      }
+    }
   },
   {
     "id": "cnm_p113",
@@ -3414,7 +4451,15 @@
         "id": "cms-2022:2.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "四、整数的四则运算",
+        "chapter": "运算定律"
+      }
+    }
   },
   {
     "id": "cnm_p115",
@@ -3439,7 +4484,15 @@
         "id": "cms-2022:2.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "四、整数的四则运算",
+        "chapter": "运算定律"
+      }
+    }
   },
   {
     "id": "cnm_p116",
@@ -3464,7 +4517,15 @@
         "id": "cms-2022:2.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "四、整数的四则运算",
+        "chapter": "运算定律"
+      }
+    }
   },
   {
     "id": "cnm_p117",
@@ -3489,7 +4550,15 @@
         "id": "cms-2022:2.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "一、复习与提高",
+        "chapter": "看谁算得巧"
+      }
+    }
   },
   {
     "id": "cnm_p118",
@@ -3518,7 +4587,15 @@
         "id": "cms-2022:3.NA.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "二、小数的认识与加减法",
+        "chapter": "小数的意义"
+      }
+    }
   },
   {
     "id": "cnm_p119",
@@ -3544,7 +4621,15 @@
         "confidence": "inferred",
         "note": "比较小数大小是理解小数意义时要会的，内容要求没有单独写「比较」，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "二、小数的认识与加减法",
+        "chapter": "小数的大小比较"
+      }
+    }
   },
   {
     "id": "cnm_p120",
@@ -3570,7 +4655,15 @@
         "confidence": "inferred",
         "note": "小数点移动是教材里的性质，内容要求写的是感悟计数单位，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "二、小数的认识与加减法",
+        "chapter": "小数点移动"
+      }
+    }
   },
   {
     "id": "cnm_p121",
@@ -3596,7 +4689,15 @@
         "confidence": "inferred",
         "note": "小数近似数是教材里的四舍五入，内容要求只写了估算，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "五、整理与提高",
+        "chapter": "凑整"
+      }
+    }
   },
   {
     "id": "cnm_p122",
@@ -3621,7 +4722,16 @@
         "id": "cms-2022:2.GG.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第3单元 三角形与四边形",
+        "chapter": "三角形与四边形的初步认识",
+        "note": "旧版三上有「三角形的分类（2）」专节（另二下有分类（1））；新版仅见初步认识，分类是否单列待课时确认，降为大致"
+      }
+    }
   },
   {
     "id": "cnm_p123",
@@ -3700,7 +4810,15 @@
         "id": "cms-2022:2.NA.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "二、小数的认识与加减法",
+        "chapter": "小数加减法"
+      }
+    }
   },
   {
     "id": "cnm_p126",
@@ -3729,7 +4847,15 @@
         "id": "cms-2022:3.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "五、整理与提高",
+        "chapter": "小数加减法的应用"
+      }
+    }
   },
   {
     "id": "cnm_p127",
@@ -3812,7 +4938,15 @@
         "id": "cms-2022:2.SP.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "三、统计",
+        "chapter": "平均数"
+      }
+    }
   },
   {
     "id": "cnm_p106",
@@ -3837,7 +4971,16 @@
         "id": "cms-2022:2.NA.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "下",
+        "unit": "二、乘与除",
+        "chapter": "用两位数除",
+        "note": "新版三下目录未上架（2026-10-23 核查），本条按旧版（二期课改试用本）目录落点，新版待补判"
+      }
+    }
   },
   {
     "id": "cnm_p107",
@@ -3916,7 +5059,15 @@
         "id": "cms-2022:3.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "二、小数乘除法",
+        "chapter": "小数乘整数"
+      }
+    }
   },
   {
     "id": "cnm_p133",
@@ -3941,7 +5092,15 @@
         "id": "cms-2022:3.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "二、小数乘除法",
+        "chapter": "小数乘小数"
+      }
+    }
   },
   {
     "id": "cnm_p134",
@@ -3970,7 +5129,15 @@
         "id": "cms-2022:2.NA.08",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "二、小数乘除法",
+        "chapter": "连乘、乘加、乘减"
+      }
+    }
   },
   {
     "id": "cnm_p137",
@@ -3995,7 +5162,15 @@
         "id": "cms-2022:3.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "二、小数乘除法",
+        "chapter": "除数是整数的小数除法"
+      }
+    }
   },
   {
     "id": "cnm_p138",
@@ -4020,7 +5195,15 @@
         "id": "cms-2022:3.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "二、小数乘除法",
+        "chapter": "除数是小数的除法"
+      }
+    }
   },
   {
     "id": "cnm_p139",
@@ -4049,7 +5232,15 @@
         "id": "cms-2022:2.NA.08",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "六、整理与提高",
+        "chapter": "问题解决"
+      }
+    }
   },
   {
     "id": "cnm_p238",
@@ -4103,7 +5294,15 @@
         "id": "cms-2022:2.NA.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "四、简易方程（一）",
+        "chapter": "用字母表示数"
+      }
+    }
   },
   {
     "id": "cnm_p144",
@@ -4128,7 +5327,16 @@
         "id": "cms-2022:3.NA.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "四、简易方程（一）",
+        "chapter": "方程",
+        "note": "沪教版解方程依据加减乘除各部分关系，不用「等式的性质」命名"
+      }
+    }
   },
   {
     "id": "cnm_p098",
@@ -4154,7 +5362,16 @@
         "confidence": "inferred",
         "note": "公顷、平方千米写在第三学段。现行教材在四年级上册，对应时按内容提前出现处理，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "二、数与量",
+        "chapter": "平方千米；从平方厘米到平方千米",
+        "note": "「公顷」未见单列"
+      }
+    }
   },
   {
     "id": "cnm_p240",
@@ -4175,6 +5392,14 @@
         "confidence": "exact"
       }
     ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "五、几何小实践",
+        "chapter": "平行四边形"
+      }
+    },
     "external": false,
     "diagnostic_question": {
       "question": "平行四边形的高是哪一种线段？",
@@ -4204,7 +5429,15 @@
         "id": "cms-2022:3.GG.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "五、几何小实践",
+        "chapter": "平行四边形的面积"
+      }
+    }
   },
   {
     "id": "cnm_p148",
@@ -4229,7 +5462,15 @@
         "id": "cms-2022:3.GG.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "五、几何小实践",
+        "chapter": "三角形的面积"
+      }
+    }
   },
   {
     "id": "cnm_p149",
@@ -4254,7 +5495,15 @@
         "id": "cms-2022:3.GG.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "五、几何小实践",
+        "chapter": "梯形的面积"
+      }
+    }
   },
   {
     "id": "cnm_p150",
@@ -4279,7 +5528,16 @@
         "id": "cms-2022:3.GG.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "六、整理与提高",
+        "chapter": "图形的面积",
+        "note": "大致对应：沪教版无同名小节，内容由相邻内容覆盖，口径略有差异"
+      }
+    }
   },
   {
     "id": "cnm_p239",
@@ -4333,7 +5591,15 @@
         "id": "cms-2022:3.SP.07",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "下",
+        "unit": "五、问题解决",
+        "chapter": "可能性"
+      }
+    }
   },
   {
     "id": "cnm_p141",
@@ -4358,7 +5624,15 @@
         "id": "cms-2022:3.SP.07",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "下",
+        "unit": "五、问题解决",
+        "chapter": "可能性的大小"
+      }
+    }
   },
   {
     "id": "cnm_p135",
@@ -4384,7 +5658,15 @@
         "confidence": "inferred",
         "note": "积的近似数是旧版五上小数乘法相关内容；2026秋正式目录已无独立单元，暂挂第8单元复习与关联，不删除（与四上移除优化不同）。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "二、小数乘除法",
+        "chapter": "积、商的凑整"
+      }
+    }
   },
   {
     "id": "cnm_p143",
@@ -4414,7 +5696,15 @@
         "id": "cms-2022:3.NA.07",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "四、简易方程（一）",
+        "chapter": "方程"
+      }
+    }
   },
   {
     "id": "cnm_p145",
@@ -4440,7 +5730,15 @@
         "confidence": "exact",
         "note": "简易方程相关内容在2026秋五上正式目录中已删去或改为选学；暂挂第8单元复习与关联，不删除。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "四、简易方程（一）",
+        "chapter": "方程"
+      }
+    }
   },
   {
     "id": "cnm_p146",
@@ -4470,7 +5768,15 @@
         "id": "cms-2022:2.NA.08",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "上",
+        "unit": "四、简易方程（一）",
+        "chapter": "找等量关系列方程，解应用题"
+      }
+    }
   },
   {
     "id": "cnm_p151",
@@ -4496,7 +5802,16 @@
         "confidence": "inferred",
         "note": "植树问题是旧版五上数学广角；2026秋正式目录无数学广角，暂挂第8单元复习与关联，不删除（与四上移除优化不同）。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 3,
+        "term": "上",
+        "unit": "第8单元 数学广场",
+        "chapter": "篱笆问题",
+        "note": "沪教版以「篱笆问题」承载间隔问题，与植树问题口径相近、非同一提法；旧版三上数学广场即有「植树问题」专节判明确，新版改名后降为大致"
+      }
+    }
   },
   {
     "id": "cnm_p152",
@@ -4724,7 +6039,15 @@
         "id": "cms-2022:3.GG.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "下",
+        "unit": "四、几何小实践",
+        "chapter": "体积"
+      }
+    }
   },
   {
     "id": "cnm_p161",
@@ -4749,7 +6072,15 @@
         "id": "cms-2022:3.GG.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "下",
+        "unit": "四、几何小实践",
+        "chapter": "正方体、长方体的表面积"
+      }
+    }
   },
   {
     "id": "cnm_p162",
@@ -4774,7 +6105,15 @@
         "id": "cms-2022:3.GG.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "下",
+        "unit": "四、几何小实践",
+        "chapter": "立方厘米、立方分米、立方米"
+      }
+    }
   },
   {
     "id": "cnm_p163",
@@ -4803,7 +6142,15 @@
         "id": "cms-2022:3.GG.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "下",
+        "unit": "四、几何小实践",
+        "chapter": "长方体与正方体的体积"
+      }
+    }
   },
   {
     "id": "cnm_p164",
@@ -4828,7 +6175,15 @@
         "id": "cms-2022:3.GG.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "下",
+        "unit": "四、几何小实践",
+        "chapter": "体积与容积"
+      }
+    }
   },
   {
     "id": "cnm_p165",
@@ -4857,7 +6212,16 @@
         "id": "cms-2022:3.NA.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "三、分数的初步认识",
+        "chapter": "二",
+        "note": "正式的分数意义（分数与除法）在沪教版六年级第二章，小学仅初步认识"
+      }
+    }
   },
   {
     "id": "cnm_p166",
@@ -4959,7 +6323,16 @@
         "confidence": "exact",
         "note": "新版目录未单列，仍挂第4单元。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "三、分数的初步认识（二）",
+        "chapter": "比一比",
+        "note": "异分母比较需通分，属六年级（初中）内容"
+      }
+    }
   },
   {
     "id": "cnm_p170",
@@ -5114,7 +6487,15 @@
         "id": "cms-2022:3.SP.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "三、统计",
+        "chapter": "折线统计图的认识"
+      }
+    }
   },
   {
     "id": "cnm_p176",
@@ -5166,7 +6547,16 @@
         "confidence": "exact",
         "note": "新版目录作「用有序数对确定位置」。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "五、整理与提高",
+        "chapter": "数学广场——位置的表示方法",
+        "note": "数对正式内容（平面直角坐标系）在沪教版初中七年级"
+      }
+    }
   },
   {
     "id": "cnm_p180",
@@ -5192,7 +6582,16 @@
         "confidence": "exact",
         "note": "新版目录作「用方向和距离确定位置」。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "下",
+        "unit": "五、整理与提高",
+        "chapter": "数学广场——位置的表示方法",
+        "note": "方向与距离的正式内容在初中"
+      }
+    }
   },
   {
     "id": "cnm_p181",
@@ -5217,7 +6616,16 @@
         "id": "cms-2022:3.GG.08",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 2,
+        "term": "上",
+        "unit": "第4单元 我的学校我的家",
+        "chapter": "东南西北；我的学校",
+        "note": "简单路线描述依托方位单元，无专节；旧版在二下"
+      }
+    }
   },
   {
     "id": "cnm_p177",
@@ -5405,7 +6813,15 @@
         "id": "cms-2022:3.IP.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "下",
+        "unit": "二、正数和负数的初步认识",
+        "chapter": "正数和负数"
+      }
+    }
   },
   {
     "id": "cnm_p202",
@@ -5430,7 +6846,15 @@
         "id": "cms-2022:3.IP.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 5,
+        "term": "下",
+        "unit": "二、正数和负数的初步认识",
+        "chapter": "正数和负数；数轴"
+      }
+    }
   },
   {
     "id": "cnm_p188",
@@ -5455,7 +6879,15 @@
         "id": "cms-2022:3.GG.02",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_math": {
+        "grade": 4,
+        "term": "上",
+        "unit": "五、几何小实践",
+        "chapter": "圆的初步认识"
+      }
+    }
   },
   {
     "id": "cnm_p189",
@@ -23012,7 +24444,15 @@
         "confidence": "inferred",
         "note": "教材中的功能句。课标没有逐句列出，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 4 Together with animals",
+        "note": "介绍动物，从人教三年级上册借用"
+      }
+    }
   },
   {
     "id": "cne_p040",
@@ -25747,7 +27187,15 @@
         "confidence": "inferred",
         "note": "新版人教教材该单元的语言点，按最接近的课标条目对应，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 9 Using computers",
+        "note": "**待核**：人教以 have to / can't 表达同一条「规则」功能"
+      }
+    }
   },
   {
     "id": "cne_p229",
@@ -26553,7 +28001,15 @@
         "id": "ces-2022:2.PH.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 1 Clubs in our school",
+        "note": "**待核**：按词例 club/class 的 cl 连缀对应，语音板块未逐条核对"
+      }
+    }
   },
   {
     "id": "cne_p198",
@@ -26607,7 +28063,15 @@
         "confidence": "inferred",
         "note": "人教 PEP 该单元的主题词。课标不逐词列出，词表和册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 7 Great scientists",
+        "note": "描述科学家性格和外貌"
+      }
+    }
   },
   {
     "id": "cne_p110",
@@ -26633,7 +28097,15 @@
         "id": "ces-2022:1.GR.05",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 7 Great scientists",
+        "note": "What is he like?"
+      }
+    }
   },
   {
     "id": "cne_p111",
@@ -26714,7 +28186,14 @@
         "confidence": "inferred",
         "note": "人教 PEP 该单元的主题词。课标不逐词列出，词表和册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 5 Seeing a doctor"
+      }
+    }
   },
   {
     "id": "cne_p177",
@@ -26741,7 +28220,16 @@
         "confidence": "inferred",
         "note": "教材中的功能句。课标没有逐句列出，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 5 Seeing a doctor",
+        "chapter": "Lesson 2 Seeing a doctor",
+        "note": "I can't see clearly these days. / You should ..."
+      }
+    }
   },
   {
     "id": "cne_p121",
@@ -26768,7 +28256,14 @@
         "confidence": "inferred",
         "note": "人教 PEP 该单元的主题词。课标不逐词列出，词表和册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 1 Clubs in our school"
+      }
+    }
   },
   {
     "id": "cne_p122",
@@ -26794,7 +28289,15 @@
         "id": "ces-2022:2.GR.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 1 Clubs in our school",
+        "note": "I can paint well."
+      }
+    }
   },
   {
     "id": "cne_p123",
@@ -26821,7 +28324,15 @@
         "confidence": "inferred",
         "note": "教材中的功能句。课标没有逐句列出，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 1 Clubs in our school",
+        "chapter": "Lesson 3 At the Art Club"
+      }
+    }
   },
   {
     "id": "cne_p124",
@@ -26848,7 +28359,14 @@
         "confidence": "inferred",
         "note": "用文字把图意或短文写进题干，考查认读和理解。册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 6 Try my best"
+      }
+    }
   },
   {
     "id": "cne_p167",
@@ -26875,7 +28393,14 @@
         "confidence": "inferred",
         "note": "人教 PEP 该单元的主题词。课标不逐词列出，词表和册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 2 Traditional games"
+      }
+    }
   },
   {
     "id": "cne_p168",
@@ -26901,7 +28426,15 @@
         "id": "ces-2022:2.GR.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 6 Try my best",
+        "note": "He tries his best."
+      }
+    }
   },
   {
     "id": "cne_p169",
@@ -26982,7 +28515,14 @@
         "confidence": "inferred",
         "note": "人教 PEP 该单元的主题词。课标不逐词列出，词表和册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 7 Great scientists"
+      }
+    }
   },
   {
     "id": "cne_p172",
@@ -27008,7 +28548,14 @@
         "id": "ces-2022:2.GR.01",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 7 Great scientists"
+      }
+    }
   },
   {
     "id": "cne_p173",
@@ -27035,7 +28582,14 @@
         "confidence": "inferred",
         "note": "教材中的功能句。课标没有逐句列出，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 7 Great scientists"
+      }
+    }
   },
   {
     "id": "cne_p174",
@@ -27062,7 +28616,14 @@
         "confidence": "inferred",
         "note": "用文字把图意或短文写进题干，考查认读和理解。册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 7 Great scientists"
+      }
+    }
   },
   {
     "id": "cne_p113",
@@ -27089,7 +28650,15 @@
         "confidence": "inferred",
         "note": "人教 PEP 该单元的主题词。课标不逐词列出，词表和册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 1 Clubs in our school",
+        "note": "When do the clubs meet?"
+      }
+    }
   },
   {
     "id": "cne_p114",
@@ -27115,7 +28684,15 @@
         "id": "ces-2022:2.GR.04",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 1 Clubs in our school",
+        "note": "We have the Art Club on Mondays."
+      }
+    }
   },
   {
     "id": "cne_p115",
@@ -27142,7 +28719,14 @@
         "confidence": "inferred",
         "note": "人教 PEP 该单元的主题词。课标不逐词列出，词表和册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 2 Traditional games"
+      }
+    }
   },
   {
     "id": "cne_p116",
@@ -27169,7 +28753,14 @@
         "confidence": "inferred",
         "note": "教材中的功能句。课标没有逐句列出，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 2 Traditional games"
+      }
+    }
   },
   {
     "id": "cne_p117",
@@ -27196,7 +28787,14 @@
         "confidence": "inferred",
         "note": "用文字把图意或短文写进题干，考查认读和理解。册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 1 Clubs in our school"
+      }
+    }
   },
   {
     "id": "cne_p118",
@@ -27330,7 +28928,15 @@
         "id": "ces-2022:2.GR.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 1 Clubs in our school",
+        "note": "there be 描述社团教室和设施"
+      }
+    }
   },
   {
     "id": "cne_p127",
@@ -27411,7 +29017,14 @@
         "confidence": "inferred",
         "note": "人教 PEP 该单元的主题词。课标不逐词列出，词表和册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 3 Amazing plants"
+      }
+    }
   },
   {
     "id": "cne_p130",
@@ -27437,7 +29050,14 @@
         "id": "ces-2022:2.GR.03",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 3 Amazing plants"
+      }
+    }
   },
   {
     "id": "cne_p131",
@@ -27464,7 +29084,15 @@
         "confidence": "inferred",
         "note": "教材中的功能句。课标没有逐句列出，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 3 Amazing plants",
+        "chapter": "Lesson 4 My plant poster"
+      }
+    }
   },
   {
     "id": "cne_p132",
@@ -27491,7 +29119,15 @@
         "confidence": "inferred",
         "note": "用文字把图意或短文写进题干，考查认读和理解。册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 4 Together with animals",
+        "chapter": "Lesson 1 A welcome letter to the Safari Park"
+      }
+    }
   },
   {
     "id": "cne_p133",
@@ -28591,7 +30227,16 @@
         "id": "ces-2022:2.GR.08",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 8 Useful inventions",
+        "chapter": "Lesson 4 An ad for a useful invention",
+        "note": "**待核**：按发明介绍的过去时叙述对应，课时语言点未核对"
+      }
+    }
   },
   {
     "id": "cne_p189",
@@ -28617,7 +30262,15 @@
         "id": "ces-2022:2.GR.08",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 8 Useful inventions",
+        "note": "**待核**：同上"
+      }
+    }
   },
   {
     "id": "cne_p186",
@@ -28857,7 +30510,15 @@
         "id": "ces-2022:2.GR.07",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 9 Using computers",
+        "note": "**待核**：电脑使用规则，沪教版以 should/shouldn't 表达"
+      }
+    }
   },
   {
     "id": "cne_p178",
@@ -28884,7 +30545,14 @@
         "confidence": "inferred",
         "note": "用文字把图意或短文写进题干，考查认读和理解。册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 5 Seeing a doctor"
+      }
+    }
   },
   {
     "id": "cne_p235",
@@ -28938,7 +30606,15 @@
         "confidence": "inferred",
         "note": "依据 dzkbw pep6s_2026（2026 秋）单元目录补点，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 5 Seeing a doctor",
+        "note": "看病延伸到健康习惯建议"
+      }
+    }
   },
   {
     "id": "cne_p237",
@@ -29421,7 +31097,15 @@
         "id": "ces-2022:2.GR.09",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 10 A greener life",
+        "note": "**待核**：比较级，按主题对应"
+      }
+    }
   },
   {
     "id": "cne_p182",
@@ -29447,7 +31131,15 @@
         "id": "ces-2022:2.GR.09",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 10 A greener life",
+        "note": "**待核**：同上"
+      }
+    }
   },
   {
     "id": "cne_p183",
@@ -29501,7 +31193,15 @@
         "confidence": "inferred",
         "note": "用文字把图意或短文写进题干，考查认读和理解。册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 10 A greener life",
+        "note": "**待核**：同上"
+      }
+    }
   },
   {
     "id": "cne_p241",
@@ -29852,7 +31552,16 @@
         "confidence": "inferred",
         "note": "人教 PEP 该单元的主题词。课标不逐词列出，词表和册次待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 10 A greener life",
+        "chapter": "Lesson 3 Baggie's new life",
+        "note": "**待核**：环境今昔对比，按主题对应"
+      }
+    }
   },
   {
     "id": "cne_p193",
@@ -29878,7 +31587,15 @@
         "id": "ces-2022:2.GR.08",
         "confidence": "exact"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 10 A greener life",
+        "note": "**待核**：同上"
+      }
+    }
   },
   {
     "id": "cne_p194",
@@ -29905,7 +31622,15 @@
         "confidence": "inferred",
         "note": "教材中的功能句。课标没有逐句列出，待核。"
       }
-    ]
+    ],
+    "mappings": {
+      "hujiao_english": {
+        "grade": 5,
+        "term": "上",
+        "unit": "Unit 10 A greener life",
+        "note": "**待核**：同上"
+      }
+    }
   },
   {
     "id": "cne_p195",

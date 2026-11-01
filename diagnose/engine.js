@@ -716,9 +716,11 @@
    * 高中英语用「必修一」「必修二」「必修三」「选必四」，不占用数学的「高一」「高二」。
    * subject 默认 math，避免三上、四上和选必一把英语和数学混在一起。
    * 不带 subject 时「必修一」没有数学知识点，返回 null。
-   * 返回 {ids, volumes, label}（ids 按 topics 文件顺序，只含正式知识点）；不认识的写法返回 null。
+   * editionId（可选，如 'hujiao_math'）传了就按 topics[].mappings[editionId] 的年级/学期筛，
+   * 不按人教版册次：跨年级映射时「沪教版五上」含人教二上~五上的知识点。
+   * 返回 {ids, volumes, label}（ids 按 topics 文件顺序，只含正式知识点）；不认识的写法或无对照返回 null。
    */
-  function gradeTargets(graph, scope, subject) {
+  function gradeTargets(graph, scope, subject, editionId) {
     const subj = subject == null || subject === '' ? 'math' : subject;
     const key = String(scope == null ? '' : scope).trim();
     const books = {
@@ -760,31 +762,46 @@
       } else if (v) { volumes = [key]; label = v[1] + '年级' + (v[2] === '上' ? '上册' : '下册'); }
     }
     if (!volumes) return null;
+    const ed = editionId ? editionScope(key) : null;
     const ids = graph.topics.filter(function (t) {
       if (t.external) return false;
       if (subj !== 'all' && subjectOf(t) !== subj) return false;
+      if (ed) {
+        const m = t.mappings && t.mappings[editionId];
+        if (!m || m.grade !== ed.grade) return false;
+        return !ed.terms || m.term === '全' || ed.terms.indexOf(m.term) >= 0;
+      }
       return volumes.indexOf(parseChapter(t.chapter).volume) >= 0;
     }).map(function (t) { return t.id; });
     return ids.length ? { ids: ids, volumes: volumes, label: label } : null;
   }
 
+  /** 教材版本的年级/学期：'五年级' -> {grade:5, terms:null}，'五上' -> {grade:5, terms:['上']}。 */
+  function editionScope(key) {
+    const m = /^([一二三四五六七八九])([上下全])?$/.exec(key.replace(/年级$/, ''));
+    if (!m) return null;
+    return { grade: '一二三四五六七八九'.indexOf(m[1]) + 1, terms: m[2] ? [m[2]] : null };
+  }
+
   /**
    * 按章汇总：范围内每章的 掌握 / 不稳 / 薄弱 / 未测 数量和薄弱、不稳的知识点 id。
    * 章按教材顺序给出，再按「薄弱数多、不稳数多」稳定排序，薄弱的章排前面。
+   * labelOf(topic)（可选）返回 {key, label} 时按教材版本的单元名分组，否则按人教版章。
    */
-  function chapterSummary(graph, session) {
+  function chapterSummary(graph, session, labelOf) {
     const inOrder = new Set(session.order);
     const byKey = Object.create(null);
     const list = [];
     graph.topics.forEach(function (t) {
       if (t.external || !inOrder.has(t.id)) return;
       const c = parseChapter(t.chapter);
-      const key = c.volume + ' ' + c.chapterNo + ' ' + c.chapterName;
+      const ov = labelOf ? labelOf(t) : null;
+      const key = ov ? 'ed ' + ov.key : c.volume + ' ' + c.chapterNo + ' ' + c.chapterName;
       let ch = byKey[key];
       if (!ch) {
         ch = byKey[key] = {
           key: key, volume: c.volume, chapterNo: c.chapterNo, chapterName: c.chapterName,
-          label: (c.volume ? c.volume + ' ' : '') + c.chapterNo + ' ' + c.chapterName,
+          label: ov ? ov.label : (c.volume ? c.volume + ' ' : '') + c.chapterNo + ' ' + c.chapterName,
           total: 0, mastered: 0, shaky: 0, weak: 0, untested: 0, weakIds: [], shakyIds: [], untestedIds: [], _i: list.length
         };
         list.push(ch);
