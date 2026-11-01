@@ -200,7 +200,7 @@
     };
     return fetch(PROXY, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: Object.assign({ 'Content-Type': 'application/json' }, CFG ? CFG.authHeaders() : {}),
       body: JSON.stringify(body)
     }).then(function (resp) {
       if (!resp.ok) throw new Error('llm http ' + resp.status);
@@ -267,7 +267,7 @@
     };
     const resp = await fetch(PROXY, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: Object.assign({ 'Content-Type': 'application/json' }, CFG ? CFG.authHeaders() : {}),
       body: JSON.stringify(body)
     });
     if (!resp.ok) throw new Error('llm http ' + resp.status);

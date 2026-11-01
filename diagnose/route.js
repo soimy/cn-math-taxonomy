@@ -1131,7 +1131,7 @@
     }
     return fetchFn(o.proxy || PROXY, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: Object.assign({ 'Content-Type': 'application/json' }, CFG ? CFG.authHeaders() : {}),
       body: JSON.stringify(body),
       signal: ctrl ? ctrl.signal : undefined
     }).then(function (res) {

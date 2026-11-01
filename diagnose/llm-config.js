@@ -12,6 +12,10 @@
  * 解析规则：有 document 的浏览器默认相对 /v1（走反代）；没有 document 的 Node
  * 脚本/测试默认绝对地址 upstream + /v1（scripts/audit_*.js 直接 fetch 需要绝对 URL）。
  * 静态托管没有反代时可用 ?llm=<url> 或 localStorage['cnmDiagnose.llmBase'] 覆盖基址。
+ *
+ * A 方案（GitHub Pages 纯静态直连百炼）：localStorage['cnmDiagnose.llm'] 存
+ * {base, model, key}，由 settings.html 写入。有配置时 resolveBase() / model /
+ * authHeaders() 都以它为准；六个 chat 请求点统一带 Authorization 头。
  */
 (function (root, factory) {
   var cfg = factory();
@@ -29,7 +33,23 @@
   }
   upstream = String(upstream).replace(/\/+$/, '');
 
-  var model = 'DeepSeek-V4.1-Flash-1017-Unlimited';
+  /* 配置存储：唯一键 + 旧的基址覆盖键（保留兼容，别删）。 */
+  var STORE_KEY = 'cnmDiagnose.llm';
+  var LEGACY_BASE_KEY = 'cnmDiagnose.llmBase';
+
+  /* 直连预设：地址与型号字面量只允许留在这个文件里
+   * （tests/test_fork_guards.js 的 (h) 项会扫其他文件）。 */
+  var PRESETS = {
+    dashscope: {
+      label: '阿里云百炼',
+      base: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
+      model: 'qwen3.8-flash',
+      altModels: ['qwen3.8-flash', 'qwen3.8-27b']
+    }
+  };
+
+  var PRESET = PRESETS.dashscope;
+  var DEFAULT_MODEL = 'DeepSeek-V4.1-Flash-1017-Unlimited';
 
   var maxTokens = {
     /* O3-6：max_tokens 单一出处。
@@ -90,12 +110,92 @@
     return String(u == null ? '' : u).replace(/\/+$/, '');
   }
 
+  /** 拿 localStorage；Node / 隐私模式 / 被禁用时返回 null，绝不抛。 */
+  function _storage() {
+    try {
+      if (typeof localStorage !== 'undefined' && localStorage) return localStorage;
+    } catch (e) { /* 隐私模式下访问 localStorage 本身也可能抛 */ }
+    return null;
+  }
+
+  /**
+   * 读取直连配置。任何异常 / 非法 JSON / 缺字段 → null（一律当未配置）。
+   * @returns {{base:string, model:string, key:string}|null}
+   */
+  function getConfig() {
+    try {
+      var ls = _storage();
+      if (!ls) return null;
+      var raw = ls.getItem(STORE_KEY);
+      if (!raw) return null;
+      var obj = JSON.parse(raw);
+      if (!obj || typeof obj !== 'object') return null;
+      var base = typeof obj.base === 'string' ? _stripTrailingSlash(obj.base) : '';
+      var model = typeof obj.model === 'string' ? obj.model : '';
+      var key = typeof obj.key === 'string' ? obj.key : '';
+      if (!base || !model || !key) return null;
+      return { base: base, model: model, key: key };
+    } catch (e) { return null; }
+  }
+
+  /**
+   * 写入直连配置。base / model 缺省取百炼预设；写入失败（配额/隐私模式）返回 false。
+   * @returns {boolean}
+   */
+  function saveConfig(cfg) {
+    try {
+      cfg = cfg || {};
+      var ls = _storage();
+      if (!ls) return false;
+      var base = cfg.base ? _stripTrailingSlash(cfg.base) : PRESET.base;
+      var model = cfg.model ? String(cfg.model) : PRESET.model;
+      var key = cfg.key == null ? '' : String(cfg.key);
+      ls.setItem(STORE_KEY, JSON.stringify({ base: base, model: model, key: key }));
+      return true;
+    } catch (e) { return false; }
+  }
+
+  /** 删除直连配置；失败返回 false。 */
+  function clearConfig() {
+    try {
+      var ls = _storage();
+      if (!ls) return false;
+      ls.removeItem(STORE_KEY);
+      return true;
+    } catch (e) { return false; }
+  }
+
+  /** 给界面显示的脱敏串：前 5 字符 + '...' + 后 4 字符；空/过短返回 ''。 */
+  function maskKey(k) {
+    try {
+      if (typeof k !== 'string' || k.length < 12) return '';
+      return k.slice(0, 5) + '...' + k.slice(-4);
+    } catch (e) { return ''; }
+  }
+
+  /** 三个字段都非空才算已配置。 */
+  function isConfigured() {
+    return !!getConfig();
+  }
+
+  /** 有 key 才带 Authorization；Node / 未配置时返回 {}。 */
+  function authHeaders() {
+    try {
+      var c = getConfig();
+      if (c && c.key) return { Authorization: 'Bearer ' + c.key };
+    } catch (e) { /* 落到无头 */ }
+    return {};
+  }
+
   /** 没有覆盖时的默认基址：浏览器 /v1；Node 绝对地址 upstream + /v1 */
   function _defaultBase() {
     return _hasDom() ? BASE : upstream + BASE;
   }
 
-  /** 覆盖链：?llm=<url> → localStorage['cnmDiagnose.llmBase'] → 默认基址 */
+  /**
+   * 覆盖链：?llm=<url> → cnmDiagnose.llm.base → 旧键 cnmDiagnose.llmBase → 默认基址。
+   * 末尾斜杠统一去掉。
+   */
   function resolveBase() {
     var custom = null;
 
@@ -112,8 +212,15 @@
 
     if (!custom) {
       try {
+        var c = getConfig();
+        if (c) custom = c.base;
+      } catch (e) { /* 配置坏了就继续往下回退 */ }
+    }
+
+    if (!custom) {
+      try {
         if (typeof localStorage !== 'undefined' && localStorage) {
-          custom = localStorage.getItem('cnmDiagnose.llmBase');
+          custom = localStorage.getItem(LEGACY_BASE_KEY);
         }
       } catch (e) { /* 隐私模式/配额异常：忽略覆盖 */ }
     }
@@ -130,12 +237,30 @@
     return resolveBase() + '/models';
   }
 
+  /* 模块加载时求值：消费方都是 `const MODEL = CFG.model`，保存后需刷新页面才生效。
+   * 这是设计约定，别改成 getter 去动四个消费文件的写法。 */
+  var model = DEFAULT_MODEL;
+  try {
+    var _boot = getConfig();
+    if (_boot && _boot.model) model = _boot.model;
+  } catch (e) { /* 保持默认型号 */ }
+
   return {
     base: BASE,
     upstream: upstream,
     model: model,
+    defaultModel: DEFAULT_MODEL,
+    storeKey: STORE_KEY,
+    legacyBaseKey: LEGACY_BASE_KEY,
+    PRESETS: PRESETS,
     maxTokens: maxTokens,
     timeouts: timeouts,
+    getConfig: getConfig,
+    saveConfig: saveConfig,
+    clearConfig: clearConfig,
+    maskKey: maskKey,
+    isConfigured: isConfigured,
+    authHeaders: authHeaders,
     resolveBase: resolveBase,
     chatUrl: chatUrl,
     modelsUrl: modelsUrl

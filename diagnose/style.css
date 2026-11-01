@@ -387,3 +387,33 @@ table.log select { min-height: 44px; }
 .blind-item { padding: 8px 0; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
 .blind-name { font-weight: 700; }
 .blind-retest { font-weight: 700; white-space: nowrap; }
+
+/* ---- 模型设置页（settings.html）与未配置横幅 ---- */
+.settings-page { width: min(720px, 100%); margin: 0 auto; padding: 20px 16px 56px; }
+.settings-page h1 { font-size: 1.5rem; margin: 0 0 6px; }
+.settings-page h2 { font-size: 1.1rem; margin: 0 0 8px; }
+.settings-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 10px 0; }
+.settings-row > label, .settings-label { flex: 0 0 104px; font-weight: 700; }
+.settings-row input, .settings-row select {
+  flex: 1 1 260px; min-width: 0; padding: 9px 10px;
+  border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg-elev); color: inherit; font-size: 1rem;
+}
+.key-wrap { display: flex; flex: 1 1 260px; gap: 6px; min-width: 0; align-items: center; }
+.key-wrap input { flex: 1 1 auto; min-width: 0; }
+.settings-advanced > summary { cursor: pointer; font-weight: 800; min-height: 40px; display: flex; align-items: center; }
+.settings-status {
+  white-space: pre-wrap; overflow-wrap: anywhere; margin: 0;
+  font-size: 0.92rem; color: var(--muted); min-height: 1.4em;
+}
+.llm-banner {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  max-width: min(840px, calc(100% - 32px)); margin: 12px auto 0;
+}
+.llm-banner a { flex: 1 1 220px; font-weight: 700; color: var(--brand-strong); }
+.llm-banner-close {
+  border: 1px solid var(--line); background: transparent; color: inherit;
+  border-radius: 8px; min-width: 40px; min-height: 40px;
+  font-size: 1.2rem; line-height: 1; cursor: pointer;
+}
+@media print { .llm-banner { display: none !important; } }

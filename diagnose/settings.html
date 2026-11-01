@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>模型设置 · 诊断</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header no-print">
+  <a class="brand" href="../">
+    <span class="brand-copy">
+      <span class="brand-name">中小学·高中知识图谱</span>
+      <span class="brand-kicker">诊断 · 模型设置</span>
+    </span>
+  </a>
+  <nav class="site-nav" aria-label="主导航">
+    <div class="page-links">
+      <a class="nav-link" href="../">首页</a>
+      <a class="nav-link" href="index.html">返回诊断</a>
+    </div>
+  </nav>
+</header>
+<main id="settings-root" class="settings-page">
+  <h1>模型设置</h1>
+  <p class="muted small">这里填的东西只存在这台电脑的浏览器里，不上传任何服务器。</p>
+
+  <section class="card">
+    <div class="settings-row">
+      <span class="settings-label">预设</span>
+      <strong id="preset-label">—</strong>
+    </div>
+    <div class="settings-row">
+      <label for="model-select">模型</label>
+      <select id="model-select"></select>
+    </div>
+    <div class="settings-row">
+      <label for="api-key">API Key</label>
+      <div class="key-wrap">
+        <input id="api-key" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="sk-...">
+        <button id="toggle-key" type="button" aria-label="显示或隐藏 API Key">显示</button>
+      </div>
+    </div>
+    <div class="row">
+      <button id="test-btn" type="button">测试连接</button>
+      <button id="save-btn" type="button" class="good">保存</button>
+    </div>
+    <p id="saved-line" class="small muted" hidden>已保存：<code id="saved-tail"></code> <button id="clear-btn" type="button">清除</button></p>
+  </section>
+
+  <details class="card settings-advanced">
+    <summary>高级（家长）</summary>
+    <div class="settings-row">
+      <label for="base-input">基址</label>
+      <input id="base-input" type="url" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="settings-row">
+      <label for="custom-model">自定义模型名</label>
+      <input id="custom-model" type="text" autocomplete="off" spellcheck="false" placeholder="留空则用上面的模型">
+    </div>
+  </details>
+
+  <section class="card">
+    <h2>连接状态</h2>
+    <pre id="status" class="settings-status" role="status" aria-live="polite"></pre>
+  </section>
+</main>
+<script src="llm-config.js"></script>
+<script src="settings.js"></script>
+</body>
+</html>
