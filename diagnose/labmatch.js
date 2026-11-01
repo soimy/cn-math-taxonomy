@@ -497,7 +497,7 @@
     };
     const init = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: Object.assign({ 'Content-Type': 'application/json' }, CFG ? CFG.authHeaders() : {}),
       body: JSON.stringify(body)
     };
     const timeout = o.timeoutMs == null ? TIMEOUT_MS : o.timeoutMs;

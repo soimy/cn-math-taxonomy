@@ -49,6 +49,36 @@
   <p><a href="https://github.com/xuxiong/cn-math-taxonomy/issues/new/choose">提交 Issue</a></p>
 </footer>
 <script src="llm-config.js"></script>
+<script>
+/* 未配置模型时的引导横幅：只在非 localhost 的静态部署（如 GitHub Pages）出现。
+ * llm-config.js 已先加载；localStorage 里已有完整 {base,model,key} 时不显示。 */
+(function () {
+  try {
+    if (typeof LLMConfig === 'undefined' || !LLMConfig) return;
+    if (LLMConfig.isConfigured()) return;
+    if (typeof location === 'undefined' || !location) return;
+    var host = location.hostname;
+    if (host === '127.0.0.1' || host === 'localhost') return;
+    var main = document.getElementById('root');
+    if (!main || !main.parentNode) return;
+    var bar = document.createElement('div');
+    bar.className = 'banner llm-banner no-print';
+    bar.setAttribute('role', 'status');
+    var a = document.createElement('a');
+    a.href = 'settings.html';
+    a.textContent = '还没设置模型 → 点这里设置';
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'llm-banner-close';
+    close.setAttribute('aria-label', '关闭提示');
+    close.textContent = '×';
+    close.onclick = function () { if (bar.parentNode) bar.parentNode.removeChild(bar); };
+    bar.appendChild(a);
+    bar.appendChild(close);
+    main.parentNode.insertBefore(bar, main);
+  } catch (e) { /* 引导横幅失败不影响主流程 */ }
+})();
+</script>
 <script src="../assets/vendor/cytoscape.min.js"></script>
 <script src="../assets/vendor/dagre.min.js"></script>
 <script src="../assets/vendor/cytoscape-dagre.js"></script>

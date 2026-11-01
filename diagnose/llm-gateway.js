@@ -116,6 +116,7 @@
 
     return fetch(modelsUrl, {
       method: 'GET',
+      headers: CFG ? CFG.authHeaders() : {},
       signal: controller ? controller.signal : undefined
     })
       .then(function (res) {
@@ -244,7 +245,7 @@
 
     return fetch(PROXY, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: Object.assign({ 'Content-Type': 'application/json' }, CFG ? CFG.authHeaders() : {}),
       body: JSON.stringify(body),
       signal: controller ? controller.signal : undefined
     })
@@ -289,7 +290,7 @@
     }
     return fetch(PROXY, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: Object.assign({ 'Content-Type': 'application/json' }, CFG ? CFG.authHeaders() : {}),
       body: JSON.stringify(body),
       signal: controller ? controller.signal : undefined
     })
