@@ -16,12 +16,13 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "CC-BY-NC-4.0",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/xiaoyang111222/cn-math-taxonomy/issues"
   },
-  "homepage": "https://github.com/xiaoyang111222/cn-math-taxonomy#readme",
+  "homepage": "https://xuxiong.github.io/cn-math-taxonomy/",
+  "upstream": "https://github.com/xiaoyang111222/cn-math-taxonomy",
   "allowScripts": {
     "esbuild@0.27.3": true,
     "workerd@1.20260426.1": true,
