@@ -51,8 +51,18 @@ node scripts/serve.js 8930 docs  # 只服务某个子目录
    顺序不能反——先判越界再解码，`%2e%2e` 就能绕过。非法 URL 编码返回 400，不抛异常。
 5. **404 / 500**：文件不存在返回 404 纯文本，读失败返回 500，进程不退出。
 6. **端口占用**：打印含端口号的错误（并给出换端口的建议）后以 1 退出，不打崩溃栈。
-   监听地址固定 `127.0.0.1`：省略 host 时 Node 会按 `getaddrinfo` 顺序（本机 `localhost` 先解析到 `::1`）做双栈重试，
+   监听地址默认 `127.0.0.1`（`HOST=0.0.0.0` 可对外，容器/局域网用）：省略 host 时 Node 会按 `getaddrinfo` 顺序（本机 `localhost` 先解析到 `::1`）做双栈重试，
    端口被占时可能「绑上了却永不回回调」，静默挂住——显式给地址才能一次成败、错误立刻可见。
+
+## 局域网 / 容器访问
+
+`compose.yaml` 用 OrbStack 跑同一份 `serve.js`，端口映射写成 `0.0.0.0:8920:8920`（只写 `8920:8920` 会只绑 localhost）：
+
+```bash
+docker compose up -d      # 局域网 http://<本机局域网IP>:8920/diagnose/
+docker compose logs -f
+docker compose down
+```
 
 ## 测试
 

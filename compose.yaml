@@ -1,0 +1,20 @@
+# 本地/局域网部署：OrbStack + scripts/serve.js（零依赖，不需要 Dockerfile）
+#   docker compose up -d        起服务，局域网 http://<本机局域网IP>:8920/diagnose/
+#   docker compose logs -f      看日志
+#   docker compose down         停
+services:
+  site:
+    image: node:22-alpine
+    working_dir: /app
+    command: node scripts/serve.js 8920
+    volumes:
+      - .:/app:ro
+    environment:
+      # serve.js 默认只听 127.0.0.1；容器内必须 0.0.0.0 才能被端口映射转发
+      HOST: 0.0.0.0
+      # 本机网关（如 3000 端口的 LLM 网关）从容器看是 host.docker.internal；不跑网关也不影响静态页面
+      LLM_UPSTREAM: http://host.docker.internal:3000
+    ports:
+      # 0.0.0.0 前缀是 OrbStack 对外（局域网）暴露的关键，只写 "8920:8920" 会只绑 localhost
+      - "0.0.0.0:8920:8920"
+    restart: unless-stopped

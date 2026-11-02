@@ -312,9 +312,9 @@ function main(argv) {
   /* 端口占用检测要显式指定监听地址：
    * Node 在 host 省略时走 getaddrinfo 顺序（本机 localhost 先解析到 ::1），双栈 listen 请求
    * err,address 时会异步重试另一个地址，导致「绑上了但永远不回 listen 回调」的静默挂起——
-   * 明明端口被占，进程却不报错也不退出。这里固定 127.0.0.1（浏览器访问 localhost 会命中），
-   * 一次绑定、一次成败，EADDRINUSE 立刻可见。 */
-  const host = '127.0.0.1';
+   * 明明端口被占，进程却不报错也不退出。默认 127.0.0.1（浏览器访问 localhost 会命中），
+   * 一次绑定、一次成败，EADDRINUSE 立刻可见。HOST=0.0.0.0 时对外监听（容器 / 局域网访问）。 */
+  const host = process.env.HOST || '127.0.0.1';
 
   server.on('error', function (err) {
     let msg;
@@ -335,7 +335,7 @@ function main(argv) {
   server.listen(port, host, function () {
     const actual = server.address().port;
     console.log('静态服务已启动：http://' + host + ':' + actual + '/diagnose/');
-    console.log('（只监听 IPv4：浏览器若把 localhost 解析成 ::1 会连不上，用 127.0.0.1 访问）');
+    if (host === '127.0.0.1') console.log('（只监听 IPv4：浏览器若把 localhost 解析成 ::1 会连不上，用 127.0.0.1 访问）');
     console.log('已禁缓存：.js/.css/.html/.json 等返回 Cache-Control: no-store（改完代码刷新即生效）');
     console.log('根目录：' + dir + '（监听 ' + host + ':' + actual + '）');
   });
